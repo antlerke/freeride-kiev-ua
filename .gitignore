@@ -1,0 +1,6 @@
+# Бриф і референси не публікуємо: репозиторій публічний заради GitHub Pages
+brief/
+
+.DS_Store
+node_modules/
+*.log
