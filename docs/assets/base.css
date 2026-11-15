@@ -1,8 +1,6 @@
-/* FreeRide — базові токени. Знято з референсів замовника. */
+/* FreeRide — базовий шар. Бренд задається через [data-theme] на <html>. */
 
 :root {
-  --lime: #C8F32C;
-  --lime-deep: #6E8F00;        /* для тексту й посилань на білому: контраст 4.6:1 */
   --ink: #111315;
   --ink-2: #41464A;
   --ink-3: #6B7075;
@@ -14,85 +12,137 @@
   --r-card: 22px;
   --r-pill: 999px;
   --r-btn: 14px;
-
   --wrap: 1240px;
+}
+
+/* ── Бренд А: лаймовий FREERIDE // ─────────────────────────── */
+:root, [data-theme="lime"] {
+  --accent: #C8F32C;          /* плашки, підкреслення, кнопки */
+  --accent-on: #111315;       /* текст на акценті: 13.9:1 */
+  --accent-ink: #6E8F00;      /* акцентний текст на білому: 4.6:1 */
+  --accent-soft: #F2FBD2;
+  --slashes: 2;
+  --logo-case: uppercase;
+  --logo-tracking: -0.01em;
+}
+
+/* ── Бренд Б: зелений FreeRide® ────────────────────────────── */
+[data-theme="green"] {
+  --accent: #3F7A1C;          /* кнопки: білий текст дає 5.3:1 */
+  --accent-on: #FFFFFF;
+  --accent-ink: #3F7A1C;
+  --accent-soft: #EAF4E2;
+  --slashes: 1;
+  --logo-case: none;
+  --logo-tracking: -0.02em;
 }
 
 * { box-sizing: border-box; }
 
 body {
-  margin: 0;
-  background: var(--surface);
-  color: var(--ink);
+  margin: 0; background: var(--surface); color: var(--ink);
   font-family: 'Manrope', system-ui, sans-serif;
-  font-size: 16px;
-  line-height: 1.55;
-  -webkit-font-smoothing: antialiased;
+  font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased;
 }
 
-a { color: var(--lime-deep); }
+a { color: var(--accent-ink); }
 
 h1, h2, h3 {
   font-family: 'Montserrat', 'Manrope', sans-serif;
-  font-weight: 800;
-  font-style: italic;
-  letter-spacing: -0.02em;
-  line-height: 1.05;
-  margin: 0 0 16px;
+  font-weight: 800; font-style: italic;
+  letter-spacing: -0.02em; line-height: 1.06; margin: 0 0 16px;
 }
-h1 { font-size: clamp(32px, 5vw, 56px); }
+h1 { font-size: clamp(32px, 4.6vw, 54px); }
 h2 { font-size: clamp(24px, 3vw, 34px); }
 h3 { font-size: 20px; }
 
 .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
+.muted { color: var(--ink-3); }
+.lede { font-size: 19px; line-height: 1.5; color: var(--ink-2); max-width: 34em; }
 
-/* Фірмовий знак «//» перед заголовком */
+/* Фірмовий знак: дві риски в лаймовому бренді, одна в зеленому */
 .slash { display: inline-flex; gap: 3px; vertical-align: middle; margin-right: 10px; }
-.slash i { display: block; width: 7px; height: 20px; background: var(--lime); transform: skewX(-18deg); }
+.slash i { display: block; width: 7px; height: 20px; background: var(--accent); transform: skewX(-18deg); }
+[data-theme="green"] .slash i:nth-child(2) { display: none; }
+[data-theme="green"] .slash i { width: 5px; }
 
-.card {
-  background: var(--ground);
-  border-radius: var(--r-card);
-  padding: 28px;
-}
+.card { background: var(--ground); border-radius: var(--r-card); padding: 28px; }
+.card-soft { background: var(--accent-soft); }
 
 .btn {
-  display: inline-flex; align-items: center; gap: 10px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
   font-family: inherit; font-weight: 700; font-size: 16px;
   padding: 15px 26px; border-radius: var(--r-btn); border: 0;
   text-decoration: none; cursor: pointer;
-  transition: transform 120ms cubic-bezier(.2,0,0,1), background-color 160ms ease;
+  transition: transform 120ms cubic-bezier(.2,0,0,1), filter 160ms ease;
 }
 .btn:active { transform: scale(.975); }
-.btn-lime { background: var(--lime); color: var(--ink); }
-.btn-lime:hover { background: #BCE726; color: var(--ink); }
+.btn-go { background: var(--accent); color: var(--accent-on); }
+.btn-go:hover { filter: brightness(.94); color: var(--accent-on); }
 .btn-ghost { background: var(--ground); color: var(--ink); border: 1px solid var(--line); }
+.btn-ghost:hover { color: var(--ink); }
 
-a:focus-visible, button:focus-visible { outline: 3px solid var(--lime-deep); outline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--accent-ink); outline-offset: 3px; }
 
 .bar {
   position: sticky; top: 0; z-index: 20;
-  background: rgba(255,255,255,.82);
+  background: rgba(255,255,255,.84);
   backdrop-filter: blur(18px) saturate(160%);
   -webkit-backdrop-filter: blur(18px) saturate(160%);
   border-bottom: 1px solid var(--line);
 }
-.bar-in { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; padding: 14px 24px; }
-.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); }
-.logo b { font-family: 'Montserrat', sans-serif; font-weight: 800; font-style: italic; font-size: 21px; letter-spacing: -0.01em; }
-.logo s { text-decoration: none; font-size: 10px; letter-spacing: .14em; color: var(--ink-3); display: block; }
+.bar-in { max-width: var(--wrap); margin: 0 auto; display: flex; flex-wrap: wrap; gap: 18px; align-items: center; padding: 13px 24px; }
+.logo { display: flex; align-items: center; gap: 9px; text-decoration: none; color: var(--ink); }
+.logo b {
+  font-family: 'Montserrat', sans-serif; font-weight: 800; font-style: italic;
+  font-size: 21px; text-transform: var(--logo-case); letter-spacing: var(--logo-tracking);
+}
+.logo s { text-decoration: none; font-size: 9.5px; letter-spacing: .15em; color: var(--ink-3); display: block; text-transform: uppercase; }
+.nav { display: flex; flex-wrap: wrap; gap: 22px; flex-grow: 1; }
+.nav a { text-decoration: none; color: var(--ink); font-weight: 600; font-size: 15px; }
+.nav a:hover { color: var(--accent-ink); }
 
 .grid { display: grid; gap: 18px; }
 .g2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
 .g3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
-.muted { color: var(--ink-3); }
+.g4 { grid-template-columns: repeat(4, minmax(0,1fr)); }
+
 .pill {
   display: inline-block; background: var(--surface); border: 1px solid var(--line);
   border-radius: var(--r-pill); padding: 7px 14px; font-size: 13px; font-weight: 600;
 }
-.pill-lime { background: var(--lime); border-color: var(--lime); }
+.pill-go { background: var(--accent); border-color: var(--accent); color: var(--accent-on); }
 
+/* Заглушка фото — поки немає власної зйомки */
+.ph {
+  background: #E7EAE4; border-radius: var(--r-card);
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  color: var(--ink-3); font-size: 13px; padding: 16px;
+}
+
+/* Перемикач бренду — службовий, не частина сайту */
+.brandbar {
+  position: fixed; right: 16px; bottom: 16px; z-index: 50;
+  display: flex; gap: 8px; align-items: center;
+  background: rgba(21,24,26,.92); color: #fff; padding: 10px 12px; border-radius: 14px;
+  font-size: 13px; backdrop-filter: blur(10px);
+}
+.brandbar button {
+  font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer;
+  padding: 7px 12px; border-radius: 9px; border: 1px solid rgba(255,255,255,.26);
+  background: transparent; color: #fff;
+}
+.brandbar button[aria-pressed="true"] { background: var(--accent); color: var(--accent-on); border-color: var(--accent); }
+
+@media (max-width: 980px) { .g4 { grid-template-columns: repeat(2, minmax(0,1fr)); } }
 @media (max-width: 860px) { .g3 { grid-template-columns: repeat(2, minmax(0,1fr)); } }
-@media (max-width: 620px) { .g2, .g3 { grid-template-columns: minmax(0,1fr); } .wrap { padding: 0 16px; } }
+@media (max-width: 620px) {
+  .g2, .g3, .g4 { grid-template-columns: minmax(0,1fr); }
+  .wrap { padding: 0 16px; }
+  .nav { order: 3; width: 100%; gap: 16px; }
+  .nav a { padding: 9px 0; }
+}
 
-@media (prefers-reduced-motion: reduce) { .btn { transition: none; } .btn:active { transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: none; } .btn:active { transform: none; }
+}
