@@ -39,8 +39,10 @@
 
 * { box-sizing: border-box; }
 
+html { overflow-x: clip; }
+
 body {
-  margin: 0; background: var(--surface); color: var(--ink);
+  margin: 0; overflow-x: clip; background: var(--surface); color: var(--ink);
   font-family: 'Manrope', system-ui, sans-serif;
   font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased;
 }
@@ -145,4 +147,25 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--accent-ink); ou
 
 @media (prefers-reduced-motion: reduce) {
   .btn { transition: none; } .btn:active { transform: none; }
+}
+
+/* ── Поява блоків при скролі ───────────────────────────────── */
+/* Ховаємо лише коли JS справді працює: без нього сайт лишається читабельним */
+.js [data-rev] {
+  opacity: 0;
+  transition: opacity 620ms cubic-bezier(.2,0,0,1), transform 620ms cubic-bezier(.2,0,0,1);
+  will-change: opacity, transform;
+}
+.js [data-rev="left"]  { transform: translateX(-48px); }
+.js [data-rev="right"] { transform: translateX(48px); }
+.js [data-rev="up"]    { transform: translateY(34px); }
+.js [data-rev].in      { opacity: 1; transform: none; }
+
+/* На вузьких екранах бічний виїзд завеликий — замінюємо на підйом */
+@media (max-width: 760px) {
+  .js [data-rev="left"], .js [data-rev="right"] { transform: translateY(26px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-rev] { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
