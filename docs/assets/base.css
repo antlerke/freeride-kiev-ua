@@ -14,6 +14,15 @@
   /* Сам зелений як текст на світлому дає 2.07:1 — для написів беремо темнішу зелень */
   --accent-ink: #3D7210;      /* 5.14:1 на теплому фоні */
   --accent-mid: #4F9419;      /* іконки й графіка на світлому: 3,33:1 */
+
+  /* Обʼємна зелена кнопка. Текст #111 тримає 13:1 угорі градієнта
+     і 4,5:1 біля самого низу, куди він не дістає */
+  --go-grad: linear-gradient(180deg, #A5E96B 0%, #7ACA3C 32%, #63B326 55%, #418D17 100%);
+  --go-grad-hover: linear-gradient(180deg, #B4F27B 0%, #85D544 32%, #69BC28 55%, #3B8614 100%);
+  --go-edge: #509C20;
+  --go-depth: inset 0 1px 0 rgba(255,255,255,.55), 0 8px 20px rgba(65,141,23,.28);
+  --go-depth-hover: inset 0 1px 0 rgba(255,255,255,.65), 0 12px 26px rgba(65,141,23,.38);
+  --go-pressed: inset 0 2px 6px rgba(26,58,7,.45);
   --accent-soft: #E9F3DD;     /* тло підказок і виділених карток */
   /* На сірому блоці AA витримує лише чистий білий (4.82:1) — приглушених відтінків там немає */
   --on-slate: #FFFFFF;
@@ -78,8 +87,16 @@ h3 { font-size: 20px; }
   transition: transform 120ms cubic-bezier(.2,0,0,1), filter 160ms ease;
 }
 .btn:active { transform: scale(.975); }
-.btn-go { background: var(--accent); color: var(--accent-on); }
-.btn-go:hover { filter: brightness(.94); color: var(--accent-on); }
+.btn-go {
+  background: var(--go-grad);
+  color: #111111;
+  border: 1px solid var(--go-edge);
+  box-shadow: var(--go-depth);
+}
+.btn-go:hover { color: #111111; }
+/* Натиснута кнопка втрачає підсвітку згори й отримує тінь усередині:
+   видно, що її продавили, а не просто перефарбували */
+.btn-go:active { box-shadow: var(--go-pressed); }
 .btn-ghost { background: var(--ground); color: var(--ink); border: 1px solid var(--line); }
 .btn-ghost:hover { color: var(--ink); }
 
@@ -192,13 +209,17 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--accent-ink); ou
   .btn {
     transition: transform 170ms cubic-bezier(.2,0,0,1),
                 box-shadow 170ms cubic-bezier(.2,0,0,1),
-                filter 160ms ease;
+                border-color 170ms ease;
   }
   .btn:hover { transform: translateY(-2px); }
-  .btn-go:hover { box-shadow: 0 10px 22px rgba(105,190,40,.34); }
+  .btn-go:hover {
+    background: var(--go-grad-hover);
+    box-shadow: var(--go-depth-hover);
+  }
   .btn-ghost:hover { box-shadow: 0 10px 22px rgba(30,31,28,.12); border-color: #CFCDC5; }
   /* Натискання повертає елемент під палець — інакше кнопка «тікає» */
   .btn:active { transform: translateY(0) scale(.985); box-shadow: none; }
+  .btn-go:active { box-shadow: var(--go-pressed); }
 
   a.card {
     transition: transform 190ms cubic-bezier(.2,0,0,1),
