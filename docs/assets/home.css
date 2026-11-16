@@ -120,3 +120,66 @@
   .hero-veil { background: linear-gradient(170deg, var(--warm) 0 52%, rgba(242,241,237,.82) 72%, rgba(242,241,237,.35) 100%); }
   .hero-cta .btn-xl { width: 100%; }
 }
+
+/* ── Бургер-меню ───────────────────────────────────────────── */
+/* На десктопі drawer «розчиняється»: меню й кнопка стають прямими
+   дітьми шапки, тож розмітка одна, а не два дублі посилань */
+.drawer { display: contents; }
+.brandblock { order: 0; }
+.nav { order: 1; }
+.lang { order: 2; }
+.hdr-cta { order: 3; }
+.burger { display: none; order: 4; }
+
+.sr {
+  position: absolute; width: 1px; height: 1px; margin: -1px;
+  padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+@media (max-width: 980px) {
+  .bar-in { flex-wrap: nowrap; gap: 14px; }
+  .motto { display: none; }
+  .brandblock { flex-grow: 1; min-width: 0; }
+
+  .js .burger {
+    display: grid; place-items: center;
+    width: 46px; height: 46px; flex: none;
+    background: transparent; border: 1px solid var(--line); border-radius: 12px;
+    cursor: pointer; color: var(--ink);
+  }
+  .burger-box { display: grid; gap: 5px; width: 20px; }
+  .burger-box i {
+    display: block; height: 2px; background: currentColor; border-radius: 2px;
+    transition: transform 220ms cubic-bezier(.2,0,0,1), opacity 140ms linear;
+  }
+  .bar.open .burger-box i:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .bar.open .burger-box i:nth-child(2) { opacity: 0; }
+  .bar.open .burger-box i:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .drawer { display: block; }           /* без JS — звичайний блок у потоці */
+  .js .drawer {
+    position: absolute; left: 0; right: 0; top: 100%;
+    background: var(--ground); border-bottom: 1px solid var(--line);
+    padding: 6px 24px 22px; box-shadow: 0 20px 44px rgba(0,0,0,.13);
+    opacity: 0; transform: translateY(-10px); visibility: hidden;
+    transition: opacity 220ms cubic-bezier(.2,0,0,1),
+                transform 220ms cubic-bezier(.2,0,0,1),
+                visibility 0s linear 220ms;
+  }
+  .js .bar.open .drawer {
+    opacity: 1; transform: none; visibility: visible;
+    transition-delay: 0s, 0s, 0s;
+  }
+
+  .drawer .nav { flex-direction: column; flex-wrap: nowrap; gap: 0; width: auto; }
+  .drawer .nav a {
+    padding: 16px 2px; font-size: 17px;
+    border-bottom: 1px solid var(--line);
+  }
+  .drawer .hdr-cta { width: 100%; margin-top: 20px; padding: 16px 22px; font-size: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer, .burger-box i { transition: none; }
+  .js .bar.open .drawer { transition: none; }
+}
