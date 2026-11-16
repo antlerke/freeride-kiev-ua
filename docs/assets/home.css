@@ -1,0 +1,122 @@
+/* Головна — верстка за макетом замовника. */
+
+/* Темніший відтінок фірмового сірого для карток рівнів;
+   білий на ньому 11,4:1, Kawasaki Green 5,2:1 — зелений тут працює і як текст */
+:root { --slate-deep: #33363A; --panel: #E8E7E2; }
+
+/* ── Шапка ─────────────────────────────────────────────────── */
+.bar-in { gap: 22px; }
+.brandblock { display: flex; align-items: center; gap: 18px; }
+.motto {
+  border-left: 1px solid var(--line); padding-left: 18px;
+  font-size: 13px; line-height: 1.35; color: var(--ink-2); max-width: 11em;
+}
+.lang { display: flex; gap: 9px; align-items: center; font-size: 14px; font-weight: 700; }
+.lang a { text-decoration: none; color: var(--ink-3); }
+.lang a[aria-current="true"] { color: var(--ink); }
+.nav .caret { margin-left: 4px; opacity: .55; font-size: 10px; }
+
+/* ── Перший екран ──────────────────────────────────────────── */
+.hero { position: relative; overflow: hidden; }
+/* Зони під майбутні фото робимо помітними, щоб замовник бачив кадрування */
+.hero-media, .final-media { background: #C9C7C0; color: #4A4C46; border-radius: 0; }
+.hero-media { position: absolute; inset: 0; }
+.hero-veil {
+  position: absolute; inset: 0;
+  background: linear-gradient(100deg, var(--warm) 0 30%, rgba(242,241,237,.92) 42%, rgba(242,241,237,0) 62%);
+}
+.hero-in { position: relative; padding: 64px 24px 56px; }
+.hero h1 { font-size: clamp(38px, 5.4vw, 62px); margin: 0 0 18px; }
+.hero h1 .ride { font-weight: 800; }
+.hero-sub { font-size: 19px; line-height: 1.45; color: var(--ink-2); margin: 0 0 14px; max-width: 17em; }
+.hero-motto {
+  font-family: 'Montserrat', sans-serif; font-weight: 800; font-style: italic;
+  font-size: 23px; letter-spacing: -0.01em; margin: 0 0 30px;
+}
+.hero-motto span { color: var(--accent-ink); }
+.hero-cta { display: flex; flex-wrap: wrap; gap: 14px; max-width: 34em; }
+
+.btn-xl { padding: 17px 26px; border-radius: 16px; text-align: left; line-height: 1.25; }
+.btn-xl b { display: block; font-size: 16px; font-weight: 800; }
+.btn-xl s { display: block; text-decoration: none; font-size: 15px; font-weight: 600; opacity: .9; }
+
+/* ── Три переваги ──────────────────────────────────────────── */
+.perks { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); }
+.perk { display: flex; gap: 15px; align-items: center; padding: 26px 28px; }
+.perk + .perk { border-left: 1px solid var(--line); }
+.perk b { display: block; font-size: 16.5px; }
+.perk span { font-size: 15px; color: var(--ink-2); }
+.perk svg { flex: none; }
+
+/* ── Рівні навчання ────────────────────────────────────────── */
+.levels { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 18px; }
+.lvl {
+  display: flex; flex-direction: column; text-decoration: none;
+  background: var(--slate-deep); color: #fff; border-radius: 18px; padding: 18px;
+  transition: transform 180ms cubic-bezier(.2,0,0,1);
+}
+.lvl:hover { transform: translateY(-4px); color: #fff; }
+.lvl-head { display: flex; gap: 11px; margin-bottom: 14px; }
+.lvl-head i { flex: none; width: 6px; height: 40px; background: var(--accent); transform: skewX(-18deg); }
+.lvl-head b {
+  display: block; font-family: 'Montserrat', sans-serif; font-weight: 800; font-style: italic;
+  font-size: 21px; letter-spacing: -0.01em;
+}
+.lvl-head em { font-style: normal; font-size: 15px; color: #D8DADB; }
+.lvl-media { flex-grow: 1; min-height: 132px; border-radius: 12px; margin-bottom: 15px; font-size: 12px; }
+.lvl-foot { display: flex; align-items: center; gap: 10px; }
+.lvl-hrs { display: flex; align-items: center; gap: 8px; font-size: 15px; flex-grow: 1; }
+.lvl-go {
+  flex: none; width: 34px; height: 34px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.4); display: grid; place-items: center;
+}
+.lvl:hover .lvl-go { background: var(--accent); border-color: var(--accent); color: var(--accent-on); }
+
+/* ── Rider Card ────────────────────────────────────────────── */
+.rider { background: var(--panel); border-radius: var(--r-card); padding: 34px; display: grid; gap: 30px; grid-template-columns: 1.05fr .95fr .9fr; align-items: center; }
+.rider h2 { margin: 0 0 4px; }
+.rider-lede { font-size: 17px; color: var(--ink-2); margin: 0 0 20px; }
+.rider ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.rider li { display: flex; gap: 11px; align-items: center; font-size: 16px; }
+.phone {
+  background: var(--slate-deep); border-radius: 26px; padding: 20px 16px; color: #fff;
+  text-align: center; border: 5px solid #1E2022; max-width: 230px; margin: 0 auto;
+}
+.rider-side { border-left: 1px solid rgba(0,0,0,.1); padding-left: 28px; }
+.rider-side p { font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 700; font-size: 18px; line-height: 1.4; margin: 0 0 20px; }
+
+/* ── Відгук ────────────────────────────────────────────────── */
+.quote { display: grid; grid-template-columns: 84px 1fr auto; gap: 26px; align-items: center; padding: 34px 0; }
+.quote-ava { width: 84px; height: 84px; border-radius: 50%; }
+.quote-text { display: flex; gap: 16px; }
+.quote-text blockquote { margin: 0; font-size: 18px; line-height: 1.55; max-width: 28em; }
+.quote-mark { font-family: Georgia, serif; font-size: 52px; line-height: .8; color: var(--ink-3); }
+.quote-who { border-left: 1px solid var(--line); padding-left: 26px; text-align: left; }
+.stars { display: flex; gap: 4px; margin-top: 8px; }
+
+/* ── Фінальний заклик ──────────────────────────────────────── */
+.final { position: relative; overflow: hidden; }
+.final-media { position: absolute; inset: 0; }
+.final-veil { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(27,29,31,.94) 0 38%, rgba(27,29,31,.72) 55%, rgba(27,29,31,.3) 100%); }
+.final-in { position: relative; padding: 60px 24px; color: #fff; }
+.final-in h2 { color: #fff; font-size: clamp(28px, 3.6vw, 40px); }
+.final-in p { font-size: 17.5px; line-height: 1.55; margin: 0 0 28px; max-width: 24em; }
+
+@media (max-width: 1040px) {
+  .levels { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .rider { grid-template-columns: 1fr 1fr; }
+  .rider-side { grid-column: 1 / -1; border-left: 0; padding-left: 0; border-top: 1px solid rgba(0,0,0,.1); padding-top: 22px; }
+}
+@media (max-width: 860px) {
+  .perks { grid-template-columns: 1fr; }
+  .perk + .perk { border-left: 0; border-top: 1px solid var(--line); }
+  .quote { grid-template-columns: 1fr; gap: 18px; }
+  .quote-who { border-left: 0; padding-left: 0; }
+  .motto { display: none; }
+}
+@media (max-width: 620px) {
+  .levels { grid-template-columns: 1fr; }
+  .rider { grid-template-columns: 1fr; padding: 24px; }
+  .hero-veil { background: linear-gradient(170deg, var(--warm) 0 52%, rgba(242,241,237,.82) 72%, rgba(242,241,237,.35) 100%); }
+  .hero-cta .btn-xl { width: 100%; }
+}

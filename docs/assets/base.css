@@ -13,6 +13,7 @@
   --accent-on: #1E1F1C;
   /* Сам зелений як текст на світлому дає 2.07:1 — для написів беремо темнішу зелень */
   --accent-ink: #3D7210;      /* 5.14:1 на теплому фоні */
+  --accent-mid: #4F9419;      /* іконки й графіка на світлому: 3,33:1 */
   --accent-soft: #E9F3DD;     /* тло підказок і виділених карток */
   /* На сірому блоці AA витримує лише чистий білий (4.82:1) — приглушених відтінків там немає */
   --on-slate: #FFFFFF;
@@ -30,15 +31,7 @@
   --r-btn: 14px;
   --wrap: 1240px;
 
-  /* Форма знака — єдине, що лишилося невирішеним */
-  --slashes: 2;
-  --logo-case: uppercase;
-  --logo-tracking: -0.01em;
-}
-
-/* Варіант знака FreeRide® — одна риска, без капсу */
-[data-mark="reg"] {
-  --slashes: 1;
+  /* Знак за макетом замовника: FreeRide®, одна риска */
   --logo-case: none;
   --logo-tracking: -0.02em;
 }
@@ -71,8 +64,8 @@ h3 { font-size: 20px; }
 /* Фірмовий знак: дві риски в лаймовому бренді, одна в зеленому */
 .slash { display: inline-flex; gap: 3px; vertical-align: middle; margin-right: 10px; }
 .slash i { display: block; width: 7px; height: 20px; background: var(--accent); transform: skewX(-18deg); }
-[data-mark="reg"] .slash i:nth-child(2) { display: none; }
-[data-mark="reg"] .slash i { width: 5px; }
+.slash i:nth-child(2) { display: none; }
+.slash i { width: 6px; }
 
 .card { background: var(--ground); border-radius: var(--r-card); padding: 28px; }
 .card-soft { background: var(--accent-soft); }

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="uk" data-mark="slashes">
+<html lang="uk">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,220 +10,160 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Montserrat:ital,wght@0,600;0,700;0,800;1,700;1,800&display=swap">
 <link rel="stylesheet" href="assets/base.css">
+<link rel="stylesheet" href="assets/home.css">
 </head>
 <body>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <g id="i-shield"><path d="M14 2 3 6v9c0 7 5 10.5 11 12 6-1.5 11-5 11-12V6L14 2Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="m9 14 3.6 3.6L19.5 11" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></g>
+  <g id="i-layers"><path d="M14 3 2.5 9 14 15l11.5-6L14 3Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="m2.5 15 11.5 6 11.5-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="m2.5 20.5 11.5 6 11.5-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></g>
+  <g id="i-people"><circle cx="10.5" cy="9" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="20" cy="10.5" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M2.5 23c0-4.4 3.6-7 8-7s8 2.6 8 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M21 16.5c2.8.5 4.5 2.9 4.5 6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></g>
+  <g id="i-cal"><rect x="2.5" y="4.5" width="19" height="17" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M2.5 9.5h19M7.5 2v5M16.5 2v5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></g>
+  <g id="i-clock"><circle cx="10" cy="10" r="8.6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M10 5.2V10l3.4 2.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></g>
+  <g id="i-arrow"><path d="M3 10h14m-5.5-5.5L17 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g>
+  <g id="i-check"><circle cx="11" cy="11" r="10" fill="currentColor"/><path d="m6.4 11.2 3.2 3.2 5.9-6.1" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g>
+  <g id="i-star"><path d="M9 1.2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L9 13.5l-4.8 2.6.9-5.4L1.2 6.9l5.4-.8L9 1.2Z" fill="currentColor"/></g>
+</defs></svg>
+
+<!-- 1. ШАПКА -->
 <header class="bar">
   <div class="bar-in">
-    <a class="logo" href="home.html">
-      <span class="slash"><i></i><i></i></span>
-      <span><b data-logo>FREERIDE</b><s>мотошкола київ</s></span>
-    </a>
+    <div class="brandblock">
+      <a class="logo" href="home.html">
+        <span><b>FreeRide®</b><s>мотошкола</s></span>
+      </a>
+      <p class="motto">Якість перемагає кількість</p>
+    </div>
     <nav class="nav">
-      <a href="#courses">Курси</a>
-      <a href="#finder">Підбір курсу</a>
-      <a href="#standard">Стандарт</a>
-      <a href="#founder">Про нас</a>
-      <a href="#contact">Контакти</a>
+      <a href="#levels">Навчання<span class="caret">▾</span></a>
+      <a href="#rider">Rider Card</a>
+      <a href="#review">Відгуки</a>
+      <a href="#">Про нас<span class="caret">▾</span></a>
+      <a href="#">Контакти</a>
     </nav>
-    <a class="btn btn-go" style="font-size: 15px; padding: 12px 20px" href="#contact">Записатися</a>
+    <div class="lang"><a href="#" aria-current="true">UA</a><a href="#">EN</a></div>
+    <a class="btn btn-go" style="font-size: 15px; padding: 13px 20px" href="#final">
+      <svg width="19" height="19" viewBox="0 0 28 28"><use href="#i-cal"/></svg>Запис на урок</a>
   </div>
 </header>
 
-<!-- 1. ПЕРШИЙ ЕКРАН -->
-<section class="wrap" style="padding: 56px 24px 48px">
-  <div style="display: flex; flex-wrap: wrap; gap: 44px; align-items: center">
-    <div style="flex: 1 1 460px; min-width: 0">
-      <h1>Керуй мотоциклом.<br>Контролюй ситуацію.</h1>
-      <p class="lede" style="margin: 0 0 28px">Професійне навчання мотоциклістів. Від перших метрів до впевненого керування в реальному дорожньому русі.</p>
+<!-- 2. ПЕРШИЙ ЕКРАН -->
+<section class="hero">
+  <div class="hero-media ph">[ФОТО: мотоцикліст на трасі, вечірнє світло — горизонтальний кадр під усю ширину]</div>
+  <div class="hero-veil"></div>
+  <div class="wrap hero-in">
+    <h1><span class="slash"><i></i><i></i></span>Мотошкола<br>Free<span class="ride">Ride</span></h1>
+    <p class="hero-sub">Навчись керувати мотоциклом впевнено, безпечно та з задоволенням.</p>
+    <p class="hero-motto">Якість перемагає <span>кількість</span></p>
+    <div class="hero-cta">
+      <a class="btn btn-go btn-xl" href="#final">
+        <svg width="21" height="21" viewBox="0 0 28 28"><use href="#i-cal"/></svg>
+        <span><b>Пробний урок</b><s>1 500 грн/год</s></span>
+        <svg width="20" height="20" viewBox="0 0 20 20"><use href="#i-arrow"/></svg></a>
+      <a class="btn btn-ghost btn-xl" href="#">
+        <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 1.6 15.5 9 3 16.4V1.6Z" fill="currentColor"/></svg>
+        <span><b>Дивитись відео</b><s class="muted">про навчання</s></span></a>
+    </div>
+  </div>
+</section>
 
-      <div class="card" style="display: inline-flex; flex-wrap: wrap; gap: 20px; align-items: center; padding: 18px 24px; margin-bottom: 26px">
-        <div>
-          <div class="muted" style="font-size: 13px; margin-bottom: 2px">Перший пробний урок</div>
-          <div style="font-family: 'Montserrat', sans-serif; font-weight: 800; font-style: italic; font-size: 30px; letter-spacing: -0.02em">1 500 грн</div>
-        </div>
-        <div style="width: 1px; align-self: stretch; background: var(--line)"></div>
-        <div style="font-size: 15px; line-height: 1.4">60 хвилин<br><span class="muted">індивідуального навчання</span></div>
+<!-- 3. ТРИ ПЕРЕВАГИ -->
+<section class="wrap" style="padding: 0 24px">
+  <div class="perks" data-rev-group="up">
+    <div class="perk"><svg width="30" height="30" viewBox="0 0 28 28" style="color: var(--accent-mid)"><use href="#i-shield"/></svg><div><b>Безпека</b><span>на першому місці</span></div></div>
+    <div class="perk"><svg width="30" height="30" viewBox="0 0 28 28" style="color: var(--accent-mid)"><use href="#i-layers"/></svg><div><b>Системне навчання</b><span>за чіткою методикою</span></div></div>
+    <div class="perk"><svg width="30" height="30" viewBox="0 0 28 28" style="color: var(--accent-mid)"><use href="#i-people"/></svg><div><b>Досвідчені</b><span>інструктори-практики</span></div></div>
+  </div>
+</section>
+
+<!-- 4. РІВНІ НАВЧАННЯ -->
+<section class="wrap" id="levels" style="padding: 44px 24px 48px">
+  <h2 data-rev="up" style="margin-bottom: 26px"><span class="slash"><i></i><i></i></span>Оберіть свій рівень навчання</h2>
+  <div class="levels" data-rev-group="up">
+    <a class="lvl" href="#"><div class="lvl-head"><i></i><span><b>STARTER</b><em>Початківець</em></span></div><div class="lvl-media ph">[ФОТО: майданчик, конуси]</div><div class="lvl-foot"><span class="lvl-hrs"><svg width="19" height="19" viewBox="0 0 20 20"><use href="#i-clock"/></svg>5 годин</span><span class="lvl-go"><svg width="17" height="17" viewBox="0 0 20 20"><use href="#i-arrow"/></svg></span></div></a>
+    <a class="lvl" href="#"><div class="lvl-head"><i></i><span><b>CONTROL</b><em>Інтенсив</em></span></div><div class="lvl-media ph">[ФОТО: вправи на нахилах]</div><div class="lvl-foot"><span class="lvl-hrs"><svg width="19" height="19" viewBox="0 0 20 20"><use href="#i-clock"/></svg>10 годин</span><span class="lvl-go"><svg width="17" height="17" viewBox="0 0 20 20"><use href="#i-arrow"/></svg></span></div></a>
+    <a class="lvl" href="#"><div class="lvl-head"><i></i><span><b>STREET</b><em>Базовий</em></span></div><div class="lvl-media ph">[ФОТО: виїзд у місто]</div><div class="lvl-foot"><span class="lvl-hrs"><svg width="19" height="19" viewBox="0 0 20 20"><use href="#i-clock"/></svg>15 годин</span><span class="lvl-go"><svg width="17" height="17" viewBox="0 0 20 20"><use href="#i-arrow"/></svg></span></div></a>
+    <a class="lvl" href="#"><div class="lvl-head"><i></i><span><b>ADVANCED</b><em>Повний</em></span></div><div class="lvl-media ph">[ФОТО: траса, гори]</div><div class="lvl-foot"><span class="lvl-hrs"><svg width="19" height="19" viewBox="0 0 20 20"><use href="#i-clock"/></svg>20 годин</span><span class="lvl-go"><svg width="17" height="17" viewBox="0 0 20 20"><use href="#i-arrow"/></svg></span></div></a>
+  </div>
+</section>
+
+<!-- 5. RIDER CARD -->
+<section class="wrap" id="rider" style="padding: 0 24px 48px">
+  <div class="rider" data-rev="up">
+    <div>
+      <h2><span class="slash"><i></i><i></i></span>Rider&nbsp;Card<sup style="font-size:.5em; vertical-align:super">®</sup></h2>
+      <p class="rider-lede">Твій прогрес у навчанні</p>
+      <ul>
+        <li><svg width="21" height="21" viewBox="0 0 22 22" style="color: var(--accent-mid)"><use href="#i-check"/></svg>50 ключових навичок</li>
+        <li><svg width="21" height="21" viewBox="0 0 22 22" style="color: var(--accent-mid)"><use href="#i-check"/></svg>Оцінювання після занять</li>
+        <li><svg width="21" height="21" viewBox="0 0 22 22" style="color: var(--accent-mid)"><use href="#i-check"/></svg>Прозорий результат</li>
+      </ul>
+    </div>
+
+    <div class="phone" aria-label="Екран Rider Card: прогрес 128 зі 150 балів, 85 відсотків">
+      <div style="font-family:'Montserrat',sans-serif; font-weight:800; font-style:italic; font-size:17px">FreeRide®</div>
+      <div style="font-size:13px; color:#D8DADB; margin-bottom:14px">Rider Card</div>
+      <svg width="150" height="150" viewBox="0 0 150 150" role="img">
+        <circle cx="75" cy="75" r="60" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="11"/>
+        <circle cx="75" cy="75" r="60" fill="none" stroke="#69BE28" stroke-width="11" stroke-linecap="round"
+                stroke-dasharray="377" stroke-dashoffset="56.6" transform="rotate(-90 75 75)"/>
+        <text x="75" y="62" text-anchor="middle" fill="#D8DADB" font-size="13" font-family="Manrope, sans-serif">Прогрес</text>
+        <text x="75" y="88" text-anchor="middle" fill="#fff" font-size="26" font-weight="800" font-style="italic" font-family="Montserrat, sans-serif">128 / 150</text>
+        <text x="75" y="106" text-anchor="middle" fill="#D8DADB" font-size="13" font-family="Manrope, sans-serif">балів</text>
+        <text x="75" y="124" text-anchor="middle" fill="#69BE28" font-size="15" font-weight="700" font-family="Manrope, sans-serif">85%</text>
+      </svg>
+    </div>
+
+    <div class="rider-side">
+      <p>Відстежуй свій розвиток,<br>бач прогрес і наступні цілі.</p>
+      <a class="btn btn-ghost" href="#">Детальніше про Rider Card
+        <svg width="19" height="19" viewBox="0 0 20 20"><use href="#i-arrow"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- 6. ВІДГУК -->
+<section class="wrap" id="review" style="padding: 0 24px 40px">
+  <div class="quote" data-rev="up">
+    <div class="quote-ava ph" style="padding:0; font-size:10px">[ФОТО]</div>
+    <div class="quote-text">
+      <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+      <blockquote>Чітка методика, професійний підхід і реальні навички, які працюють у місті. Рекомендую!</blockquote>
+    </div>
+    <div class="quote-who">
+      <div style="font-size:15.5px">Андрій, випускник FreeRide</div>
+      <div class="stars" aria-label="Оцінка 5 з 5">
+        <svg width="20" height="20" viewBox="0 0 18 18" style="color: var(--accent)"><use href="#i-star"/></svg>
+        <svg width="20" height="20" viewBox="0 0 18 18" style="color: var(--accent)"><use href="#i-star"/></svg>
+        <svg width="20" height="20" viewBox="0 0 18 18" style="color: var(--accent)"><use href="#i-star"/></svg>
+        <svg width="20" height="20" viewBox="0 0 18 18" style="color: var(--accent)"><use href="#i-star"/></svg>
+        <svg width="20" height="20" viewBox="0 0 18 18" style="color: var(--accent)"><use href="#i-star"/></svg>
       </div>
-
-      <div style="display: flex; flex-wrap: wrap; gap: 12px">
-        <a class="btn btn-go" href="#contact">Записатися на пробний урок</a>
-        <a class="btn btn-ghost" href="#courses">Обрати курс</a>
-      </div>
-    </div>
-    <div style="flex: 1 1 400px; min-width: 0">
-      <div class="ph" style="aspect-ratio: 4/3">[ФОТО або коротке відео навчання FreeRide — реальна зйомка з майданчика]</div>
     </div>
   </div>
 </section>
 
-<!-- 2. ДЛЯ КОГО НАВЧАННЯ -->
-<section class="wrap" style="padding: 24px 24px 48px">
-  <h2><span class="slash"><i></i><i></i></span>Знайдемо правильний формат підготовки</h2>
-  <div class="grid g4" data-rev-group="up" style="margin-top: 24px">
-    <a class="card" href="#finder" style="text-decoration: none; color: inherit"><h3>Починаю з нуля</h3><p class="muted" style="margin: 0; font-size: 15px">Ніколи не сидів за кермом мотоцикла.</p></a>
-    <a class="card" href="#finder" style="text-decoration: none; color: inherit"><h3>Уже маю досвід</h3><p class="muted" style="margin: 0; font-size: 15px">Потрібно закріпити навички або скласти іспит.</p></a>
-    <a class="card" href="#finder" style="text-decoration: none; color: inherit"><h3>Хочу впевнено їздити містом</h3><p class="muted" style="margin: 0; font-size: 15px">Трафік, перехрестя, прогнозування небезпек.</p></a>
-    <a class="card" href="#finder" style="text-decoration: none; color: inherit"><h3>Маю власний мотоцикл</h3><p class="muted" style="margin: 0; font-size: 15px">Заняття й виїзди на своїй техніці.</p></a>
-  </div>
-</section>
-
-<!-- 3. ПІДБІР КУРСУ -->
-<section class="wrap" id="finder" style="padding: 24px 24px 48px">
-  <div class="card card-soft" data-rev="left">
-    <h2 style="margin-bottom: 8px"><span class="slash"><i></i><i></i></span>Підбір курсу</h2>
-    <p class="muted" style="margin: 0 0 22px; max-width: 36em">Чотири коротких кроки — і ви бачите рекомендовану програму, тривалість, ціну та доступні дати.</p>
-    <div class="grid g4">
-      <div class="card"><div class="pill pill-go" style="margin-bottom: 10px">Крок 1</div><p style="margin: 0; font-size: 15px">Чи є досвід керування мотоциклом?</p></div>
-      <div class="card"><div class="pill" style="margin-bottom: 10px">Крок 2</div><p style="margin: 0; font-size: 15px">Чи є посвідчення відповідної категорії?</p></div>
-      <div class="card"><div class="pill" style="margin-bottom: 10px">Крок 3</div><p style="margin: 0; font-size: 15px">Яка мета навчання?</p></div>
-      <div class="card"><div class="pill" style="margin-bottom: 10px">Крок 4</div><p style="margin: 0; font-size: 15px">Формат, графік і власний мотоцикл.</p></div>
-    </div>
-    <p style="margin: 22px 0 0"><a class="btn btn-go" href="#courses">Підібрати програму</a></p>
-  </div>
-</section>
-
-<!-- 4. ОСНОВНІ КУРСИ -->
-<section class="wrap" id="courses" style="padding: 24px 24px 48px">
-  <div data-rev="left" style="display: flex; flex-wrap: wrap; gap: 16px; align-items: baseline; margin-bottom: 22px">
-    <h2 style="margin: 0; flex-grow: 1"><span class="slash"><i></i><i></i></span>Основні програми</h2>
-    <a href="#" style="font-weight: 700; font-size: 15px">Усі курси та ціни →</a>
-  </div>
-
-  <div class="grid g4" data-rev-group="up">
-    <div class="card">
-      <div class="ph" style="aspect-ratio: 3/2; margin-bottom: 16px">[ФОТО]</div>
-      <h3 style="margin-bottom: 4px">Пробний урок</h3>
-      <p class="muted" style="margin: 0 0 12px; font-size: 14px">60 хвилин · знайомство з мотоциклом</p>
-      <p style="margin: 0 0 16px; font-size: 15px">Спробувати без зобовʼязань і зрозуміти, чи ваше це.</p>
-      <div style="font-family: 'Montserrat', sans-serif; font-weight: 800; font-style: italic; font-size: 22px; margin-bottom: 14px">1 500 грн</div>
-      <a class="btn btn-ghost" style="width: 100%; font-size: 15px; padding: 12px 18px" href="#contact">Детальніше</a>
-    </div>
-
-    <div class="card">
-      <div class="ph" style="aspect-ratio: 3/2; margin-bottom: 16px">[ФОТО]</div>
-      <h3 style="margin-bottom: 4px">INTENSIVE <span class="muted" style="font-style: normal; font-weight: 600; font-size: 15px">/ Інтенсив</span></h3>
-      <p class="muted" style="margin: 0 0 12px; font-size: 14px">10 годин практики</p>
-      <p style="margin: 0 0 16px; font-size: 15px">Стабільний контроль мотоцикла й підготовка до іспиту на категорію А.</p>
-      <div style="font-family: 'Montserrat', sans-serif; font-weight: 800; font-style: italic; font-size: 22px; margin-bottom: 14px">23 000 грн</div>
-      <a class="btn btn-ghost" style="width: 100%; font-size: 15px; padding: 12px 18px" href="#contact">Детальніше</a>
-    </div>
-
-    <div class="card" style="outline: 2px solid var(--accent); outline-offset: -2px">
-      <div class="ph" style="aspect-ratio: 3/2; margin-bottom: 16px">[ФОТО]</div>
-      <div class="pill pill-go" style="margin-bottom: 10px">Найчастіший вибір</div>
-      <h3 style="margin-bottom: 4px">BASIC <span class="muted" style="font-style: normal; font-weight: 600; font-size: 15px">/ Базовий</span></h3>
-      <p class="muted" style="margin: 0 0 12px; font-size: 14px">14 годин практики + 1 виїзд у місто · разом 15 годин</p>
-      <p style="margin: 0 0 16px; font-size: 15px">Фундамент техніки керування й перше застосування навичок у реальному русі.</p>
-      <div style="font-family: 'Montserrat', sans-serif; font-weight: 800; font-style: italic; font-size: 22px; margin-bottom: 14px">32 200 грн</div>
-      <a class="btn btn-go" style="width: 100%; font-size: 15px; padding: 12px 18px" href="#contact">Детальніше</a>
-    </div>
-
-    <div class="card">
-      <div class="ph" style="aspect-ratio: 3/2; margin-bottom: 16px">[ФОТО]</div>
-      <h3 style="margin-bottom: 4px">ADVANCED <span class="muted" style="font-style: normal; font-weight: 600; font-size: 15px">/ Повний</span></h3>
-      <p class="muted" style="margin: 0 0 12px; font-size: 14px">14 год практики + 2 год скутера + 4 виїзди · разом 20 годин</p>
-      <p style="margin: 0 0 16px; font-size: 15px">Комплексна база, категорії А та А1, зріле управління ризиком.</p>
-      <div style="font-family: 'Montserrat', sans-serif; font-weight: 800; font-style: italic; font-size: 22px; margin-bottom: 14px">47 200 грн</div>
-      <a class="btn btn-ghost" style="width: 100%; font-size: 15px; padding: 12px 18px" href="#contact">Детальніше</a>
-    </div>
-  </div>
-</section>
-
-<!-- 5. МЕТОДИКА -->
-<section class="slab" style="margin: 24px 0">
-  <div class="wrap" data-rev="right" style="padding: 56px 24px">
-    <h2 style="max-width: 18em">Ми навчаємо контролювати мотоцикл, а не просто їхати</h2>
-    <p style="font-size: 17px; line-height: 1.6; max-width: 40em; margin: 0 0 28px">
-      Контроль на малій швидкості, правильне гальмування, повороти, уникнення перешкод,
-      прогнозування небезпек і поведінка в міському трафіку.
-    </p>
-    <a class="btn btn-go" id="standard" href="#">Стандарт випускника FreeRide</a>
-  </div>
-</section>
-
-<!-- 6. ЗАСНОВНИК -->
-<section class="wrap" id="founder" style="padding: 24px 24px 48px">
-  <div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: center">
-    <div data-rev="left" style="flex: 0 1 320px; min-width: 0"><div class="ph" style="aspect-ratio: 4/5">[ФОТО: Костянтин Колот]</div></div>
-    <div data-rev="right" style="flex: 1 1 420px; min-width: 0">
-      <h2 style="max-width: 16em">За стандартом навчання стоїть особиста відповідальність</h2>
-      <p style="font-size: 17px; line-height: 1.65; color: var(--ink-2); max-width: 34em; margin: 0 0 20px">
-        Костянтин Колот — засновник FreeRide та шеф-інструктор. Педагогічна освіта,
-        викладацький досвід, розробка навчальних програм, професійна підготовка мотоциклістів.
-      </p>
-      <p style="font-size: 17px; line-height: 1.65; color: var(--ink-2); max-width: 34em; margin: 0 0 22px">
-        «Ми не вимірюємо якість навчання лише кількістю проведених годин. Важливо, які навички
-        людина отримала, чи може застосувати їх самостійно та чи розуміє ризики».
-      </p>
-      <a class="btn btn-ghost" href="#">Про FreeRide</a>
-    </div>
-  </div>
-</section>
-
-<!-- 7. ДОВІРА -->
-<section class="wrap" style="padding: 24px 24px 48px">
-  <h2><span class="slash"><i></i><i></i></span>Досвід учнів FreeRide</h2>
-  <div class="grid g2" data-rev-group="up" style="margin-top: 20px">
-    <figure class="card" style="margin: 0">
-      <blockquote style="margin: 0 0 14px; font-size: 17px; line-height: 1.6">[ПІДТВЕРДЖЕНИЙ ВІДГУК УЧНЯ — 2–3 речення]</blockquote>
-      <figcaption class="muted" style="font-size: 14px">[Імʼя], випускник курсу [назва]</figcaption>
-    </figure>
-    <figure class="card" style="margin: 0">
-      <blockquote style="margin: 0 0 14px; font-size: 17px; line-height: 1.6">[ПІДТВЕРДЖЕНИЙ ВІДГУК УЧНЯ — 2–3 речення]</blockquote>
-      <figcaption class="muted" style="font-size: 14px">[Імʼя], випускник курсу [назва]</figcaption>
-    </figure>
-  </div>
-  <p style="margin: 20px 0 0"><a class="btn btn-ghost" href="#">Читати відгуки та історії учнів</a></p>
-</section>
-
-<!-- 8. КОНТАКТ -->
-<section class="wrap" id="contact" style="padding: 24px 24px 64px">
-  <div class="card card-soft" data-rev="up" style="text-align: center; padding: 48px 28px">
-    <h2 style="margin-bottom: 10px">Готові почати?</h2>
-    <p class="muted" style="margin: 0 auto 26px; max-width: 32em; font-size: 17px">
-      Перший пробний урок — 1 500 грн за 60 хвилин індивідуального навчання.
-    </p>
-    <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center">
-      <a class="btn btn-go" href="#">Записатися на пробний урок</a>
-      <a class="btn btn-ghost" href="#">Написати адміністратору</a>
-      <a class="btn btn-ghost" href="#">Зателефонувати</a>
-    </div>
+<!-- 7. ФІНАЛЬНИЙ ЗАКЛИК -->
+<section class="final" id="final">
+  <div class="final-media ph">[ФОТО: мотоцикліст у куртці FreeRide, вид ззаду, серпантин на заході сонця]</div>
+  <div class="final-veil"></div>
+  <div class="wrap final-in">
+    <h2>Готовий(а) розпочати?</h2>
+    <p>Запишись на пробний урок і відчуй, як це – впевнено керувати мотоциклом.</p>
+    <a class="btn btn-go btn-xl" href="#">
+      <svg width="21" height="21" viewBox="0 0 28 28"><use href="#i-cal"/></svg>
+      <span><b>Пробний урок</b><s>1 500 грн/год</s></span>
+      <svg width="20" height="20" viewBox="0 0 20 20"><use href="#i-arrow"/></svg></a>
   </div>
 </section>
 
 <footer class="slab">
   <div class="wrap" style="padding: 32px 24px; display: flex; flex-wrap: wrap; gap: 18px; align-items: center">
-    <span style="flex-grow: 1; font-size: 14px">FreeRide · тестова збірка за ТЗ v1.1 · контакти та адресу уточнюємо</span>
+    <span style="flex-grow: 1; font-size: 14px">FreeRide · тестова збірка за макетом замовника · контакти та адресу уточнюємо</span>
     <a href="index.html" style="font-size: 14px">← стан проєкту</a>
   </div>
 </footer>
 
-<!-- Службовий перемикач: лишилося обрати форму знака. Кольори затверджено. -->
-<div class="brandbar">
-  <span>Знак:</span>
-  <button type="button" data-mark="slashes" aria-pressed="true">FREERIDE //</button>
-  <button type="button" data-mark="reg" aria-pressed="false">FreeRide®</button>
-</div>
-
-<script>
-(function () {
-  var html = document.documentElement;
-  var logo = document.querySelector('[data-logo]');
-  var btns = document.querySelectorAll('.brandbar [data-mark]');
-  var names = { slashes: 'FREERIDE', reg: 'FreeRide\u00AE' };
-  function set(mark) {
-    html.setAttribute('data-mark', mark);
-    logo.textContent = names[mark];
-    btns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.mark === mark)); });
-    try { localStorage.setItem('fr-mark', mark); } catch (e) {}
-  }
-  btns.forEach(function (b) { b.addEventListener('click', function () { set(b.dataset.mark); }); });
-  var saved = null;
-  try { saved = localStorage.getItem('fr-mark'); } catch (e) {}
-  set(saved === 'reg' ? 'reg' : 'slashes');
-})();
-</script>
 <script src="assets/reveal.js" defer></script>
 </body>
 </html>
