@@ -1,37 +1,43 @@
-/* FreeRide — базовий шар. Бренд задається через [data-theme] на <html>. */
+/* FreeRide — базовий шар.
+   Палітра Hybrid Premium, затверджена замовником (листопад 2026):
+   сірий ССО #707276 · теплий світлий #F2F1ED · Kawasaki Green #69BE28 */
 
 :root {
-  --ink: #111315;
-  --ink-2: #41464A;
-  --ink-3: #6B7075;
+  /* ── Затверджені фірмові кольори ─────────────────────────── */
+  --slate: #707276;           /* основний сірий: великі блоки, графіка */
+  --warm:  #F2F1ED;           /* теплий світлий: основний фон сайту */
+  --accent: #69BE28;          /* Kawasaki Green: CTA, індикатори Rider Card */
+
+  /* ── Похідні, виведені з контрасту ───────────────────────── */
+  /* На Kawasaki Green читається лише темний текст: 7.1:1 проти 2.33:1 у білого */
+  --accent-on: #1E1F1C;
+  /* Сам зелений як текст на світлому дає 2.07:1 — для написів беремо темнішу зелень */
+  --accent-ink: #3D7210;      /* 5.14:1 на теплому фоні */
+  --accent-soft: #E9F3DD;     /* тло підказок і виділених карток */
+  /* На сірому блоці AA витримує лише чистий білий (4.82:1) — приглушених відтінків там немає */
+  --on-slate: #FFFFFF;
+
+  --ink:   #1E1F1C;           /* 14.65:1 */
+  --ink-2: #4A4C46;           /* 7.6:1  */
+  --ink-3: #666860;           /* 5.0:1  — мінімальний приглушений */
   --ground: #FFFFFF;
-  --surface: #F3F5F1;
-  --line: #E3E6E0;
-  --dark: #15181A;
+  --surface: var(--warm);
+  --line: #E2E0D8;
+  --dark: var(--slate);
 
   --r-card: 22px;
   --r-pill: 999px;
   --r-btn: 14px;
   --wrap: 1240px;
-}
 
-/* ── Бренд А: лаймовий FREERIDE // ─────────────────────────── */
-:root, [data-theme="lime"] {
-  --accent: #C8F32C;          /* плашки, підкреслення, кнопки */
-  --accent-on: #111315;       /* текст на акценті: 13.9:1 */
-  --accent-ink: #6E8F00;      /* акцентний текст на білому: 4.6:1 */
-  --accent-soft: #F2FBD2;
+  /* Форма знака — єдине, що лишилося невирішеним */
   --slashes: 2;
   --logo-case: uppercase;
   --logo-tracking: -0.01em;
 }
 
-/* ── Бренд Б: зелений FreeRide® ────────────────────────────── */
-[data-theme="green"] {
-  --accent: #3F7A1C;          /* кнопки: білий текст дає 5.3:1 */
-  --accent-on: #FFFFFF;
-  --accent-ink: #3F7A1C;
-  --accent-soft: #EAF4E2;
+/* Варіант знака FreeRide® — одна риска, без капсу */
+[data-mark="reg"] {
   --slashes: 1;
   --logo-case: none;
   --logo-tracking: -0.02em;
@@ -65,8 +71,8 @@ h3 { font-size: 20px; }
 /* Фірмовий знак: дві риски в лаймовому бренді, одна в зеленому */
 .slash { display: inline-flex; gap: 3px; vertical-align: middle; margin-right: 10px; }
 .slash i { display: block; width: 7px; height: 20px; background: var(--accent); transform: skewX(-18deg); }
-[data-theme="green"] .slash i:nth-child(2) { display: none; }
-[data-theme="green"] .slash i { width: 5px; }
+[data-mark="reg"] .slash i:nth-child(2) { display: none; }
+[data-mark="reg"] .slash i { width: 5px; }
 
 .card { background: var(--ground); border-radius: var(--r-card); padding: 28px; }
 .card-soft { background: var(--accent-soft); }
@@ -117,7 +123,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--accent-ink); ou
 
 /* Заглушка фото — поки немає власної зйомки */
 .ph {
-  background: #E7EAE4; border-radius: var(--r-card);
+  background: #E4E2DA; border-radius: var(--r-card);
   display: flex; align-items: center; justify-content: center; text-align: center;
   color: var(--ink-3); font-size: 13px; padding: 16px;
 }
@@ -148,6 +154,15 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--accent-ink); ou
 @media (prefers-reduced-motion: reduce) {
   .btn { transition: none; } .btn:active { transform: none; }
 }
+
+/* ── Великі блоки на основному сірому ──────────────────────── */
+/* Увесь текст тут білий: інші відтінки сірого на цьому фоні не дають 4.5:1 */
+.slab { background: var(--slate); color: var(--on-slate); }
+.slab h1, .slab h2, .slab h3 { color: var(--on-slate); }
+.slab .muted { color: var(--on-slate); opacity: .88; }
+.slab a:not(.btn) { color: var(--on-slate); text-decoration: underline; text-underline-offset: 3px; }
+/* Зелений на сірому — 2.06:1, тому як обведення фокуса він там не працює */
+.slab a:focus-visible, .slab button:focus-visible { outline-color: var(--on-slate); }
 
 /* ── Поява блоків при скролі ───────────────────────────────── */
 /* Ховаємо лише коли JS справді працює: без нього сайт лишається читабельним */

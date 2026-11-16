@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="uk" data-theme="lime">
+<html lang="uk" data-mark="slashes">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -131,10 +131,10 @@
 </section>
 
 <!-- 5. МЕТОДИКА -->
-<section style="background: var(--dark); color: #fff; margin: 24px 0">
+<section class="slab" style="margin: 24px 0">
   <div class="wrap" data-rev="right" style="padding: 56px 24px">
-    <h2 style="color: #fff; max-width: 18em">Ми навчаємо контролювати мотоцикл, а не просто їхати</h2>
-    <p style="font-size: 17px; line-height: 1.6; color: #B3B9BD; max-width: 40em; margin: 0 0 28px">
+    <h2 style="max-width: 18em">Ми навчаємо контролювати мотоцикл, а не просто їхати</h2>
+    <p style="font-size: 17px; line-height: 1.6; max-width: 40em; margin: 0 0 28px">
       Контроль на малій швидкості, правильне гальмування, повороти, уникнення перешкод,
       прогнозування небезпек і поведінка в міському трафіку.
     </p>
@@ -192,36 +192,36 @@
   </div>
 </section>
 
-<footer style="background: var(--dark); color: #9AA0A5">
+<footer class="slab">
   <div class="wrap" style="padding: 32px 24px; display: flex; flex-wrap: wrap; gap: 18px; align-items: center">
     <span style="flex-grow: 1; font-size: 14px">FreeRide · тестова збірка за ТЗ v1.1 · контакти та адресу уточнюємо</span>
-    <a href="index.html" style="font-size: 14px; color: #9AA0A5">← стан проєкту</a>
+    <a href="index.html" style="font-size: 14px">← стан проєкту</a>
   </div>
 </footer>
 
-<!-- Службовий перемикач бренду: не частина сайту -->
+<!-- Службовий перемикач: лишилося обрати форму знака. Кольори затверджено. -->
 <div class="brandbar">
-  <span>Бренд:</span>
-  <button type="button" data-brand="lime" aria-pressed="true">Лаймовий</button>
-  <button type="button" data-brand="green" aria-pressed="false">Зелений</button>
+  <span>Знак:</span>
+  <button type="button" data-mark="slashes" aria-pressed="true">FREERIDE //</button>
+  <button type="button" data-mark="reg" aria-pressed="false">FreeRide®</button>
 </div>
 
 <script>
 (function () {
   var html = document.documentElement;
   var logo = document.querySelector('[data-logo]');
-  var btns = document.querySelectorAll('[data-brand]');
-  var names = { lime: 'FREERIDE', green: 'FreeRide®' };
-  function set(theme) {
-    html.setAttribute('data-theme', theme);
-    logo.textContent = names[theme];
-    btns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.brand === theme)); });
-    try { localStorage.setItem('fr-brand', theme); } catch (e) {}
+  var btns = document.querySelectorAll('.brandbar [data-mark]');
+  var names = { slashes: 'FREERIDE', reg: 'FreeRide\u00AE' };
+  function set(mark) {
+    html.setAttribute('data-mark', mark);
+    logo.textContent = names[mark];
+    btns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.mark === mark)); });
+    try { localStorage.setItem('fr-mark', mark); } catch (e) {}
   }
-  btns.forEach(function (b) { b.addEventListener('click', function () { set(b.dataset.brand); }); });
+  btns.forEach(function (b) { b.addEventListener('click', function () { set(b.dataset.mark); }); });
   var saved = null;
-  try { saved = localStorage.getItem('fr-brand'); } catch (e) {}
-  set(saved === 'green' ? 'green' : 'lime');
+  try { saved = localStorage.getItem('fr-mark'); } catch (e) {}
+  set(saved === 'reg' ? 'reg' : 'slashes');
 })();
 </script>
 <script src="assets/reveal.js" defer></script>
