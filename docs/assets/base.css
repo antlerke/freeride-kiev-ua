@@ -159,21 +159,70 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--accent-ink); ou
 
 /* ── Поява блоків при скролі ───────────────────────────────── */
 /* Ховаємо лише коли JS справді працює: без нього сайт лишається читабельним */
+/* Зсув задається змінними, а не самим transform. Інакше правило
+   `.js [data-rev].in { transform: none }` (специфічність 0,3,0) перебиває
+   ховер-зсуви на кнопках і картках (0,2,0) — і елемент під курсором
+   не рухається. Тепер .in лише обнуляє змінні, а оголошення transform
+   лишається на 0,2,0 і спокійно поступається ховеру. */
 .js [data-rev] {
   opacity: 0;
+  transform: translate(var(--rev-x, 0px), var(--rev-y, 0px));
   transition: opacity 620ms cubic-bezier(.2,0,0,1), transform 620ms cubic-bezier(.2,0,0,1);
   will-change: opacity, transform;
 }
-.js [data-rev="left"]  { transform: translateX(-48px); }
-.js [data-rev="right"] { transform: translateX(48px); }
-.js [data-rev="up"]    { transform: translateY(34px); }
-.js [data-rev].in      { opacity: 1; transform: none; }
+.js [data-rev="left"]  { --rev-x: -48px; }
+.js [data-rev="right"] { --rev-x: 48px; }
+.js [data-rev="up"]    { --rev-y: 34px; }
+.js [data-rev].in      { opacity: 1; --rev-x: 0px; --rev-y: 0px; }
 
 /* На вузьких екранах бічний виїзд завеликий — замінюємо на підйом */
 @media (max-width: 760px) {
-  .js [data-rev="left"], .js [data-rev="right"] { transform: translateY(26px); }
+  .js [data-rev="left"], .js [data-rev="right"] { --rev-x: 0px; --rev-y: 26px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .js [data-rev] { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
+
+/* ── Відгук на курсор ──────────────────────────────────────── */
+/* Лише для справжнього вказівника: на тачскріні :hover залипає після
+   тапу — елемент лишається «піднятим», доки не торкнешся іншого */
+@media (hover: hover) and (pointer: fine) {
+
+  .btn {
+    transition: transform 170ms cubic-bezier(.2,0,0,1),
+                box-shadow 170ms cubic-bezier(.2,0,0,1),
+                filter 160ms ease;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-go:hover { box-shadow: 0 10px 22px rgba(105,190,40,.34); }
+  .btn-ghost:hover { box-shadow: 0 10px 22px rgba(30,31,28,.12); border-color: #CFCDC5; }
+  /* Натискання повертає елемент під палець — інакше кнопка «тікає» */
+  .btn:active { transform: translateY(0) scale(.985); box-shadow: none; }
+
+  a.card {
+    transition: transform 190ms cubic-bezier(.2,0,0,1),
+                box-shadow 190ms cubic-bezier(.2,0,0,1);
+  }
+  a.card:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(30,31,28,.11); }
+  a.card:active { transform: translateY(-1px); }
+
+  .nav a, .lang a {
+    display: inline-block;
+    transition: transform 150ms cubic-bezier(.2,0,0,1), color 150ms ease;
+  }
+  .nav a:hover, .lang a:hover { transform: translateY(-2px); }
+
+  .logo { transition: transform 190ms cubic-bezier(.2,0,0,1); }
+  .logo:hover { transform: translateX(3px); }
+
+  /* З клавіатури сигнал має бути той самий, що й мишею */
+  .btn:focus-visible { transform: translateY(-2px); }
+  a.card:focus-visible { transform: translateY(-3px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn, a.card, .nav a, .lang a, .logo { transition: none; }
+  .btn:hover, a.card:hover, .nav a:hover, .lang a:hover, .logo:hover,
+  .btn:focus-visible, a.card:focus-visible { transform: none; }
 }
