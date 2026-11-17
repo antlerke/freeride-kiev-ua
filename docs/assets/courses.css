@@ -124,3 +124,26 @@
 @media (prefers-reduced-motion: reduce) {
   .prog { transition: none; } .prog:hover { transform: none; }
 }
+
+/* ── Смуга-натяк у каталозі ────────────────────────────────── */
+.soon {
+  grid-column: 1 / -1;
+  background: var(--ground); border-radius: var(--r-card); padding: 28px 30px;
+  display: flex; flex-wrap: wrap; gap: 24px; align-items: center;
+}
+.soon-ic {
+  flex: none; width: 54px; height: 54px; border-radius: 16px;
+  background: var(--accent-soft); color: var(--accent-mid);
+  display: grid; place-items: center;
+}
+.soon-txt { flex: 1 1 280px; }
+.soon-txt .kicker {
+  display: block; font-size: 13.5px; font-weight: 600; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--ink-3); margin-bottom: 5px;
+}
+.soon-txt b { font-weight: 800; font-size: 23px; letter-spacing: -0.015em; }
+.soon-when {
+  font-weight: 700; font-size: 17px; color: var(--accent-ink);
+  display: flex; align-items: center; gap: 9px;
+}
+@media (max-width: 620px) { .soon { padding: 24px; } }

@@ -49,7 +49,9 @@
 .perk svg { flex: none; }
 
 /* ── Рівні навчання ────────────────────────────────────────── */
-.levels { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 18px; }
+/* Пʼята колонка вужча: плитка-натяк не мусить відбирати ширину
+   в чотирьох реальних курсів */
+.levels { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)) .78fr; gap: 18px; }
 .lvl {
   display: flex; flex-direction: column; text-decoration: none;
   background: var(--slate-deep); color: #fff; border-radius: 18px; padding: 18px;
@@ -116,6 +118,7 @@
 .final-in h2 { color: #fff; font-size: clamp(28px, 3.6vw, 40px); }
 .final-in p { font-size: 17.5px; line-height: 1.55; margin: 0 0 28px; max-width: 24em; }
 
+@media (max-width: 1180px) { .levels { grid-template-columns: repeat(3, minmax(0,1fr)); } }
 @media (max-width: 1040px) {
   .levels { grid-template-columns: repeat(2, minmax(0,1fr)); }
   .rider { grid-template-columns: 1fr 1fr; }
@@ -201,4 +204,22 @@
 /* У випадному меню список вертикальний, тож зсув убік, а не підйом */
 @media (max-width: 980px) and (hover: hover) and (pointer: fine) {
   .drawer .nav a:hover { transform: translateX(4px); }
+}
+
+/* ── Плитка-натяк: курс, якого ще немає ────────────────────── */
+/* Світла серед темних і без стрілки — щоб читалася як анонс,
+   а не як курс, на який можна записатися вже зараз */
+.lvl-soon {
+  background: var(--ground); border-radius: 18px; padding: 22px 20px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.lvl-soon .spark { color: var(--accent-mid); }
+.lvl-soon .kicker {
+  font-size: 14px; font-weight: 600; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--ink-3);
+}
+.lvl-soon b { font-weight: 800; font-size: 21px; line-height: 1.18; letter-spacing: -0.015em; }
+.lvl-soon em {
+  font-style: normal; font-weight: 600; font-size: 17px; line-height: 1.25;
+  color: var(--accent-ink); margin-top: auto;
 }
