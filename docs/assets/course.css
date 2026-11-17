@@ -1,0 +1,123 @@
+/* Сторінка одного курсу. */
+
+/* ── Хіроу на фото ─────────────────────────────────────────── */
+.chero { position: relative; overflow: hidden; }
+.chero-media { position: absolute; inset: 0; background: #C9C7C0; color: #4A4C46; }
+.chero-veil {
+  position: absolute; inset: 0;
+  background: linear-gradient(100deg, rgba(24,26,28,.93) 0 36%, rgba(24,26,28,.74) 56%, rgba(24,26,28,.28) 100%);
+}
+.chero-in { position: relative; padding: 44px 24px 36px; color: #fff; }
+.chero-kicker { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+.chero h1 { font-size: clamp(42px, 6.4vw, 76px); margin: 0 0 14px; color: #fff; }
+.chero-sub { font-size: 19px; line-height: 1.45; max-width: 26em; margin: 0 0 26px; }
+
+.facts { display: flex; flex-wrap: wrap; gap: 0; }
+.fact { display: flex; gap: 12px; align-items: center; padding: 0 26px 0 0; }
+.fact + .fact { padding-left: 26px; border-left: 1px solid rgba(255,255,255,.3); }
+.fact svg { flex: none; color: var(--accent); }
+.fact b { display: block; font-size: 16px; }
+.fact span { font-size: 14.5px; opacity: .88; }
+
+/* ── Верхній ряд: відео · програма · ціна ──────────────────── */
+.top3 { display: grid; grid-template-columns: 1fr 1fr .9fr; gap: 20px; align-items: start; }
+.vid { position: relative; border-radius: var(--r-card); overflow: hidden; aspect-ratio: 16/10; }
+.vid .ph { position: absolute; inset: 0; border-radius: 0; }
+.vid-play {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
+  width: 64px; height: 64px; border-radius: 50%;
+  background: rgba(255,255,255,.92); display: grid; place-items: center; color: var(--ink);
+  box-shadow: 0 8px 22px rgba(0,0,0,.26);
+}
+.vid-len {
+  position: absolute; right: 12px; bottom: 12px;
+  background: rgba(21,24,26,.85); color: #fff; font-size: 13px; font-weight: 600;
+  padding: 4px 9px; border-radius: 7px;
+}
+.plan ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.plan li { display: flex; gap: 11px; align-items: flex-start; font-size: 16px; line-height: 1.45; }
+.plan li svg { flex: none; margin-top: 2px; color: var(--accent-mid); }
+
+.pricebox { background: var(--ground); border-radius: var(--r-card); padding: 26px; }
+.pricebox .sum {
+  font-family: 'Montserrat', sans-serif; font-weight: 800; font-style: italic;
+  font-size: clamp(32px, 3.4vw, 42px); letter-spacing: -0.02em; margin-bottom: 4px;
+}
+.pricebox .sum-note { font-size: 14px; color: var(--ink-3); margin: 0 0 18px; }
+.pricebox .btn { width: 100%; margin-bottom: 10px; }
+.pay { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); text-align: center; }
+.pay-t { font-size: 13.5px; color: var(--ink-3); margin: 0 0 10px; }
+.pay-row { display: flex; justify-content: center; gap: 10px; }
+.pay-row span {
+  font-size: 12px; font-weight: 700; color: var(--ink-2);
+  border: 1px solid var(--line); border-radius: 9px; padding: 7px 11px;
+}
+
+/* ── Чому цей курс ─────────────────────────────────────────── */
+.why { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 18px; }
+.why-card {
+  background: var(--slate-deep); color: #fff; border-radius: 18px;
+  overflow: hidden; display: flex; flex-direction: column;
+}
+.why-media { aspect-ratio: 4/3; border-radius: 0; font-size: 11px; }
+.why-body { padding: 18px 20px 22px; }
+.why-body svg { color: var(--accent); margin-bottom: 10px; }
+.why-body b { display: block; font-size: 16.5px; margin-bottom: 5px; }
+.why-body span { font-size: 14.5px; color: #D8DADB; line-height: 1.45; }
+
+/* ── Склад програми ────────────────────────────────────────── */
+.mix { display: flex; flex-wrap: wrap; gap: 14px; align-items: stretch; }
+.mix-part {
+  flex: 1 1 190px; background: var(--ground); border-radius: 18px; padding: 20px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.mix-part .pill-go { align-self: flex-start; }
+.mix-part svg { color: var(--accent-mid); }
+.mix-part b { font-size: 16.5px; }
+.mix-part span { font-size: 14.5px; color: var(--ink-2); line-height: 1.45; }
+.mix-op {
+  align-self: center; font-family: 'Montserrat', sans-serif; font-weight: 800;
+  font-size: 24px; color: var(--ink-3);
+}
+.mix-res { flex: 1 1 210px; background: var(--accent-soft); border-radius: 18px; padding: 20px; }
+.mix-res b { display: block; font-family: 'Montserrat', sans-serif; font-style: italic; font-size: 18px; margin-bottom: 6px; }
+.mix-res span { font-size: 14.5px; color: var(--ink-2); line-height: 1.45; }
+
+/* ── Результат ─────────────────────────────────────────────── */
+.result { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); background: var(--ground); border-radius: var(--r-card); overflow: hidden; }
+.result div { padding: 26px 24px; display: flex; flex-direction: column; gap: 10px; }
+.result div + div { border-left: 1px solid var(--line); }
+.result svg { color: var(--accent-mid); }
+.result b { font-size: 16.5px; line-height: 1.35; }
+
+@media (max-width: 1040px) {
+  .top3 { grid-template-columns: 1fr 1fr; }
+  .pricebox { grid-column: 1 / -1; }
+  .why { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .result { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .result div:nth-child(2n+1) { border-left: 0; }
+  .result div:nth-child(n+3) { border-top: 1px solid var(--line); }
+}
+@media (max-width: 760px) {
+  .top3 { grid-template-columns: minmax(0,1fr); }
+  .fact { padding-right: 0; }
+  .fact + .fact { padding-left: 0; border-left: 0; margin-top: 12px; }
+  .facts { flex-direction: column; }
+  .mix-op { display: none; }
+  .chero-veil { background: linear-gradient(170deg, rgba(24,26,28,.92) 0 60%, rgba(24,26,28,.72) 100%); }
+}
+@media (max-width: 620px) {
+  .why { grid-template-columns: minmax(0,1fr); }
+  .result { grid-template-columns: minmax(0,1fr); }
+  .result div { border-left: 0 !important; }
+  .result div + div { border-top: 1px solid var(--line); }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .vid { cursor: pointer; }
+  .vid-play { transition: transform 180ms cubic-bezier(.2,0,0,1); }
+  .vid:hover .vid-play { transform: translate(-50%,-50%) scale(1.08); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vid-play { transition: none; } .vid:hover .vid-play { transform: translate(-50%,-50%); }
+}
