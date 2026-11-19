@@ -1,25 +1,5 @@
 /* Сторінка курсів — каталог програм. */
 
-.crumbs { font-size: 14px; color: var(--ink-3); margin-bottom: 14px; }
-.crumbs a { color: var(--ink-3); text-decoration: none; }
-.crumbs a:hover { color: var(--accent-ink); }
-.crumbs span { margin: 0 8px; opacity: .6; }
-
-/* Шапка сторінки на фото — та сама механіка, що й хіроу головної
-   (.hero-media + .hero-veil із home.css), тільки нижча і без кнопок. */
-.hero-page { margin-bottom: 34px; }
-.hero-page .hero-in { padding: 26px 24px 44px; min-height: 290px;
-  display: flex; flex-direction: column; justify-content: center; }
-/* підпис-заглушку відсуваємо в правий нижній кут, щоб не лізла в заголовок */
-.hero-page .hero-media { align-items: flex-end; justify-content: flex-end; padding: 14px 20px; }
-.hero-page h1 { font-size: clamp(32px, 4.6vw, 54px); max-width: 14em; }
-.hero-page .lede { margin: 0; }
-/* на вузькому екрані завіса вертикальна (home.css), тож лишаємо знизу
-   смугу фото — інакше підпис-заглушка лягає на текст */
-@media (max-width: 760px) {
-  .hero-page .hero-in { min-height: 0; padding-bottom: 104px; }
-}
-
 /* ── Картки програм ────────────────────────────────────────── */
 .progs { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 20px; }
 .prog {
