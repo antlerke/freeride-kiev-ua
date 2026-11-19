@@ -177,13 +177,14 @@
     background: var(--ground); border-bottom: 1px solid var(--line);
     padding: 6px 24px 22px; box-shadow: 0 20px 44px rgba(0,0,0,.13);
     opacity: 0; transform: translateY(-10px); visibility: hidden;
+    /* visibility їде тією ж тривалістю, що й прозорість: поки панель
+       згасає, вона видима, а в кінці зникає з Tab-порядку */
     transition: opacity 220ms cubic-bezier(.2,0,0,1),
                 transform 220ms cubic-bezier(.2,0,0,1),
-                visibility 0s linear 220ms;
+                visibility 220ms;
   }
   .js .bar.open .drawer {
     opacity: 1; transform: none; visibility: visible;
-    transition-delay: 0s, 0s, 0s;
   }
 
   .drawer .nav { flex-direction: column; flex-wrap: nowrap; gap: 0; width: auto; }
