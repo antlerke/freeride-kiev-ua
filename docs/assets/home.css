@@ -87,14 +87,63 @@
 }
 
 /* ── Rider Card ────────────────────────────────────────────── */
-.rider { background: var(--panel); border-radius: var(--r-card); padding: 34px; display: grid; gap: 30px; grid-template-columns: 1.05fr .95fr .9fr; align-items: center; }
+.rider { background: var(--panel); border-radius: var(--r-card); padding: 34px; display: grid; gap: 30px;
+         grid-template-columns: 1.05fr .95fr .9fr; align-items: center; overflow: hidden; }
 .rider h2 { margin: 0 0 4px; }
 .rider-lede { font-size: 17px; color: var(--ink-2); margin: 0 0 20px; }
 .rider ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
 .rider li { display: flex; gap: 11px; align-items: center; font-size: 16px; }
-.phone {
-  background: var(--slate-deep); border-radius: 26px; padding: 20px 16px; color: #fff;
-  text-align: center; border: 5px solid #1E2022; max-width: 230px; margin: 0 auto;
+/* ── Телефон із Rider Card ─────────────────────────────────── */
+/* Пристрій виходить за нижню межу панелі й підрізається нею — як у макеті.
+   Через це .rider має overflow: hidden, а телефон — відʼємне нижнє поле.
+   Зверху запас лише -22px: верх із «островом» і статус-рядком має лишитися
+   цілим, інакше підрізаний екран читається як помилка. */
+.phone { display: flex; justify-content: center; align-self: start; margin: -22px 0 -150px; }
+.phone-body {
+  position: relative; width: 232px; flex: none;
+  padding: 9px; border-radius: 42px;
+  background: linear-gradient(145deg, #5A5E63 0%, #26282B 26%, #1A1C1E 52%, #2F3236 78%, #141618 100%);
+  box-shadow: 0 26px 54px rgba(16,18,20,.34), 0 4px 10px rgba(16,18,20,.22),
+              inset 0 0 0 1px rgba(255,255,255,.1);
+  transform: rotate(4deg);
+}
+/* Бічні клавіші */
+.phone-btn { position: absolute; background: linear-gradient(90deg, #2A2D30, #4A4E53); border-radius: 2px; }
+.phone-btn-a { left: -2px; top: 104px; width: 3px; height: 28px; }
+.phone-btn-b { left: -2px; top: 142px; width: 3px; height: 46px; }
+.phone-btn-c { right: -2px; top: 132px; width: 3px; height: 62px; }
+
+.phone-screen {
+  position: relative; border-radius: 34px; overflow: hidden;
+  background: radial-gradient(120% 80% at 50% 0%, #23262A 0%, #141618 60%, #0E1012 100%);
+  color: #FFFFFF; aspect-ratio: 9 / 19.2;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 0 14px 18px;
+}
+.phone-island {
+  position: absolute; top: 9px; left: 50%; transform: translateX(-50%);
+  width: 76px; height: 22px; border-radius: 999px; background: #000000;
+}
+.phone-bar {
+  width: 100%; height: 40px; flex: none;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 4px; font-size: 11.5px; font-weight: 700; letter-spacing: .01em;
+  color: #FFFFFF;
+}
+.phone-app {
+  flex-grow: 1; width: 100%; padding-top: 12px;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+}
+.phone-app b { font-family: 'Montserrat', sans-serif; font-weight: 800; font-style: italic; font-size: 17px; }
+.phone-app > span { font-size: 12.5px; color: #CFD2D4; }
+.phone-ring { width: 154px; height: 154px; margin: 10px 0 4px; }
+.phone-hint {
+  font-size: 11.5px; color: #CFD2D4; text-align: center;
+  border: 1px solid rgba(255,255,255,.17); border-radius: 999px; padding: 6px 12px;
+}
+.phone-home {
+  width: 96px; height: 4px; border-radius: 999px; background: rgba(255,255,255,.5);
+  margin-top: 14px; flex: none;
 }
 .rider-side { border-left: 1px solid rgba(0,0,0,.1); padding-left: 28px; }
 .rider-side p { font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 700; font-size: 18px; line-height: 1.4; margin: 0 0 20px; }
@@ -132,6 +181,10 @@
 @media (max-width: 620px) {
   .levels { grid-template-columns: 1fr; }
   .rider { grid-template-columns: 1fr; padding: 24px; }
+  /* У стовпчик телефон стоїть прямо й цілком: підрізаний і нахилений
+     він тут читався б як помилка верстки, а не як кадр пристрою */
+  .phone { margin: 4px 0; align-self: center; }
+  .phone-body { transform: none; width: 212px; }
   .hero-veil { background: linear-gradient(170deg, var(--warm) 0 52%, rgba(242,241,237,.82) 72%, rgba(242,241,237,.35) 100%); }
   .hero-cta .btn-xl { width: 100%; }
 }
