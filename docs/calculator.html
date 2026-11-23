@@ -10,9 +10,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Montserrat:ital,wght@0,600;0,700;0,800;1,700;1,800&display=swap">
-<link rel="stylesheet" href="assets/base.css?v=17">
-<link rel="stylesheet" href="assets/home.css?v=17">
-<link rel="stylesheet" href="assets/calc.css?v=17">
+<link rel="stylesheet" href="assets/base.css?v=19">
+<link rel="stylesheet" href="assets/home.css?v=19">
+<link rel="stylesheet" href="assets/calc.css?v=19">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -121,11 +121,23 @@
       <div id="mix"></div>
 
       <h3 class="sum-sub">Вартість програми</h3>
-      <div id="cost"></div>
-      <div class="total"><span>Разом</span><b id="total"></b></div>
+      <p class="cost-cap">Базовий пакет</p>
+      <div id="cost-base"></div>
+      <div id="cost-add-wrap" hidden>
+        <p class="cost-cap is-add">Додано вручну</p>
+        <div id="cost-add"></div>
+      </div>
+      <div class="total">
+        <span>Разом</span>
+        <b id="total"></b>
+        <small id="total-split" hidden></small>
+      </div>
+      <p class="upsell" id="upsell" hidden></p>
 
       <div class="vs" id="vs" hidden>
-        <h3 class="sum-sub" style="margin-bottom:0">Порівняння з альтернативним варіантом</h3>
+        <h3 class="sum-sub" style="margin-bottom:6px">Порівняння пакетів</h3>
+        <p class="vs-rule">Скільки коштувало б зібрати склад повного курсу з меншого пакета
+          плюс окремі заняття. Розрахунок не залежить від того, що ви додали вручну вище.</p>
         <div class="vs-grid">
           <div class="vs-card">
             <b id="vs-a-name"></b>
@@ -146,8 +158,6 @@
         <p class="save" id="vs-equal" hidden style="color: var(--ink-2); font-size:15px">
           Різниці у вартості немає
         </p>
-        <p class="vs-rule">Ліворуч — обраний курс, добудований окремими заняттями щонайменше
-          до складу повного. Години, які вже входять у базовий курс, другий раз не рахуються.</p>
       </div>
 
       <a class="btn btn-go btn-xl calc-cta" href="#final">
@@ -243,9 +253,9 @@
   </div>
 </footer>
 
-<script src="assets/nav.js?v=17" defer></script>
-<script src="assets/contact.js?v=17" defer></script>
-<script src="assets/reveal.js?v=17" defer></script>
-<script src="assets/calc.js?v=17" defer></script>
+<script src="assets/nav.js?v=19" defer></script>
+<script src="assets/contact.js?v=19" defer></script>
+<script src="assets/reveal.js?v=19" defer></script>
+<script src="assets/calc.js?v=19" defer></script>
 </body>
 </html>

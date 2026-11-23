@@ -109,9 +109,26 @@
 .mix-row b, .cost-row b { flex: none; font-weight: 800; }
 .cost-row b.ok { color: var(--accent-ink); }
 .sum-sub { margin: 24px 0 2px; font-size: 19px; }
+/* Підписи груп: без них базова ціна й ручний добір зливалися в один стовпчик */
+.cost-cap {
+  margin: 4px 0 0; font-size: 12.5px; font-weight: 700; letter-spacing: .09em;
+  text-transform: uppercase; color: var(--ink-3);
+}
+.cost-cap.is-add { color: var(--accent-ink); margin-top: 18px; }
+.cost-row.is-add span::before {
+  content: '+'; flex: none; width: 18px; height: 18px; border-radius: 50%;
+  background: var(--accent-soft); color: var(--accent-ink);
+  display: grid; place-items: center; font-size: 13px; font-weight: 800;
+}
+
 .total {
-  display: flex; gap: 16px; align-items: baseline; justify-content: space-between;
+  display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: baseline; justify-content: space-between;
   background: var(--accent-soft); border-radius: 16px; padding: 16px 20px; margin-top: 16px;
+}
+.total small { width: 100%; font-size: 13px; color: var(--ink-2); }
+.upsell {
+  margin: 12px 0 0; font-size: 14.5px; line-height: 1.5; color: var(--ink-2);
+  border-left: 3px solid var(--accent); padding-left: 13px;
 }
 .total span { font-family: 'Montserrat', sans-serif; font-weight: 800; font-style: italic; font-size: 21px; }
 .total b { font-family: 'Montserrat', sans-serif; font-weight: 800; font-style: italic; font-size: clamp(24px, 3vw, 31px); letter-spacing: -0.015em; }

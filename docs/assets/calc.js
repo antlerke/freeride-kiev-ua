@@ -30,16 +30,19 @@
     var mix = {}, k;
     for (k in c.mix) mix[k] = c.mix[k];
 
-    var lines = [{ label: c.name + ' (' + hours(courseHours(c)) + ')', value: money(c.price) }];
-    var total = c.price;
+    /* Два окремі списки: що входить у пакет і що людина додала руками.
+       Поки вони були одним стовпчиком, базова ціна й добір зливалися. */
+    var baseLines = [{ label: 'Пакет ' + c.name + ' · ' + hours(courseHours(c)), value: money(c.price) }];
+    var addLines = [];
+    var baseSum = c.price, addSum = 0;
 
     D.extras.forEach(function (x) {
       var h = st.extras[x.id] || 0;
       if (!h) return;
       mix[x.type] = (mix[x.type] || 0) + h;
       var sum = h * x.rate;
-      total += sum;
-      lines.push({ label: x.label + ' — ' + hours(h) + ' × ' + money(x.rate), value: money(sum) });
+      addSum += sum;
+      addLines.push({ label: x.label + ' · ' + hours(h) + ' × ' + money(x.rate), value: money(sum) });
     });
 
     var docs = c.docs.slice();
@@ -47,23 +50,29 @@
       if (c.docs.indexOf(d.id) >= 0) return;          // вже в курсі
       if (!st.docs[d.id]) return;
       docs.push(d.id);
-      total += d.price;
-      lines.push({ label: d.label, value: money(d.price) });
+      addSum += d.price;
+      addLines.push({ label: d.label, value: money(d.price) });
     });
 
-    lines.push({
-      label: 'Документи ' + docs.map(function (id) { return D.docLabels[id] || id; }).join(' та '),
+    baseLines.push({
+      label: 'Документи ' + c.docs.map(function (id) { return D.docLabels[id] || id; }).join(' та '),
       value: 'включено', ok: true
     });
 
-    return { course: c, mix: mix, lines: lines, total: total, compare: compare(st, c, mix) };
+    var total = baseSum + addSum;
+    return {
+      course: c, mix: mix, docs: docs,
+      baseLines: baseLines, addLines: addLines,
+      baseSum: baseSum, addSum: addSum, total: total,
+      compare: compare(c), upsell: upsell(c, total)
+    };
   }
 
   /* Порівняння: ліворуч — обраний курс, добудований щонайменше
      до складу повного; праворуч — повний курс цілком.
      Години, які вже є в базовому курсі, другий раз не рахуємо —
      інакше економія виходить завищеною. */
-  function compare(st, c, mix) {
+  function compare(c) {
     if (!D.compare || !D.compare.enabled) return null;
     var target = byId(D.courses, D.compare.target);
     if (!target) return null;
@@ -95,11 +104,10 @@
     var sum = base.price, added = [];
     D.extras.forEach(function (x) {
       var inBase = base.mix[x.type] || 0;
-      var chosen = (c.id === base.id) ? (st.extras[x.id] || 0) : 0;
-      var need = Math.max(inBase + chosen, target.mix[x.type] || 0) - inBase;
+      var need = (target.mix[x.type] || 0) - inBase;
       if (need <= 0) return;
       sum += need * x.rate;
-      added.push(hours(need) + ' ' + x.label.toLowerCase());
+      added.push(x.label.toLowerCase() + ' \u2014 ' + hours(need));
     });
     D.documents.forEach(function (d) {
       if (base.docs.indexOf(d.id) >= 0) return;
@@ -112,6 +120,17 @@
       base: base, target: target, altTotal: sum, added: added,
       save: sum - target.price
     };
+  }
+
+  /* Якщо ручні додатки вже перетягнули вартість за повний курс —
+     кажемо про це прямо, на числах самої людини. Це окрема підказка,
+     а не частина порівняння пакетів: інакше знову три ціни поруч. */
+  function upsell(c, total) {
+    if (!D.compare || !D.compare.enabled) return null;
+    var target = byId(D.courses, D.compare.target);
+    if (!target || c.id === target.id) return null;
+    if (total <= target.price) return null;
+    return { target: target, diff: total - target.price };
   }
 
   /* ── Малювання ─────────────────────────────────────────── */
@@ -167,11 +186,27 @@
       return '<div class="mix-row"><span>' + svg(t.icon, 22) + t.label + '</span><b>' + hours(r.mix[t.id]) + '</b></div>';
     }).join('');
 
-    el('#cost').innerHTML = r.lines.map(function (l) {
-      return '<div class="cost-row"><span>' + l.label + '</span><b' + (l.ok ? ' class="ok"' : '') + '>' + l.value + '</b></div>';
-    }).join('');
+    function rows(list, cls) {
+      return list.map(function (l) {
+        return '<div class="cost-row' + (cls ? ' ' + cls : '') + '"><span>' + l.label +
+          '</span><b' + (l.ok ? ' class="ok"' : '') + '>' + l.value + '</b></div>';
+      }).join('');
+    }
+    el('#cost-base').innerHTML = rows(r.baseLines, '');
+    el('#cost-add').innerHTML = rows(r.addLines, 'is-add');
+    el('#cost-add-wrap').hidden = r.addLines.length === 0;
 
     el('#total').textContent = money(r.total);
+    var split = el('#total-split');
+    split.hidden = r.addSum === 0;
+    if (r.addSum) split.textContent = 'пакет ' + money(r.baseSum) + '  +  додано вручну ' + money(r.addSum);
+
+    var up = el('#upsell');
+    up.hidden = !r.upsell;
+    if (r.upsell) {
+      up.innerHTML = 'Ваша збірка вже дорожча за повний курс <b>' + r.upsell.target.name +
+        '</b> (' + money(r.upsell.target.price) + ') на ' + money(r.upsell.diff) + '.';
+    }
 
     var box = el('#vs');
     if (!r.compare) { box.hidden = true; } else {
@@ -179,8 +214,8 @@
       box.hidden = false;
       el('#vs-a-name').textContent = cp.base.name;
       el('#vs-a-note').textContent = cp.added.length
-        ? '+ ' + cp.added.join(', ')
-        : 'без доповнень';
+        ? 'треба докупити: ' + cp.added.join(', ')
+        : 'докуповувати нічого';
       el('#vs-a-sum').textContent = money(cp.altTotal);
       el('#vs-b-name').textContent = cp.target.name;
       el('#vs-b-sum').textContent = money(cp.target.price);
