@@ -194,8 +194,6 @@
       else eq.textContent = 'Окремими заняттями вийде дешевше на ' + money(-cp.save);
     }
 
-    el('#cta-name').textContent = r.course.name;
-
     /* А1 всередині обраного курсу — чекбокс вимикаємо, а не ігноруємо мовчки */
     D.documents.forEach(function (d) {
       var row = el('#doc-' + d.id);
