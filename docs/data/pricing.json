@@ -1,0 +1,74 @@
+{
+  "_": "Єдине джерело цін і складу курсів. Калькулятор не має жодного числа в розмітці — усе читається звідси. Пізніше цей файл замінюється відповіддю адмінки за тією самою схемою, код не змінюється. Цифри тимчасові, з макета замовника, і не підтверджені.",
+  "version": "2026-11-23",
+  "currency": "грн",
+  "unit": "год",
+
+  "lessonTypes": [
+    { "id": "small",   "label": "Малокубатурний мотоцикл", "icon": "i-moto" },
+    { "id": "scooter", "label": "Скутер",                  "icon": "i-scooter" },
+    { "id": "big",     "label": "Великий мотоцикл",        "icon": "i-moto" },
+    { "id": "city",    "label": "Практика в місті",        "icon": "i-city" }
+  ],
+
+  "courses": [
+    {
+      "id": "starter",
+      "name": "STARTER",
+      "legacy": "EXAM",
+      "icon": "i-cone",
+      "price": 13500,
+      "mix": { "small": 5 },
+      "docs": ["A"]
+    },
+    {
+      "id": "control",
+      "name": "CONTROL",
+      "legacy": "INTENSIVE",
+      "icon": "i-gauge",
+      "price": 23000,
+      "mix": { "small": 10 },
+      "docs": ["A"]
+    },
+    {
+      "id": "street",
+      "name": "STREET",
+      "legacy": "BASIC",
+      "icon": "i-road",
+      "price": 32200,
+      "mix": { "small": 13, "big": 1, "city": 1 },
+      "docs": ["A"]
+    },
+    {
+      "id": "advanced",
+      "name": "ADVANCED",
+      "legacy": "ADVANCED",
+      "icon": "i-medal",
+      "price": 47200,
+      "mix": { "small": 13, "scooter": 2, "big": 1, "city": 4 },
+      "docs": ["A", "A1"]
+    }
+  ],
+
+  "extras": [
+    { "id": "big",     "type": "big",     "label": "Великий мотоцикл",   "rate": 2500, "max": 20 },
+    { "id": "city",    "type": "city",    "label": "Виїзд у місто",      "rate": 3000, "max": 20 },
+    { "id": "scooter", "type": "scooter", "label": "Практика на скутері", "rate": 1500, "max": 20 }
+  ],
+
+  "documents": [
+    {
+      "id": "A1",
+      "label": "Категорія А1",
+      "price": 4000,
+      "note": "Додаткова підготовка та документи на категорію А1."
+    }
+  ],
+
+  "docLabels": { "A": "А", "A1": "А1" },
+
+  "compare": {
+    "enabled": true,
+    "target": "advanced"
+  }
+}
