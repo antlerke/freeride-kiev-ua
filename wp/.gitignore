@@ -1,3 +1,4 @@
 .env.local
 content/uploads/
 .env
+.env.staging
