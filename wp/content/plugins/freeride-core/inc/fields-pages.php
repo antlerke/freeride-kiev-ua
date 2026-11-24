@@ -236,6 +236,7 @@ add_action( 'acf/init', static function (): void {
 			[ 'key' => 'field_fr_ct_tab1', 'label' => 'Сам сертифікат', 'type' => 'tab' ],
 			[ 'key' => 'field_fr_ct_cap',  'name' => 'card_caption', 'label' => 'Напис на картці', 'type' => 'text', 'default_value' => 'Подарунковий сертифікат', 'wrapper' => [ 'width' => 50 ] ],
 			[ 'key' => 'field_fr_ct_note', 'name' => 'card_note',    'label' => 'Дрібний рядок на картці', 'type' => 'text', 'default_value' => 'Мотошкола в Києві', 'wrapper' => [ 'width' => 50 ] ],
+			[ 'key' => 'field_fr_ct_val',  'name' => 'card_value',   'label' => 'Номінал на картці', 'type' => 'text', 'wrapper' => [ 'width' => 50 ], 'instructions' => 'Що надруковано великим на самому сертифікаті. Порожньо — рядка немає.' ],
 			[ 'key' => 'field_fr_ct_term', 'name' => 'card_term',    'label' => 'Термін дії', 'type' => 'text', 'wrapper' => [ 'width' => 50 ], 'instructions' => 'Наприклад: діє 12 місяців. Порожньо — рядок не показується.' ],
 			[ 'key' => 'field_fr_ct_env',  'name' => 'envelope_note','label' => 'Про конверт', 'type' => 'text', 'default_value' => 'Сертифікат іде в комплекті з конвертом', 'wrapper' => [ 'width' => 50 ] ],
 
@@ -331,6 +332,40 @@ add_action( 'acf/init', static function (): void {
 			[ 'key' => 'field_fr_lg_upd', 'name' => 'updated', 'label' => 'Дата оновлення', 'type' => 'date_picker', 'display_format' => 'j F Y', 'return_format' => 'Y-m-d', 'wrapper' => [ 'width' => 35 ] ],
 			[ 'key' => 'field_fr_lg_file','name' => 'file',    'label' => 'Файл для завантаження', 'type' => 'file', 'return_format' => 'array', 'wrapper' => [ 'width' => 65 ], 'instructions' => 'Необовʼязково: копія документа для тих, кому потрібен файл.' ],
 			[ 'key' => 'field_fr_lg_toc', 'name' => 'show_toc','label' => 'Показувати зміст збоку', 'type' => 'true_false', 'default_value' => 1, 'ui' => 1, 'instructions' => 'Зміст будується сам із заголовків другого рівня в тексті.' ],
+		],
+	] );
+
+	// ── Відгуки ─────────────────────────────────────────────────────
+	acf_add_local_field_group( [
+		'key'      => 'group_fr_rev_page',
+		'title'    => 'Блоки сторінки «Відгуки»',
+		'location' => fr_tpl_location( 'page-reviews.php' ),
+		'fields'   => [
+			[ 'key' => 'field_fr_rp_tab1', 'label' => 'Цифри згори', 'type' => 'tab' ],
+			[
+				'key' => 'field_fr_rp_stats', 'name' => 'stats', 'label' => 'Цифри',
+				'type' => 'repeater', 'layout' => 'table', 'button_label' => 'Додати',
+				'instructions' => 'Середня оцінка й кількість відгуків на сайті рахуються самі — тут решта.',
+				'sub_fields' => [
+					[ 'key' => 'field_fr_rp_s_i', 'name' => 'icon',  'label' => 'Іконка', 'type' => 'select', 'choices' => fr_icon_choices(), 'wrapper' => [ 'width' => 25 ] ],
+					[ 'key' => 'field_fr_rp_s_v', 'name' => 'value', 'label' => 'Число', 'type' => 'text', 'required' => 1, 'wrapper' => [ 'width' => 25 ] ],
+					[ 'key' => 'field_fr_rp_s_l', 'name' => 'label', 'label' => 'Підпис', 'type' => 'text', 'wrapper' => [ 'width' => 50 ] ],
+				],
+			],
+			[ 'key' => 'field_fr_rp_tab2', 'label' => 'Google', 'type' => 'tab' ],
+			[ 'key' => 'field_fr_rp_gurl', 'name' => 'google_url',   'label' => 'Посилання на профіль', 'type' => 'url' ],
+			[ 'key' => 'field_fr_rp_grate','name' => 'google_rating','label' => 'Оцінка в Google', 'type' => 'text', 'wrapper' => [ 'width' => 30 ] ],
+			[ 'key' => 'field_fr_rp_gcnt', 'name' => 'google_count', 'label' => 'Скільки відгуків', 'type' => 'text', 'wrapper' => [ 'width' => 70 ] ],
+			[ 'key' => 'field_fr_rp_tab3', 'label' => 'Про нас пишуть', 'type' => 'tab' ],
+			[
+				'key' => 'field_fr_rp_press', 'name' => 'press', 'label' => 'Згадки в медіа',
+				'type' => 'repeater', 'layout' => 'table', 'button_label' => 'Додати',
+				'sub_fields' => [
+					[ 'key' => 'field_fr_rp_p_l', 'name' => 'logo', 'label' => 'Логотип', 'type' => 'image', 'return_format' => 'id', 'wrapper' => [ 'width' => 25 ] ],
+					[ 'key' => 'field_fr_rp_p_n', 'name' => 'name', 'label' => 'Видання', 'type' => 'text', 'required' => 1, 'wrapper' => [ 'width' => 40 ] ],
+					[ 'key' => 'field_fr_rp_p_u', 'name' => 'url',  'label' => 'Посилання', 'type' => 'url', 'wrapper' => [ 'width' => 35 ] ],
+				],
+			],
 		],
 	] );
 

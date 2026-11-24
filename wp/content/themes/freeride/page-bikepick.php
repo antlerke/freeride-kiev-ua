@@ -11,7 +11,7 @@ get_header();
 
 while ( have_posts() ) :
 	the_post();
-	$id = get_the_ID();
+	$pid = get_the_ID();
 	?>
 	<section class="hero hero-page">
 		<div class="hero-media<?php echo has_post_thumbnail() ? '' : ' ph'; ?>">
@@ -27,7 +27,7 @@ while ( have_posts() ) :
 		</div>
 	</section>
 
-	<?php $gets = (array) ( get_field( 'deliverables', $id ) ?: [] ); ?>
+	<?php $gets = (array) ( get_field( 'deliverables', $pid ) ?: [] ); ?>
 	<?php if ( $gets ) : ?>
 		<section class="wrap" style="padding: 0 24px 40px">
 			<div class="gets" data-rev-group="up">
@@ -42,12 +42,12 @@ while ( have_posts() ) :
 		</section>
 	<?php endif; ?>
 
-	<?php $steps = (array) ( get_field( 'steps', $id ) ?: [] ); ?>
+	<?php $steps = (array) ( get_field( 'steps', $pid ) ?: [] ); ?>
 	<?php if ( $steps ) : ?>
 		<section class="wrap" style="padding: 0 24px 44px">
 			<div class="route-head" data-rev="up">
 				<h2 class="eyebrow-h"><span class="slash sm"><i></i><i></i></span>Як ми працюємо</h2>
-				<?php if ( $intro = get_field( 'intro', $id ) ) : ?>
+				<?php if ( $intro = get_field( 'intro', $pid ) ) : ?>
 					<p><?php echo esc_html( $intro ); ?></p>
 				<?php endif; ?>
 			</div>
@@ -75,16 +75,16 @@ while ( have_posts() ) :
 	<?php endif; ?>
 
 	<?php
-	$p1 = get_field( 'price_first', $id );
-	$p2 = get_field( 'price_second', $id );
+	$p1 = get_field( 'price_first', $pid );
+	$p2 = get_field( 'price_second', $pid );
 	if ( $p1 || $p2 ) :
 		?>
 		<section class="wrap" style="padding: 0 24px 44px">
 			<div class="pricebox" data-rev="up">
 				<div class="pricebox-head">
 					<h2 class="eyebrow-h"><span class="slash sm"><i></i><i></i></span>Скільки це коштує</h2>
-					<?php if ( $pv = get_field( 'proof_value', $id ) ) : ?>
-						<div class="proof"><b><?php echo esc_html( $pv ); ?></b><span><?php echo esc_html( (string) get_field( 'proof_text', $id ) ); ?></span></div>
+					<?php if ( $pv = get_field( 'proof_value', $pid ) ) : ?>
+						<div class="proof"><b><?php echo esc_html( $pv ); ?></b><span><?php echo esc_html( (string) get_field( 'proof_text', $pid ) ); ?></span></div>
 					<?php endif; ?>
 				</div>
 				<div class="prices">
@@ -92,18 +92,18 @@ while ( have_posts() ) :
 						<div class="price-part">
 							<span class="price-n">1</span>
 							<b><?php echo esc_html( (string) $p1 ); ?></b>
-							<span><?php echo esc_html( (string) get_field( 'price_first_note', $id ) ); ?></span>
+							<span><?php echo esc_html( (string) get_field( 'price_first_note', $pid ) ); ?></span>
 						</div>
 					<?php endif; ?>
 					<?php if ( $p2 ) : ?>
 						<div class="price-part">
 							<span class="price-n">2</span>
 							<b><?php echo esc_html( (string) $p2 ); ?></b>
-							<span><?php echo esc_html( (string) get_field( 'price_second_note', $id ) ); ?></span>
+							<span><?php echo esc_html( (string) get_field( 'price_second_note', $pid ) ); ?></span>
 						</div>
 					<?php endif; ?>
 				</div>
-				<?php if ( $pl = get_field( 'price_logic', $id ) ) : ?>
+				<?php if ( $pl = get_field( 'price_logic', $pid ) ) : ?>
 					<p class="price-logic"><?php echo fr_icon( 'i-piggy', 26 ); ?><?php echo esc_html( $pl ); ?></p>
 				<?php endif; ?>
 			</div>
@@ -115,12 +115,12 @@ while ( have_posts() ) :
 			<?php
 			get_template_part( 'parts/lead-form', null, [
 				'title'  => 'Шукаєте мотоцикл?',
-				'intro'  => (string) get_field( 'form_intro', $id ),
+				'intro'  => (string) get_field( 'form_intro', $pid ),
 				'button' => 'Надіслати запит',
 				'topic'  => 'Підбір мотоцикла',
 			] );
 			?>
-			<?php $pi = (int) get_field( 'proof_image', $id ); ?>
+			<?php $pi = (int) get_field( 'proof_image', $pid ); ?>
 			<div class="pickphoto<?php echo $pi ? '' : ' ph'; ?>">
 				<?php echo $pi ? wp_get_attachment_image( $pi, 'fr-hero', false, [ 'alt' => '', 'loading' => 'lazy' ] ) : '[ФОТО: огляд мотоцикла перед купівлею]'; ?>
 			</div>

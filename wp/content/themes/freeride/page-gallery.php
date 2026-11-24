@@ -15,9 +15,9 @@ $labels = fr_channel_labels();
 
 while ( have_posts() ) :
 	the_post();
-	$id       = get_the_ID();
-	$featured = (array) ( get_field( 'featured', $id ) ?: [] );
-	$albums   = (array) ( get_field( 'albums', $id ) ?: [] );
+	$pid       = get_the_ID();
+	$featured = (array) ( get_field( 'featured', $pid ) ?: [] );
+	$albums   = (array) ( get_field( 'albums', $pid ) ?: [] );
 
 	// Розділи — з реальних матеріалів, у порядку появи
 	$tags = [];
@@ -35,14 +35,14 @@ while ( have_posts() ) :
 		<div class="hero-veil"></div>
 		<div class="wrap hero-in">
 			<?php fr_breadcrumbs(); ?>
-			<?php if ( $e = get_field( 'eyebrow', $id ) ) : ?>
+			<?php if ( $e = get_field( 'eyebrow', $pid ) ) : ?>
 				<p class="gl-eyebrow"><?php echo esc_html( $e ); ?></p>
 			<?php endif; ?>
 			<h1><span class="slash"><i></i><i></i></span><?php the_title(); ?></h1>
 			<?php if ( has_excerpt() ) : ?>
 				<p class="lede"><?php echo esc_html( get_the_excerpt() ); ?></p>
 			<?php endif; ?>
-			<?php if ( $v = get_field( 'hero_video', $id ) ) : ?>
+			<?php if ( $v = get_field( 'hero_video', $pid ) ) : ?>
 				<a class="gl-play" href="<?php echo esc_url( $v ); ?>" target="_blank" rel="noopener">
 					<span class="gl-play-btn"><?php echo fr_icon( 'i-play', 22 ); ?></span>
 					<span>Дивитися<br>відео про FreeRide</span>
@@ -141,10 +141,10 @@ while ( have_posts() ) :
 		</section>
 	<?php endif; ?>
 
-	<?php if ( $ct = get_field( 'cta_title', $id ) ) : ?>
+	<?php if ( $ct = get_field( 'cta_title', $pid ) ) : ?>
 		<section class="wrap" style="padding: 0 24px 56px">
 			<div class="gl-cta">
-				<?php $ci = (int) get_field( 'cta_image', $id ); ?>
+				<?php $ci = (int) get_field( 'cta_image', $pid ); ?>
 				<div class="gl-cta-media<?php echo $ci ? '' : ' ph'; ?>">
 					<?php echo $ci ? wp_get_attachment_image( $ci, 'fr-hero', false, [ 'alt' => '', 'loading' => 'lazy' ] ) : '[ФОТО: мотоцикліст на серпантині]'; ?>
 				</div>
@@ -161,9 +161,9 @@ while ( have_posts() ) :
 							<?php endforeach; ?>
 						</div>
 					<?php endif; ?>
-					<?php if ( $cu = get_field( 'cta_url', $id ) ) : ?>
+					<?php if ( $cu = get_field( 'cta_url', $pid ) ) : ?>
 						<a class="btn btn-go btn-xl" href="<?php echo esc_url( $cu ); ?>" target="_blank" rel="noopener">
-							<span><b><?php echo esc_html( (string) ( get_field( 'cta_button', $id ) ?: 'Підписатися' ) ); ?></b></span>
+							<span><b><?php echo esc_html( (string) ( get_field( 'cta_button', $pid ) ?: 'Підписатися' ) ); ?></b></span>
 							<?php echo fr_icon( 'i-arrow', 20 ); ?></a>
 					<?php endif; ?>
 				</div>

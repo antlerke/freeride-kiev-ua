@@ -9,22 +9,22 @@
 declare( strict_types = 1 );
 get_header();
 
-$id = (int) get_option( 'page_on_front' );
+$fid = (int) get_option( 'page_on_front' );
 ?>
 <section class="hero">
-	<div class="hero-media<?php echo has_post_thumbnail( $id ) ? '' : ' ph'; ?>">
-		<?php echo has_post_thumbnail( $id )
-			? get_the_post_thumbnail( $id, 'fr-hero', [ 'alt' => '' ] )
+	<div class="hero-media<?php echo has_post_thumbnail( $fid ) ? '' : ' ph'; ?>">
+		<?php echo has_post_thumbnail( $fid )
+			? get_the_post_thumbnail( $fid, 'fr-hero', [ 'alt' => '' ] )
 			: '[ФОТО: мотоцикліст на трасі, вечірнє світло]'; ?>
 	</div>
 	<div class="hero-veil"></div>
 	<div class="wrap hero-in">
 		<h1><span class="slash"><i></i><i></i></span>Мотошкола<br>Free<span class="ride">Ride</span></h1>
-		<?php if ( $sub = get_field( 'hero_sub', $id ) ) : ?>
+		<?php if ( $sub = get_field( 'hero_sub', $fid ) ) : ?>
 			<p class="hero-sub"><?php echo esc_html( $sub ); ?></p>
 		<?php endif; ?>
 		<?php
-		if ( $motto = get_field( 'hero_motto', $id ) ) :
+		if ( $motto = get_field( 'hero_motto', $fid ) ) :
 			// Останнє слово підсвічується — так у макеті, і так воно
 			// лишається підсвіченим, хоч би яке гасло поставили
 			$words = preg_split( '/\s+/u', trim( (string) $motto ) );
@@ -38,16 +38,16 @@ $id = (int) get_option( 'page_on_front' );
 
 		<div class="hero-cta">
 			<?php get_template_part( 'parts/cta-trial' ); ?>
-			<?php if ( $v = get_field( 'video_url', $id ) ) : ?>
+			<?php if ( $v = get_field( 'video_url', $fid ) ) : ?>
 				<a class="btn btn-ghost btn-xl" href="<?php echo esc_url( $v ); ?>" target="_blank" rel="noopener">
 					<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 1.6 15.5 9 3 16.4V1.6Z" fill="currentColor"/></svg>
-					<span><b><?php echo esc_html( (string) ( get_field( 'video_label', $id ) ?: 'Дивитись відео' ) ); ?></b><s class="muted">про навчання</s></span></a>
+					<span><b><?php echo esc_html( (string) ( get_field( 'video_label', $fid ) ?: 'Дивитись відео' ) ); ?></b><s class="muted">про навчання</s></span></a>
 			<?php endif; ?>
 		</div>
 	</div>
 </section>
 
-<?php $perks = (array) ( get_field( 'perks', $id ) ?: [] ); ?>
+<?php $perks = (array) ( get_field( 'perks', $fid ) ?: [] ); ?>
 <?php if ( $perks ) : ?>
 	<section class="wrap" style="padding: 0 24px">
 		<div class="perks" data-rev-group="up">
@@ -90,15 +90,15 @@ $id = (int) get_option( 'page_on_front' );
 	</section>
 <?php endif; ?>
 
-<?php if ( $rt = get_field( 'rider_text', $id ) ) : ?>
+<?php if ( $rt = get_field( 'rider_text', $fid ) ) : ?>
 	<section class="wrap" id="rider" style="padding: 0 24px 48px">
 		<div class="rider" data-rev="up">
 			<div>
 				<h2><span class="slash"><i></i><i></i></span>Rider&nbsp;Card<sup style="font-size:.5em; vertical-align:super">®</sup></h2>
-				<?php if ( $rl = get_field( 'rider_lede', $id ) ) : ?>
+				<?php if ( $rl = get_field( 'rider_lede', $fid ) ) : ?>
 					<p class="rider-lede"><?php echo esc_html( $rl ); ?></p>
 				<?php endif; ?>
-				<?php $pts = (array) ( get_field( 'rider_points', $id ) ?: [] ); ?>
+				<?php $pts = (array) ( get_field( 'rider_points', $fid ) ?: [] ); ?>
 				<?php if ( $pts ) : ?>
 					<ul>
 						<?php foreach ( $pts as $pt ) : ?>
@@ -110,7 +110,7 @@ $id = (int) get_option( 'page_on_front' );
 			<?php get_template_part( 'parts/rider-phone' ); ?>
 			<div class="rider-side">
 				<p><?php echo wp_kses( (string) $rt, [ 'br' => [] ] ); ?></p>
-				<?php if ( $ru = get_field( 'rider_url', $id ) ) : ?>
+				<?php if ( $ru = get_field( 'rider_url', $fid ) ) : ?>
 					<a class="btn btn-ghost" href="<?php echo esc_url( $ru ); ?>">Детальніше про Rider Card
 						<?php echo fr_icon( 'i-arrow', 19 ); ?></a>
 				<?php endif; ?>
@@ -119,10 +119,10 @@ $id = (int) get_option( 'page_on_front' );
 	</section>
 <?php endif; ?>
 
-<?php if ( $qt = get_field( 'quote_text', $id ) ) : $rating = (int) ( get_field( 'quote_rating', $id ) ?: 5 ); ?>
+<?php if ( $qt = get_field( 'quote_text', $fid ) ) : $rating = (int) ( get_field( 'quote_rating', $fid ) ?: 5 ); ?>
 	<section class="wrap" id="review" style="padding: 0 24px 40px">
 		<div class="quote" data-rev="up">
-			<?php $qa = (int) get_field( 'quote_photo', $id ); ?>
+			<?php $qa = (int) get_field( 'quote_photo', $fid ); ?>
 			<div class="quote-ava<?php echo $qa ? '' : ' ph'; ?>"<?php echo $qa ? '' : ' style="padding:0; font-size:10px"'; ?>>
 				<?php echo $qa ? wp_get_attachment_image( $qa, 'thumbnail', false, [ 'alt' => '', 'loading' => 'lazy' ] ) : '[ФОТО]'; ?>
 			</div>
@@ -131,7 +131,7 @@ $id = (int) get_option( 'page_on_front' );
 				<blockquote><?php echo esc_html( $qt ); ?></blockquote>
 			</div>
 			<div class="quote-who">
-				<div style="font-size:15.5px"><?php echo esc_html( (string) get_field( 'quote_author', $id ) ); ?></div>
+				<div style="font-size:15.5px"><?php echo esc_html( (string) get_field( 'quote_author', $fid ) ); ?></div>
 				<div class="stars" aria-label="Оцінка <?php echo esc_attr( (string) $rating ); ?> з 5">
 					<?php for ( $i = 0; $i < $rating; $i++ ) { echo fr_icon( 'i-star', 20, 'star-on' ); } ?>
 				</div>
@@ -141,14 +141,14 @@ $id = (int) get_option( 'page_on_front' );
 <?php endif; ?>
 
 <section class="final" id="final">
-	<?php $fi = (int) get_field( 'final_image', $id ); ?>
+	<?php $fi = (int) get_field( 'final_image', $fid ); ?>
 	<div class="final-media<?php echo $fi ? '' : ' ph'; ?>">
 		<?php echo $fi ? wp_get_attachment_image( $fi, 'fr-hero', false, [ 'alt' => '', 'loading' => 'lazy' ] ) : '[ФОТО: серпантин на заході сонця]'; ?>
 	</div>
 	<div class="final-veil"></div>
 	<div class="wrap final-in">
 		<h2>Готовий(а) розпочати?</h2>
-		<?php if ( $ft = get_field( 'final_text', $id ) ) : ?>
+		<?php if ( $ft = get_field( 'final_text', $fid ) ) : ?>
 			<p><?php echo esc_html( $ft ); ?></p>
 		<?php endif; ?>
 		<?php get_template_part( 'parts/cta-trial' ); ?>

@@ -127,6 +127,41 @@ add_action( 'acf/init', static function (): void {
 				'key' => 'field_fr_for', 'name' => 'for_whom', 'label' => 'Для кого',
 				'type' => 'textarea', 'rows' => 3,
 			],
+			[ 'key' => 'field_fr_tabA', 'label' => 'Сторінка курсу', 'type' => 'tab' ],
+			[ 'key' => 'field_fr_kicker', 'name' => 'kicker', 'label' => 'Надзаголовок', 'type' => 'text', 'wrapper' => [ 'width' => 40 ], 'instructions' => 'Наприклад: Курс · Повний рівень' ],
+			[
+				'key' => 'field_fr_facts', 'name' => 'facts', 'label' => 'Плашки в шапці',
+				'type' => 'repeater', 'layout' => 'table', 'button_label' => 'Додати плашку',
+				'instructions' => 'Перша плашка з годинами додається сама — тут тільки решта.',
+				'sub_fields' => [
+					[ 'key' => 'field_fr_fa_i', 'name' => 'icon',  'label' => 'Іконка', 'type' => 'select', 'choices' => fr_icon_choices(), 'wrapper' => [ 'width' => 22 ] ],
+					[ 'key' => 'field_fr_fa_t', 'name' => 'title', 'label' => 'Головне', 'type' => 'text', 'required' => 1, 'wrapper' => [ 'width' => 33 ] ],
+					[ 'key' => 'field_fr_fa_s', 'name' => 'text',  'label' => 'Уточнення', 'type' => 'text', 'wrapper' => [ 'width' => 45 ] ],
+				],
+			],
+			[ 'key' => 'field_fr_vurl', 'name' => 'video_url',   'label' => 'Відео про курс', 'type' => 'url', 'wrapper' => [ 'width' => 45 ] ],
+			[ 'key' => 'field_fr_vlen', 'name' => 'video_length','label' => 'Тривалість', 'type' => 'text', 'wrapper' => [ 'width' => 15 ] ],
+			[ 'key' => 'field_fr_vimg', 'name' => 'video_poster','label' => 'Кадр з відео', 'type' => 'image', 'return_format' => 'id', 'wrapper' => [ 'width' => 40 ] ],
+			[
+				'key' => 'field_fr_why', 'name' => 'why', 'label' => 'Чому саме цей курс',
+				'type' => 'repeater', 'layout' => 'block', 'button_label' => 'Додати причину',
+				'sub_fields' => [
+					[ 'key' => 'field_fr_w_img', 'name' => 'image', 'label' => 'Фото', 'type' => 'image', 'return_format' => 'id', 'wrapper' => [ 'width' => 30 ] ],
+					[ 'key' => 'field_fr_w_i',   'name' => 'icon',  'label' => 'Іконка', 'type' => 'select', 'choices' => fr_icon_choices(), 'wrapper' => [ 'width' => 20 ] ],
+					[ 'key' => 'field_fr_w_t',   'name' => 'title', 'label' => 'Назва', 'type' => 'text', 'required' => 1, 'wrapper' => [ 'width' => 50 ] ],
+					[ 'key' => 'field_fr_w_s',   'name' => 'text',  'label' => 'Пояснення', 'type' => 'text' ],
+				],
+			],
+			[ 'key' => 'field_fr_mixres', 'name' => 'mix_result', 'label' => 'Підсумок складу годин', 'type' => 'textarea', 'rows' => 2, 'new_lines' => '', 'instructions' => 'Рядок у кінці блоку «із чого складаються години». Самі години рахуються зі складу вище.' ],
+			[
+				'key' => 'field_fr_res', 'name' => 'results', 'label' => 'Результат курсу',
+				'type' => 'repeater', 'layout' => 'table', 'button_label' => 'Додати',
+				'sub_fields' => [
+					[ 'key' => 'field_fr_r_i', 'name' => 'icon',  'label' => 'Іконка', 'type' => 'select', 'choices' => fr_icon_choices(), 'wrapper' => [ 'width' => 25 ] ],
+					[ 'key' => 'field_fr_r_t', 'name' => 'title', 'label' => 'Результат', 'type' => 'text', 'required' => 1, 'wrapper' => [ 'width' => 75 ] ],
+				],
+			],
+			[ 'key' => 'field_fr_ftxt', 'name' => 'final_text', 'label' => 'Текст у фінальному заклику', 'type' => 'text' ],
 			[
 				'key' => 'field_fr_in_calc', 'name' => 'in_calculator', 'label' => 'Показувати в калькуляторі',
 				'type' => 'true_false', 'default_value' => 1, 'ui' => 1,
@@ -164,6 +199,7 @@ add_action( 'acf/init', static function (): void {
 					[ 'key' => 'field_fr_t_id',   'name' => 'id',    'label' => 'Ідентифікатор', 'type' => 'text', 'required' => 1, 'wrapper' => [ 'width' => 22 ] ],
 					[ 'key' => 'field_fr_t_lbl',  'name' => 'label', 'label' => 'Назва',         'type' => 'text', 'required' => 1, 'wrapper' => [ 'width' => 48 ] ],
 					[ 'key' => 'field_fr_t_icon', 'name' => 'icon',  'label' => 'Іконка',        'type' => 'select', 'choices' => fr_icon_choices(), 'wrapper' => [ 'width' => 30 ] ],
+					[ 'key' => 'field_fr_t_desc', 'name' => 'desc',  'label' => 'Що це дає', 'type' => 'text', 'instructions' => 'Один рядок для блоку «із чого складається курс» на сторінці курсу.' ],
 				],
 			],
 			[
@@ -202,6 +238,16 @@ add_action( 'acf/init', static function (): void {
 			[ 'key' => 'field_fr_c_badge', 'name' => 'custom_badge', 'label' => 'Плашка',  'type' => 'text', 'default_value' => 'БЕЗ ПАКЕТА', 'wrapper' => [ 'width' => 25 ] ],
 			[ 'key' => 'field_fr_c_cta',   'name' => 'custom_cta',   'label' => 'Кнопка',  'type' => 'text', 'default_value' => 'Записатися на заняття', 'wrapper' => [ 'width' => 25 ] ],
 			[ 'key' => 'field_fr_c_note',  'name' => 'custom_note',  'label' => 'Пояснення', 'type' => 'text', 'default_value' => 'Без пакета: платите тільки за ті заняття, які оберете в кроці 2.' ],
+			[
+				'key' => 'field_fr_tab_pay', 'label' => 'Оплата частинами', 'type' => 'tab',
+			],
+			[ 'key' => 'field_fr_pay_t', 'name' => 'pay_title', 'label' => 'Заголовок', 'type' => 'text', 'default_value' => 'Оплата частинами' ],
+			[
+				'key' => 'field_fr_pay_b', 'name' => 'pay_banks', 'label' => 'Банки',
+				'type' => 'repeater', 'layout' => 'table', 'button_label' => 'Додати банк',
+				'instructions' => 'Показується на сторінці кожного курсу. Порожньо — блоку немає.',
+				'sub_fields' => [ [ 'key' => 'field_fr_pay_n', 'name' => 'name', 'label' => 'Назва', 'type' => 'text', 'required' => 1 ] ],
+			],
 			[
 				'key' => 'field_fr_tab_cmp', 'label' => 'Порівняння', 'type' => 'tab',
 			],

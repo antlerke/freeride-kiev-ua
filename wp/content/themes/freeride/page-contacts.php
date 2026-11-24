@@ -15,7 +15,7 @@ $labels = fr_channel_labels();
 
 while ( have_posts() ) :
 	the_post();
-	$id = get_the_ID();
+	$pid = get_the_ID();
 	?>
 	<section class="hero hero-page">
 		<div class="hero-media<?php echo has_post_thumbnail() ? '' : ' ph'; ?>">
@@ -82,8 +82,8 @@ while ( have_posts() ) :
 
 	<!-- Локація -->
 	<?php
-	$map   = (int) get_field( 'loc_map', $id );
-	$photo = (int) get_field( 'loc_photo', $id );
+	$map   = (int) get_field( 'loc_map', $pid );
+	$photo = (int) get_field( 'loc_photo', $pid );
 	if ( $map || $photo || $c['address'] ) :
 		?>
 		<section class="wrap" style="padding: 0 24px 40px">
@@ -101,17 +101,17 @@ while ( have_posts() ) :
 				</div>
 
 				<div class="loc-txt">
-					<?php if ( $e = get_field( 'loc_eyebrow', $id ) ) : ?>
+					<?php if ( $e = get_field( 'loc_eyebrow', $pid ) ) : ?>
 						<p class="eyebrow"><i></i><?php echo esc_html( $e ); ?></p>
 					<?php endif; ?>
-					<h2><?php echo esc_html( (string) ( get_field( 'loc_title', $id ) ?: 'Наш майданчик' ) ); ?></h2>
-					<?php if ( $m = get_field( 'loc_metro', $id ) ) : ?>
+					<h2><?php echo esc_html( (string) ( get_field( 'loc_title', $pid ) ?: 'Наш майданчик' ) ); ?></h2>
+					<?php if ( $m = get_field( 'loc_metro', $pid ) ) : ?>
 						<p class="loc-row"><?php echo fr_icon( 'i-pin', 21 ); ?><b><?php echo esc_html( $m ); ?></b></p>
 					<?php endif; ?>
 					<?php if ( $c['address'] ) : ?>
 						<p class="loc-row"><?php echo fr_icon( 'i-moto', 21 ); ?><span>
 							<b><?php echo esc_html( $c['address'] ); ?></b>
-							<?php if ( $n = get_field( 'loc_note', $id ) ) : ?>
+							<?php if ( $n = get_field( 'loc_note', $pid ) ) : ?>
 								<s><?php echo esc_html( $n ); ?></s>
 							<?php endif; ?>
 						</span></p>
@@ -133,28 +133,28 @@ while ( have_posts() ) :
 
 			<?php
 			get_template_part( 'parts/lead-form', null, [
-				'title'   => (string) ( get_field( 'form_title', $id ) ?: 'Звʼяжіться з нами' ),
-				'button'  => (string) ( get_field( 'form_button', $id ) ?: 'Надіслати запит' ),
-				'success' => (string) ( get_field( 'form_success', $id ) ?: 'Дякуємо! Передзвонимо найближчим часом.' ),
-				'topics'  => (array) ( get_field( 'form_topics', $id ) ?: [] ),
+				'title'   => (string) ( get_field( 'form_title', $pid ) ?: 'Звʼяжіться з нами' ),
+				'button'  => (string) ( get_field( 'form_button', $pid ) ?: 'Надіслати запит' ),
+				'success' => (string) ( get_field( 'form_success', $pid ) ?: 'Дякуємо! Передзвонимо найближчим часом.' ),
+				'topics'  => (array) ( get_field( 'form_topics', $pid ) ?: [] ),
 			] );
 			?>
 
-			<?php if ( $bu = get_field( 'book_url', $id ) ) : ?>
+			<?php if ( $bu = get_field( 'book_url', $pid ) ) : ?>
 				<div class="bookcard">
 					<div class="bookcard-txt">
 						<?php echo fr_icon( 'i-cal', 28, 'bookcard-ic' ); ?>
-						<h2><?php echo esc_html( (string) get_field( 'book_title', $id ) ); ?></h2>
-						<?php if ( $bt = get_field( 'book_text', $id ) ) : ?>
+						<h2><?php echo esc_html( (string) get_field( 'book_title', $pid ) ); ?></h2>
+						<?php if ( $bt = get_field( 'book_text', $pid ) ) : ?>
 							<p><?php echo esc_html( $bt ); ?></p>
 						<?php endif; ?>
 						<a class="btn btn-go btn-xl" href="<?php echo esc_url( $bu ); ?>">
-							<span><b><?php echo esc_html( (string) ( get_field( 'book_button', $id ) ?: 'Записатися' ) ); ?></b></span>
+							<span><b><?php echo esc_html( (string) ( get_field( 'book_button', $pid ) ?: 'Записатися' ) ); ?></b></span>
 							<?php echo fr_icon( 'i-arrow', 20 ); ?></a>
 					</div>
-					<div class="bookcard-img<?php echo get_field( 'book_image', $id ) ? '' : ' ph'; ?>">
+					<div class="bookcard-img<?php echo get_field( 'book_image', $pid ) ? '' : ' ph'; ?>">
 						<?php
-						$bi = (int) get_field( 'book_image', $id );
+						$bi = (int) get_field( 'book_image', $pid );
 						echo $bi ? wp_get_attachment_image( $bi, 'fr-card', false, [ 'alt' => '', 'loading' => 'lazy' ] ) : '[ЗОБРАЖЕННЯ: телефон із вікном запису]';
 						?>
 					</div>
@@ -163,7 +163,7 @@ while ( have_posts() ) :
 		</div>
 	</section>
 
-	<?php $bene = (array) ( get_field( 'benefits', $id ) ?: [] ); ?>
+	<?php $bene = (array) ( get_field( 'benefits', $pid ) ?: [] ); ?>
 	<?php if ( $bene ) : ?>
 		<section class="wrap" style="padding: 0 24px 56px">
 			<div class="wins" data-rev-group="up">

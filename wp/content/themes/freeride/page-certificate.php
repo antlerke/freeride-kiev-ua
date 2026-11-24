@@ -11,7 +11,7 @@ get_header();
 
 while ( have_posts() ) :
 	the_post();
-	$id = get_the_ID();
+	$pid = get_the_ID();
 	?>
 	<section class="hero hero-page">
 		<div class="hero-media<?php echo has_post_thumbnail() ? '' : ' ph'; ?>">
@@ -27,14 +27,15 @@ while ( have_posts() ) :
 		</div>
 	</section>
 
-	<?php $gifts = (array) ( get_field( 'gifts', $id ) ?: [] ); ?>
+	<?php $gifts = (array) ( get_field( 'gifts', $pid ) ?: [] ); ?>
 	<section class="wrap" style="padding: 0 24px 44px">
 		<div class="certrow" data-rev="up">
 			<?php
 			get_template_part( 'parts/certificate-card', null, [
-				'caption' => (string) ( get_field( 'card_caption', $id ) ?: 'Подарунковий сертифікат' ),
-				'note'    => (string) get_field( 'card_note', $id ),
-				'term'    => (string) get_field( 'card_term', $id ),
+				'caption' => (string) ( get_field( 'card_caption', $pid ) ?: 'Подарунковий сертифікат' ),
+				'note'    => (string) get_field( 'card_note', $pid ),
+				'value'   => (string) get_field( 'card_value', $pid ),
+				'term'    => (string) get_field( 'card_term', $pid ),
 			] );
 			?>
 			<div class="certrow-txt">
@@ -73,14 +74,14 @@ while ( have_posts() ) :
 						<a href="<?php echo esc_url( (string) get_permalink( $calc ) ); ?>">калькуляторі</a>
 						і назвіть суму при замовленні.</span></p>
 				<?php endif; ?>
-				<?php if ( $env = get_field( 'envelope_note', $id ) ) : ?>
+				<?php if ( $env = get_field( 'envelope_note', $pid ) ) : ?>
 					<p class="certrow-env"><?php echo fr_icon( 'i-check', 19, 'perk-ic' ); ?><span><?php echo esc_html( $env ); ?></span></p>
 				<?php endif; ?>
 			</div>
 		</div>
 	</section>
 
-	<?php $steps = (array) ( get_field( 'steps', $id ) ?: [] ); ?>
+	<?php $steps = (array) ( get_field( 'steps', $pid ) ?: [] ); ?>
 	<?php if ( $steps ) : ?>
 		<section class="wrap" style="padding: 0 24px 44px">
 			<h2 class="eyebrow-h"><span class="slash sm"><i></i><i></i></span>Як це працює</h2>
@@ -96,13 +97,13 @@ while ( have_posts() ) :
 		</section>
 	<?php endif; ?>
 
-	<?php $ship = (array) ( get_field( 'delivery', $id ) ?: [] ); ?>
+	<?php $ship = (array) ( get_field( 'delivery', $pid ) ?: [] ); ?>
 	<section class="wrap" style="padding: 0 24px 56px">
 		<div class="duo-form" data-rev-group="up">
 			<?php
 			get_template_part( 'parts/lead-form', null, [
 				'title'  => 'Замовити сертифікат',
-				'intro'  => (string) get_field( 'form_intro', $id ),
+				'intro'  => (string) get_field( 'form_intro', $pid ),
 				'button' => 'Замовити',
 				'topic'  => 'Подарунковий сертифікат',
 			] );

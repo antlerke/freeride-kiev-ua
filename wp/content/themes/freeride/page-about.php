@@ -11,7 +11,7 @@ get_header();
 
 while ( have_posts() ) :
 	the_post();
-	$id = get_the_ID();
+	$pid = get_the_ID();
 	?>
 	<section class="hero hero-page">
 		<div class="hero-media<?php echo has_post_thumbnail() ? '' : ' ph'; ?>">
@@ -27,27 +27,27 @@ while ( have_posts() ) :
 		</div>
 	</section>
 
-	<?php if ( $fname = get_field( 'founder_name', $id ) ) : ?>
+	<?php if ( $fname = get_field( 'founder_name', $pid ) ) : ?>
 		<section class="wrap" style="padding: 0 24px 48px">
 			<div class="founder" data-rev="up">
-				<?php $fp = (int) get_field( 'founder_photo', $id ); ?>
+				<?php $fp = (int) get_field( 'founder_photo', $pid ); ?>
 				<div class="founder-photo<?php echo $fp ? '' : ' ph'; ?>">
 					<?php echo $fp ? wp_get_attachment_image( $fp, 'fr-card', false, [ 'alt' => esc_attr( (string) $fname ), 'loading' => 'lazy' ] ) : '[ФОТО: вертикальний портрет засновника]'; ?>
 				</div>
 				<div class="founder-body">
 					<p class="kicker-sm">Засновник FreeRide</p>
 					<h2><?php echo esc_html( (string) $fname ); ?></h2>
-					<?php if ( $fr = get_field( 'founder_role', $id ) ) : ?>
+					<?php if ( $fr = get_field( 'founder_role', $pid ) ) : ?>
 						<p class="founder-role"><?php echo esc_html( $fr ); ?></p>
 					<?php endif; ?>
-					<?php if ( $fq = get_field( 'founder_quote', $id ) ) : ?>
+					<?php if ( $fq = get_field( 'founder_quote', $pid ) ) : ?>
 						<blockquote><?php echo esc_html( $fq ); ?></blockquote>
 					<?php endif; ?>
-					<?php if ( $fs = get_field( 'founder_sign', $id ) ) : ?>
+					<?php if ( $fs = get_field( 'founder_sign', $pid ) ) : ?>
 						<div class="founder-sign"><span><?php echo esc_html( $fs ); ?></span></div>
 					<?php endif; ?>
 				</div>
-				<?php $facts = (array) ( get_field( 'founder_facts', $id ) ?: [] ); ?>
+				<?php $facts = (array) ( get_field( 'founder_facts', $pid ) ?: [] ); ?>
 				<?php if ( $facts ) : ?>
 					<div class="founder-facts">
 						<?php foreach ( $facts as $f ) : ?>
@@ -61,10 +61,10 @@ while ( have_posts() ) :
 	<?php endif; ?>
 
 	<?php
-	$mtxt  = get_field( 'mission_text', $id );
-	$prin  = (array) ( get_field( 'principles', $id ) ?: [] );
+	$mtxt  = get_field( 'mission_text', $pid );
+	$prin  = (array) ( get_field( 'principles', $pid ) ?: [] );
 	if ( $mtxt || $prin ) :
-		$mi = (int) get_field( 'mission_image', $id );
+		$mi = (int) get_field( 'mission_image', $pid );
 		?>
 		<section class="mission">
 			<div class="mission-media<?php echo $mi ? '' : ' ph'; ?>">
@@ -109,7 +109,7 @@ while ( have_posts() ) :
 		</section>
 	<?php endif; ?>
 
-	<?php $stats = (array) ( get_field( 'stats', $id ) ?: [] ); ?>
+	<?php $stats = (array) ( get_field( 'stats', $pid ) ?: [] ); ?>
 	<?php if ( $stats ) : ?>
 		<section class="wrap" style="padding: 0 24px 48px">
 			<div class="stats" data-rev-group="up">
@@ -122,8 +122,8 @@ while ( have_posts() ) :
 	<?php endif; ?>
 
 	<?php
-	$steps = (array) ( get_field( 'steps', $id ) ?: [] );
-	$chips = (array) ( get_field( 'gear_chips', $id ) ?: [] );
+	$steps = (array) ( get_field( 'steps', $pid ) ?: [] );
+	$chips = (array) ( get_field( 'gear_chips', $pid ) ?: [] );
 	if ( $steps || $chips ) :
 		?>
 		<section class="wrap" style="padding: 0 24px 48px">
@@ -138,7 +138,7 @@ while ( have_posts() ) :
 										<div><b><?php echo esc_html( (string) $s['title'] ); ?></b><span><?php echo esc_html( (string) ( $s['text'] ?? '' ) ); ?></span></div></div>
 								<?php endforeach; ?>
 							</div>
-							<?php $si = (int) get_field( 'steps_image', $id ); ?>
+							<?php $si = (int) get_field( 'steps_image', $pid ); ?>
 							<div class="duo-photo<?php echo $si ? '' : ' ph'; ?>">
 								<?php echo $si ? wp_get_attachment_image( $si, 'fr-card', false, [ 'alt' => '', 'loading' => 'lazy' ] ) : '[ФОТО: мотоцикл у русі]'; ?>
 							</div>
@@ -149,7 +149,7 @@ while ( have_posts() ) :
 				<?php if ( $chips ) : ?>
 					<div class="duo-col" data-rev="right">
 						<h2><span class="slash"><i></i><i></i></span>Наша техніка та екіпірування</h2>
-						<?php $gi = (int) get_field( 'gear_image', $id ); ?>
+						<?php $gi = (int) get_field( 'gear_image', $pid ); ?>
 						<div class="duo-wide<?php echo $gi ? '' : ' ph'; ?>">
 							<?php echo $gi ? wp_get_attachment_image( $gi, 'fr-hero', false, [ 'alt' => '', 'loading' => 'lazy' ] ) : '[ФОТО: мотоцикли школи в ряд]'; ?>
 						</div>
@@ -169,14 +169,14 @@ while ( have_posts() ) :
 	<?php endif; ?>
 
 	<section class="final" id="final">
-		<?php $fi = (int) get_field( 'final_image', $id ); ?>
+		<?php $fi = (int) get_field( 'final_image', $pid ); ?>
 		<div class="final-media<?php echo $fi ? '' : ' ph'; ?>">
 			<?php echo $fi ? wp_get_attachment_image( $fi, 'fr-hero', false, [ 'alt' => '', 'loading' => 'lazy' ] ) : '[ФОТО: троє мотоциклістів на оглядовому майданчику]'; ?>
 		</div>
 		<div class="final-veil"></div>
 		<div class="wrap final-in">
 			<h2>Приєднуйтесь до спільноти FreeRide!</h2>
-			<?php if ( $ft = get_field( 'final_text', $id ) ) : ?>
+			<?php if ( $ft = get_field( 'final_text', $pid ) ) : ?>
 				<p><?php echo esc_html( $ft ); ?></p>
 			<?php endif; ?>
 			<?php get_template_part( 'parts/cta-trial' ); ?>

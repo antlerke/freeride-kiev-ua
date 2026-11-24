@@ -67,6 +67,7 @@ add_action( 'wp_enqueue_scripts', static function (): void {
 	}
 	if ( is_singular( FR_COURSE ) ) {
 		fr_style( 'fr-course', 'course.css', [ 'fr-courses' ] );
+		fr_style( 'fr-pages', 'pages.css', [ 'fr-base' ] );   // картки відгуків
 	}
 	if ( is_page_template( 'page-calculator.php' ) ) {
 		fr_style( 'fr-calc', 'calc.css', [ 'fr-base' ] );

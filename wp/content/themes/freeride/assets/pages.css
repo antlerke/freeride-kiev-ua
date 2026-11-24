@@ -180,6 +180,9 @@
   display: grid; place-items: center; cursor: pointer;
 }
 .vid-nav button:hover { border-color: #CFCDC5; }
+/* У макеті стрілка «назад» поверталася інлайновим стилем. У темі іконки
+   малює шаблон, тож поворот живе тут. */
+.vid-nav button[data-scroll="-1"] svg { transform: rotate(180deg); }
 
 /* ── Текстові відгуки ──────────────────────────────────────── */
 .revs { display: grid; gap: 14px; }

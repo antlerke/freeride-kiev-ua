@@ -12,7 +12,7 @@ get_header();
 
 while ( have_posts() ) :
 	the_post();
-	$id      = get_the_ID();
+	$pid      = get_the_ID();
 	$content = apply_filters( 'the_content', get_the_content() );
 
 	// Проставляємо id заголовкам і збираємо з них зміст
@@ -27,9 +27,9 @@ while ( have_posts() ) :
 		},
 		$content
 	);
-	$show_toc = get_field( 'show_toc', $id ) && count( $toc ) > 2;
-	$file     = get_field( 'file', $id );
-	$updated  = get_field( 'updated', $id );
+	$show_toc = get_field( 'show_toc', $pid ) && count( $toc ) > 2;
+	$file     = get_field( 'file', $pid );
+	$updated  = get_field( 'updated', $pid );
 	?>
 	<section class="wrap legal-head">
 		<?php fr_breadcrumbs(); ?>

@@ -8,16 +8,16 @@
 declare( strict_types = 1 );
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-$id    = get_the_ID();
-$hours = fr_course_hours( $id );
-$price = (int) get_field( 'price', $id );
-$docs  = (array) ( get_field( 'docs', $id ) ?: [] );
+$cid    = get_the_ID();
+$hours = fr_course_hours( $cid );
+$price = (int) get_field( 'price', $cid );
+$docs  = (array) ( get_field( 'docs', $cid ) ?: [] );
 ?>
 <article class="prog">
-	<div class="prog-media<?php echo has_post_thumbnail( $id ) ? '' : ' ph'; ?>">
+	<div class="prog-media<?php echo has_post_thumbnail( $cid ) ? '' : ' ph'; ?>">
 		<?php
-		if ( has_post_thumbnail( $id ) ) {
-			echo get_the_post_thumbnail( $id, 'fr-card', [ 'loading' => 'lazy', 'decoding' => 'async', 'alt' => '' ] );
+		if ( has_post_thumbnail( $cid ) ) {
+			echo get_the_post_thumbnail( $cid, 'fr-card', [ 'loading' => 'lazy', 'decoding' => 'async', 'alt' => '' ] );
 		} else {
 			echo '[ФОТО не додано]';
 		}
@@ -28,15 +28,15 @@ $docs  = (array) ( get_field( 'docs', $id ) ?: [] );
 	</div>
 	<div class="prog-body">
 		<div class="prog-name"><i></i><span>
-			<b><?php echo esc_html( (string) get_field( 'code', $id ) ); ?></b>
-			<em><?php echo esc_html( get_the_title( $id ) ); ?></em>
+			<b><?php echo esc_html( (string) get_field( 'code', $cid ) ); ?></b>
+			<em><?php echo esc_html( get_the_title( $cid ) ); ?></em>
 		</span></div>
 
-		<?php if ( $lede = get_field( 'summary', $id ) ) : ?>
+		<?php if ( $lede = get_field( 'summary', $cid ) ) : ?>
 			<p class="prog-lede"><?php echo esc_html( $lede ); ?></p>
 		<?php endif; ?>
 
-		<?php $inc = (array) ( get_field( 'includes', $id ) ?: [] ); ?>
+		<?php $inc = (array) ( get_field( 'includes', $cid ) ?: [] ); ?>
 		<?php if ( $inc ) : ?>
 			<ul>
 				<?php foreach ( $inc as $row ) : ?>
