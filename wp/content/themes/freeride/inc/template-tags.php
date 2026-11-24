@@ -13,11 +13,29 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-/** Іконка зі спрайта. */
+/**
+ * Іконка зі спрайта.
+ *
+ * viewBox береться з карти, а не задається тут одним числом: іконки
+ * намальовані в різних сітках, і в чужій сітці та сама картинка виходить
+ * або крихітною, або обрізаною. Непрямокутні (логотип) зберігають
+ * пропорції — висота рахується з самого viewBox.
+ */
 function fr_icon( string $id, int $size = 22, string $class = '' ): string {
+	$boxes = fr_icon_boxes();
+	$box   = $boxes[ $id ] ?? '0 0 28 28';
+
+	$h = $size;
+	$n = array_map( 'floatval', preg_split( '/[\s,]+/', $box ) );
+	if ( 4 === count( $n ) && $n[2] > 0 && abs( $n[2] - $n[3] ) > 0.01 ) {
+		$h = (int) round( $size * $n[3] / $n[2] );
+	}
+
 	return sprintf(
-		'<svg width="%1$d" height="%1$d" viewBox="0 0 28 28" aria-hidden="true" focusable="false"%2$s><use href="#%3$s"/></svg>',
+		'<svg width="%1$d" height="%2$d" viewBox="%3$s" aria-hidden="true" focusable="false"%4$s><use href="#%5$s"/></svg>',
 		$size,
+		$h,
+		esc_attr( $box ),
 		$class ? ' class="' . esc_attr( $class ) . '"' : '',
 		esc_attr( $id )
 	);

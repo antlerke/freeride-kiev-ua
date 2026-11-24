@@ -2,9 +2,7 @@
 /**
  * Template Name: Команда
  *
- * Шапка сторінки збирається з полів, тіло — з редактора. Блоки
- * за макетом додаються сюди поступово; те, що вже є, редагується
- * з адмінки як звичайний текст.
+ * Той самий список інструкторів, що й на «Про нас», просто повний.
  */
 
 declare( strict_types = 1 );
@@ -15,7 +13,7 @@ while ( have_posts() ) :
 	?>
 	<section class="hero hero-page">
 		<div class="hero-media<?php echo has_post_thumbnail() ? '' : ' ph'; ?>">
-			<?php echo has_post_thumbnail() ? get_the_post_thumbnail( null, 'fr-hero', [ 'alt' => '' ] ) : '[ФОТО сторінки]'; ?>
+			<?php echo has_post_thumbnail() ? get_the_post_thumbnail( null, 'fr-hero', [ 'alt' => '' ] ) : '[ФОТО: інструктори школи]'; ?>
 		</div>
 		<div class="hero-veil"></div>
 		<div class="wrap hero-in">
@@ -27,8 +25,29 @@ while ( have_posts() ) :
 		</div>
 	</section>
 
-	<section class="wrap" style="padding: 0 24px 56px">
-		<div class="entry"><?php the_content(); ?></div>
+	<?php $mates = fr_mates(); ?>
+	<section class="wrap" style="padding: 0 24px 48px">
+		<?php if ( $mates ) : ?>
+			<div class="team" data-rev-group="up">
+				<?php foreach ( $mates as $m ) { get_template_part( 'parts/mate-card', null, [ 'mate' => $m ] ); } ?>
+			</div>
+		<?php else : ?>
+			<p>Інструкторів ще не додано. Розділ «Інструктори» в адмінці.</p>
+		<?php endif; ?>
+	</section>
+
+	<?php if ( get_the_content() ) : ?>
+		<section class="wrap" style="padding: 0 24px 48px"><div class="entry"><?php the_content(); ?></div></section>
+	<?php endif; ?>
+
+	<section class="final" id="final">
+		<div class="final-media ph">[ФОТО: мотоцикліст на серпантині]</div>
+		<div class="final-veil"></div>
+		<div class="wrap final-in">
+			<h2>Хочете потрапити саме до цього інструктора?</h2>
+			<p>Скажіть про це при записі — підберемо зручний час.</p>
+			<?php get_template_part( 'parts/cta-trial' ); ?>
+		</div>
 	</section>
 	<?php
 endwhile;

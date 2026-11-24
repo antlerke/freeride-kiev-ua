@@ -30,6 +30,7 @@ require_once FR_DIR . 'inc/cpt.php';
 require_once FR_DIR . 'inc/fields.php';
 require_once FR_DIR . 'inc/fields-pages.php';
 require_once FR_DIR . 'inc/leads.php';
+require_once FR_DIR . 'inc/mates.php';
 require_once FR_DIR . 'inc/pricing.php';
 require_once FR_DIR . 'inc/seo.php';
 require_once FR_DIR . 'inc/admin.php';

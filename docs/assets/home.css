@@ -167,6 +167,10 @@
 
 @media (max-width: 1180px) { .levels { grid-template-columns: repeat(3, minmax(0,1fr)); } }
 @media (max-width: 1040px) {
+  /* Коли текст збоку переїжджає під телефон окремим рядком, відʼємне
+     нижнє поле телефона затягує цей текст під пристрій. Підрізання
+     нижнім краєм панелі — десктопний прийом; тут пристрій стоїть цілим. */
+  .phone { margin: -10px 0 0; align-self: center; }
   .levels { grid-template-columns: repeat(2, minmax(0,1fr)); }
   .rider { grid-template-columns: 1fr 1fr; }
   .rider-side { grid-column: 1 / -1; border-left: 0; padding-left: 0; border-top: 1px solid rgba(0,0,0,.1); padding-top: 22px; }
