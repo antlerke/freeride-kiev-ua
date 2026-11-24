@@ -1,20 +1,21 @@
-# Локальне середовище розробки сайту FreeRide.
-# Підняти:   cd wp && docker compose up -d && ./init.sh
-# Зупинити:  docker compose down          (дані лишаються)
-# Знести:    docker compose down -v       (разом із базою)
+# Базова збірка сайту FreeRide. Однакова локально, на тестовому сервері
+# і на продакшені — різниця тільки в .env і в тому, який ще файл підкласти.
 #
-# У git лежать тільки наші тема й плагін — вони змонтовані з content/.
-# Ядро WordPress і сторонні плагіни живуть у томі й ставляться через init.sh,
-# тож середовище відтворюється з нуля однією командою.
+#   локально:   docker-compose up -d          (підхопить override)
+#   на сервері: docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+#
+# Порт назовні базовий файл не відкриває навмисно: на сервері контейнер
+# має слухати лише 127.0.0.1, а назовні його пускає nginx хоста.
 
 services:
   db:
     image: mariadb:11.4
+    restart: unless-stopped
     environment:
-      MARIADB_DATABASE: freeride
-      MARIADB_USER: freeride
-      MARIADB_PASSWORD: freeride
-      MARIADB_ROOT_PASSWORD: freeride
+      MARIADB_DATABASE: ${DB_NAME:-freeride}
+      MARIADB_USER: ${DB_USER:-freeride}
+      MARIADB_PASSWORD: ${DB_PASS:-freeride}
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASS:-freeride}
     volumes: [db:/var/lib/mysql]
     healthcheck:
       test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
@@ -23,19 +24,32 @@ services:
 
   wp:
     image: wordpress:php8.3-apache
+    restart: unless-stopped
     depends_on:
       db: { condition: service_healthy }
-    ports: ["8080:80"]
     environment:
       WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_NAME: freeride
-      WORDPRESS_DB_USER: freeride
-      WORDPRESS_DB_PASSWORD: freeride
-      WORDPRESS_DEBUG: 1
+      WORDPRESS_DB_NAME: ${DB_NAME:-freeride}
+      WORDPRESS_DB_USER: ${DB_USER:-freeride}
+      WORDPRESS_DB_PASSWORD: ${DB_PASS:-freeride}
+      WORDPRESS_DEBUG: ${WP_DEBUG:-0}
       WORDPRESS_CONFIG_EXTRA: |
+        /* Адреса сайту приходить з оточення: за проксі WordPress сам її
+           не вгадає й почне переписувати посилання на внутрішні. */
+        define('WP_HOME',    '${SITE_URL:-http://localhost:8080}');
+        define('WP_SITEURL', '${SITE_URL:-http://localhost:8080}');
+
+        /* TLS уривається на nginx хоста, тож у контейнер приходить http.
+           Без цього WordPress робить нескінченний редирект на https. */
+        if ( isset($$_SERVER['HTTP_X_FORWARDED_PROTO']) && 'https' === $$_SERVER['HTTP_X_FORWARDED_PROTO'] ) {
+            $$_SERVER['HTTPS'] = 'on';
+        }
+        if ( isset($$_SERVER['HTTP_X_FORWARDED_FOR']) ) {
+            $$_SERVER['REMOTE_ADDR'] = trim( explode( ',', $$_SERVER['HTTP_X_FORWARDED_FOR'] )[0] );
+        }
+
         define('WP_DEBUG_LOG', true);
         define('WP_DEBUG_DISPLAY', false);
-        define('SCRIPT_DEBUG', true);
         define('DISALLOW_FILE_EDIT', true);
     volumes:
       - wp:/var/www/html
@@ -49,9 +63,9 @@ services:
     depends_on: [wp]
     environment:
       WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_NAME: freeride
-      WORDPRESS_DB_USER: freeride
-      WORDPRESS_DB_PASSWORD: freeride
+      WORDPRESS_DB_NAME: ${DB_NAME:-freeride}
+      WORDPRESS_DB_USER: ${DB_USER:-freeride}
+      WORDPRESS_DB_PASSWORD: ${DB_PASS:-freeride}
       HOME: /tmp
     volumes:
       - wp:/var/www/html

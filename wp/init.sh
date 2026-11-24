@@ -4,8 +4,23 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-wp() { docker-compose exec -T cli wp --allow-root "$@"; }
-URL=http://localhost:8080
+# Той самий скрипт обслуговує і локальну машину, і сервер: різниця
+# тільки в тому, які compose-файли підкладено й що лежить у .env.
+# Compose буває плагіном (`docker compose`) і окремим бінарником
+# (`docker-compose`). Скрипти мають працювати з обома.
+if docker compose version >/dev/null 2>&1; then
+  DC="docker compose"
+elif command -v docker-compose >/dev/null 2>&1; then
+  DC="docker-compose"
+else
+  echo "Не знайдено ні docker compose, ні docker-compose" >&2; exit 1
+fi
+COMPOSE_FILES=${COMPOSE_FILES:-}
+dc() { $DC $COMPOSE_FILES "$@"; }
+wp() { dc exec -T cli wp --allow-root "$@"; }
+
+[ -f .env ] && . ./.env
+URL=${SITE_URL:-http://localhost:8080}
 
 # Пароль адміністратора — випадковий, локальний, одноразовий. Лежить
 # у .env.local (поза git), у виводі не світиться.

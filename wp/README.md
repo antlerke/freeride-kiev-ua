@@ -18,6 +18,39 @@ docker-compose up -d     # WordPress + MariaDB
 
 Знести все разом із базою: `docker-compose down -v`.
 
+## На сервері
+
+Той самий код, та сама база образів — різниця лише в `.env` і в тому,
+що замість локального `docker-compose.override.yml` підкладається
+`docker-compose.prod.yml`.
+
+```bash
+ssh root@<сервер>
+git clone https://github.com/antlerke/freeride-kiev-ua.git /opt/freeride
+cd /opt/freeride/wp
+cp .env.example .env && nano .env     # адреса сайту, порт, паролі бази
+./deploy.sh
+```
+
+Оновити після правок: `git pull && ./deploy.sh`.
+
+Контейнер слухає **лише 127.0.0.1** — назовні його пускає nginx хоста
+зворотним проксі. Це не косметика: Docker пише власні правила в iptables
+і опублікований на `0.0.0.0` порт був би доступний усьому світу
+в обхід фаєрвола.
+
+Переїзд на продакшен — той самий `deploy.sh` з іншим `.env`, плюс
+перенесення даних:
+
+```bash
+# знімок
+docker-compose $COMPOSE_FILES exec -T db mariadb-dump -u root -p"$DB_ROOT_PASS" "$DB_NAME" > dump.sql
+tar czf uploads.tgz content/uploads
+# на новому місці
+docker-compose $COMPOSE_FILES exec -T db mariadb -u root -p"$DB_ROOT_PASS" "$DB_NAME" < dump.sql
+wp search-replace 'http://стара.адреса' 'https://нова.адреса'
+```
+
 ## Що де
 
 | | |

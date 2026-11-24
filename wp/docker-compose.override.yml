@@ -1,0 +1,7 @@
+# Локальна розробка. Compose підхоплює цей файл сам, тож
+# `docker-compose up -d` на машині розробника працює як раніше.
+services:
+  wp:
+    ports: ["${WP_PORT:-8080}:80"]
+    environment:
+      WORDPRESS_DEBUG: 1
