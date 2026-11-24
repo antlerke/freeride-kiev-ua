@@ -82,6 +82,12 @@ add_action( 'wp_enqueue_scripts', static function (): void {
 	if ( is_page_template( [ 'page-about.php', 'page-reviews.php', 'page-team.php' ] ) ) {
 		fr_style( 'fr-pages', 'pages.css', [ 'fr-base' ] );
 	}
+	if ( is_page_template( [ 'page-certificate.php', 'page-bikepick.php', 'page-legal.php' ] ) ) {
+		fr_style( 'fr-services', 'services.css', [ 'fr-base' ] );
+	}
+	if ( is_page_template( [ 'page-certificate.php', 'page-bikepick.php' ] ) ) {
+		fr_style( 'fr-contacts', 'contacts.css', [ 'fr-base' ] );   // форма заявки
+	}
 	if ( is_page_template( 'page-gallery.php' ) ) {
 		fr_style( 'fr-gallery', 'gallery.css', [ 'fr-base' ] );
 		fr_script( 'fr-gallery', 'gallery.js' );

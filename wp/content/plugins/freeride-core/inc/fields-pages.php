@@ -227,6 +227,113 @@ add_action( 'acf/init', static function (): void {
 		],
 	] );
 
+	// ── Подарунковий сертифікат ─────────────────────────────────────
+	acf_add_local_field_group( [
+		'key'      => 'group_fr_cert',
+		'title'    => 'Блоки сторінки «Сертифікат»',
+		'location' => fr_tpl_location( 'page-certificate.php' ),
+		'fields'   => [
+			[ 'key' => 'field_fr_ct_tab1', 'label' => 'Сам сертифікат', 'type' => 'tab' ],
+			[ 'key' => 'field_fr_ct_cap',  'name' => 'card_caption', 'label' => 'Напис на картці', 'type' => 'text', 'default_value' => 'Подарунковий сертифікат', 'wrapper' => [ 'width' => 50 ] ],
+			[ 'key' => 'field_fr_ct_note', 'name' => 'card_note',    'label' => 'Дрібний рядок на картці', 'type' => 'text', 'default_value' => 'Мотошкола в Києві', 'wrapper' => [ 'width' => 50 ] ],
+			[ 'key' => 'field_fr_ct_term', 'name' => 'card_term',    'label' => 'Термін дії', 'type' => 'text', 'wrapper' => [ 'width' => 50 ], 'instructions' => 'Наприклад: діє 12 місяців. Порожньо — рядок не показується.' ],
+			[ 'key' => 'field_fr_ct_env',  'name' => 'envelope_note','label' => 'Про конверт', 'type' => 'text', 'default_value' => 'Сертифікат іде в комплекті з конвертом', 'wrapper' => [ 'width' => 50 ] ],
+
+			[ 'key' => 'field_fr_ct_tab2', 'label' => 'Що подарувати', 'type' => 'tab' ],
+			[
+				'key' => 'field_fr_ct_gifts', 'name' => 'gifts', 'label' => 'Варіанти',
+				'type' => 'repeater', 'layout' => 'block', 'button_label' => 'Додати варіант',
+				'instructions' => 'Якщо вибрати курс, ціна береться з нього і сама оновлюється разом із прайсом.',
+				'sub_fields' => [
+					[ 'key' => 'field_fr_ct_g_t',  'name' => 'title',  'label' => 'Назва', 'type' => 'text', 'required' => 1, 'wrapper' => [ 'width' => 34 ] ],
+					[ 'key' => 'field_fr_ct_g_i',  'name' => 'icon',   'label' => 'Іконка', 'type' => 'select', 'choices' => fr_icon_choices(), 'wrapper' => [ 'width' => 22 ] ],
+					[ 'key' => 'field_fr_ct_g_c',  'name' => 'course', 'label' => 'Курс', 'type' => 'post_object', 'post_type' => [ FR_COURSE ], 'return_format' => 'id', 'allow_null' => 1, 'wrapper' => [ 'width' => 44 ] ],
+					[ 'key' => 'field_fr_ct_g_s',  'name' => 'text',   'label' => 'Опис', 'type' => 'textarea', 'rows' => 2, 'new_lines' => '' ],
+					[ 'key' => 'field_fr_ct_g_p',  'name' => 'price_note', 'label' => 'Напис замість ціни', 'type' => 'text', 'instructions' => 'Якщо курс не вибрано: «від 13 500 грн», «будь-яка сума» тощо.' ],
+				],
+			],
+
+			[ 'key' => 'field_fr_ct_tab3', 'label' => 'Як це працює', 'type' => 'tab' ],
+			[
+				'key' => 'field_fr_ct_steps', 'name' => 'steps', 'label' => 'Кроки',
+				'type' => 'repeater', 'layout' => 'table', 'button_label' => 'Додати крок',
+				'sub_fields' => [
+					[ 'key' => 'field_fr_ct_s_t', 'name' => 'title', 'label' => 'Крок', 'type' => 'text', 'required' => 1, 'wrapper' => [ 'width' => 35 ] ],
+					[ 'key' => 'field_fr_ct_s_s', 'name' => 'text',  'label' => 'Пояснення', 'type' => 'text', 'wrapper' => [ 'width' => 65 ] ],
+				],
+			],
+
+			[ 'key' => 'field_fr_ct_tab4', 'label' => 'Як отримати', 'type' => 'tab' ],
+			[
+				'key' => 'field_fr_ct_ship', 'name' => 'delivery', 'label' => 'Способи',
+				'type' => 'repeater', 'layout' => 'table', 'button_label' => 'Додати спосіб',
+				'instructions' => 'Порядок тут — порядок на сторінці. Найшвидший спосіб краще ставити першим.',
+				'sub_fields' => [
+					[ 'key' => 'field_fr_ct_d_i', 'name' => 'icon',  'label' => 'Іконка', 'type' => 'select', 'choices' => fr_icon_choices(), 'wrapper' => [ 'width' => 20 ] ],
+					[ 'key' => 'field_fr_ct_d_t', 'name' => 'title', 'label' => 'Спосіб', 'type' => 'text', 'required' => 1, 'wrapper' => [ 'width' => 30 ] ],
+					[ 'key' => 'field_fr_ct_d_s', 'name' => 'text',  'label' => 'Пояснення', 'type' => 'text', 'wrapper' => [ 'width' => 50 ] ],
+				],
+			],
+			[ 'key' => 'field_fr_ct_ftxt', 'name' => 'form_intro', 'label' => 'Текст над формою', 'type' => 'text', 'default_value' => 'Залиште номер — передзвонимо й оформимо сертифікат.' ],
+		],
+	] );
+
+	// ── Підбір мотоцикла ────────────────────────────────────────────
+	acf_add_local_field_group( [
+		'key'      => 'group_fr_pick',
+		'title'    => 'Блоки сторінки «Підбір мотоцикла»',
+		'location' => fr_tpl_location( 'page-bikepick.php' ),
+		'fields'   => [
+			[ 'key' => 'field_fr_pk_tab1', 'label' => 'Як ми працюємо', 'type' => 'tab' ],
+			[ 'key' => 'field_fr_pk_lead', 'name' => 'intro', 'label' => 'Вступ', 'type' => 'textarea', 'rows' => 3, 'new_lines' => '' ],
+			[
+				'key' => 'field_fr_pk_steps', 'name' => 'steps', 'label' => 'Кроки',
+				'type' => 'repeater', 'layout' => 'table', 'button_label' => 'Додати крок',
+				'instructions' => 'Нумерація проставляється сама — порядок задається перетягуванням.',
+				'sub_fields' => [
+					[ 'key' => 'field_fr_pk_s_t', 'name' => 'title', 'label' => 'Крок', 'type' => 'text', 'required' => 1, 'wrapper' => [ 'width' => 40 ] ],
+					[ 'key' => 'field_fr_pk_s_s', 'name' => 'text',  'label' => 'Пояснення', 'type' => 'text', 'wrapper' => [ 'width' => 60 ] ],
+				],
+			],
+
+			[ 'key' => 'field_fr_pk_tab2', 'label' => 'Що ви отримуєте', 'type' => 'tab' ],
+			[
+				'key' => 'field_fr_pk_gets', 'name' => 'deliverables', 'label' => 'Результат',
+				'type' => 'repeater', 'layout' => 'table', 'button_label' => 'Додати',
+				'sub_fields' => [
+					[ 'key' => 'field_fr_pk_g_i', 'name' => 'icon',  'label' => 'Іконка', 'type' => 'select', 'choices' => fr_icon_choices(), 'wrapper' => [ 'width' => 20 ] ],
+					[ 'key' => 'field_fr_pk_g_t', 'name' => 'title', 'label' => 'Назва', 'type' => 'text', 'required' => 1, 'wrapper' => [ 'width' => 30 ] ],
+					[ 'key' => 'field_fr_pk_g_s', 'name' => 'text',  'label' => 'Пояснення', 'type' => 'text', 'wrapper' => [ 'width' => 50 ] ],
+				],
+			],
+
+			[ 'key' => 'field_fr_pk_tab3', 'label' => 'Ціна', 'type' => 'tab' ],
+			[ 'key' => 'field_fr_pk_p1v', 'name' => 'price_first',  'label' => 'Передоплата', 'type' => 'text', 'wrapper' => [ 'width' => 30 ], 'instructions' => 'Наприклад: 100 $' ],
+			[ 'key' => 'field_fr_pk_p1t', 'name' => 'price_first_note', 'label' => 'Пояснення', 'type' => 'text', 'wrapper' => [ 'width' => 70 ] ],
+			[ 'key' => 'field_fr_pk_p2v', 'name' => 'price_second', 'label' => 'Друга частина', 'type' => 'text', 'wrapper' => [ 'width' => 30 ], 'instructions' => 'Наприклад: половина торгу' ],
+			[ 'key' => 'field_fr_pk_p2t', 'name' => 'price_second_note', 'label' => 'Пояснення', 'type' => 'text', 'wrapper' => [ 'width' => 70 ] ],
+			[ 'key' => 'field_fr_pk_pnote','name' => 'price_logic', 'label' => 'Головна думка про ціну', 'type' => 'text', 'instructions' => 'Один рядок великим шрифтом під цінами.' ],
+
+			[ 'key' => 'field_fr_pk_tab4', 'label' => 'Довіра', 'type' => 'tab' ],
+			[ 'key' => 'field_fr_pk_pv',  'name' => 'proof_value', 'label' => 'Цифра', 'type' => 'text', 'wrapper' => [ 'width' => 25 ] ],
+			[ 'key' => 'field_fr_pk_pt',  'name' => 'proof_text',  'label' => 'Підпис до цифри', 'type' => 'text', 'wrapper' => [ 'width' => 75 ] ],
+			[ 'key' => 'field_fr_pk_pimg','name' => 'proof_image', 'label' => 'Фото', 'type' => 'image', 'return_format' => 'id' ],
+			[ 'key' => 'field_fr_pk_ftxt','name' => 'form_intro',  'label' => 'Текст над формою', 'type' => 'text', 'default_value' => 'Розкажіть, який мотоцикл шукаєте — передзвонимо й обговоримо.' ],
+		],
+	] );
+
+	// ── Юридичні сторінки ───────────────────────────────────────────
+	acf_add_local_field_group( [
+		'key'      => 'group_fr_legal',
+		'title'    => 'Юридична сторінка',
+		'location' => fr_tpl_location( 'page-legal.php' ),
+		'fields'   => [
+			[ 'key' => 'field_fr_lg_upd', 'name' => 'updated', 'label' => 'Дата оновлення', 'type' => 'date_picker', 'display_format' => 'j F Y', 'return_format' => 'Y-m-d', 'wrapper' => [ 'width' => 35 ] ],
+			[ 'key' => 'field_fr_lg_file','name' => 'file',    'label' => 'Файл для завантаження', 'type' => 'file', 'return_format' => 'array', 'wrapper' => [ 'width' => 65 ], 'instructions' => 'Необовʼязково: копія документа для тих, кому потрібен файл.' ],
+			[ 'key' => 'field_fr_lg_toc', 'name' => 'show_toc','label' => 'Показувати зміст збоку', 'type' => 'true_false', 'default_value' => 1, 'ui' => 1, 'instructions' => 'Зміст будується сам із заголовків другого рівня в тексті.' ],
+		],
+	] );
+
 	// ── Куди надсилати заявки ───────────────────────────────────────
 	acf_add_local_field_group( [
 		'key'      => 'group_fr_form_opts',

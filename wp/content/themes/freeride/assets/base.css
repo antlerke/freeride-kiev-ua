@@ -383,3 +383,10 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--accent-ink); ou
 }
 @media (max-width: 980px) { .sfoot-in { grid-template-columns: 1fr 1fr; gap: 30px 24px; } }
 @media (max-width: 560px) { .sfoot-in { grid-template-columns: 1fr; gap: 26px; } }
+
+/* Найвужчі екрани: «конфіденційності» — 16 літер, і в 32px воно не
+   влазить у 320px за жодного переносу слів. Дозволяємо перенос
+   зі складу, а якщо браузер української не знає — хоч розриваємо. */
+@media (max-width: 360px) {
+  h1, .hero-page h1 { font-size: 28px; hyphens: auto; overflow-wrap: break-word; }
+}
