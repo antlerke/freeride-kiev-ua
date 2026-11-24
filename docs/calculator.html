@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Montserrat:ital,wght@0,600;0,700;0,800;1,700;1,800&display=swap">
 <link rel="stylesheet" href="assets/base.css?v=19">
 <link rel="stylesheet" href="assets/home.css?v=19">
-<link rel="stylesheet" href="assets/calc.css?v=19">
+<link rel="stylesheet" href="assets/calc.css?v=20">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -92,19 +92,19 @@
     <!-- ЛІВОРУЧ: ВИБІР -->
     <div class="calc-col">
       <div class="step">
-        <div class="step-head"><span class="num">1</span><h2>Оберіть основний курс</h2></div>
+        <div class="step-head"><span class="num">1</span><h2>Оберіть курс</h2><s>або лише окремі заняття</s></div>
         <fieldset style="border:0; margin:0; padding:0">
-          <legend class="sr">Основний курс</legend>
+          <legend class="sr">Курс або окремі заняття</legend>
           <div class="courses" id="courses"></div>
         </fieldset>
       </div>
 
       <div class="step">
-        <div class="step-head"><span class="num">2</span><h2>Додайте додаткові заняття</h2><s>за потреби</s></div>
+        <div class="step-head"><span class="num">2</span><h2 id="step2-head">Додайте додаткові заняття</h2><s id="step2-note">за потреби</s></div>
         <div id="extras"></div>
       </div>
 
-      <div class="step">
+      <div class="step" id="step-docs">
         <div class="step-head"><span class="num">3</span><h2>Додаткові документи</h2></div>
         <div id="docs"></div>
       </div>
@@ -121,10 +121,10 @@
       <div id="mix"></div>
 
       <h3 class="sum-sub">Вартість програми</h3>
-      <p class="cost-cap">Базовий пакет</p>
+      <p class="cost-cap" id="cost-base-cap">Базовий пакет</p>
       <div id="cost-base"></div>
       <div id="cost-add-wrap" hidden>
-        <p class="cost-cap is-add">Додано вручну</p>
+        <p class="cost-cap is-add" id="cost-add-cap">Додано вручну</p>
         <div id="cost-add"></div>
       </div>
       <div class="total">
@@ -160,9 +160,9 @@
         </p>
       </div>
 
-      <a class="btn btn-go btn-xl calc-cta" href="#final">
+      <a class="btn btn-go btn-xl calc-cta" id="calc-cta" href="#final">
         <svg width="21" height="21" viewBox="0 0 28 28"><use href="#i-cal"/></svg>
-        <span><b>Записатися на курс</b></span>
+        <span><b id="cta-label">Записатися на курс</b></span>
         <svg width="20" height="20" viewBox="0 0 20 20"><use href="#i-arrow"/></svg></a>
     </div>
   </div>
@@ -256,6 +256,6 @@
 <script src="assets/nav.js?v=19" defer></script>
 <script src="assets/contact.js?v=19" defer></script>
 <script src="assets/reveal.js?v=19" defer></script>
-<script src="assets/calc.js?v=19" defer></script>
+<script src="assets/calc.js?v=20" defer></script>
 </body>
 </html>

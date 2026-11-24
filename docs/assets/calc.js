@@ -9,7 +9,13 @@
 
   var nf = new Intl.NumberFormat('uk-UA');
   var D = null;                 // дані
+  var CUSTOM = null;            // псевдокурс «лише окремі заняття», якщо дозволений
   var state = { course: null, extras: {}, docs: {} };
+
+  /* Варіанти кроку 1 — пакети плюс, за наявності, збірка без пакета.
+     CUSTOM навмисне має форму курсу (price 0, порожні mix і docs),
+     щоб решта коду не знала про цей випадок і не обростала гілками. */
+  function options() { return CUSTOM ? D.courses.concat([CUSTOM]) : D.courses; }
 
   function money(n) { return nf.format(n) + ' ' + D.currency; }
   function hours(n) { return n + ' ' + D.unit; }
@@ -26,15 +32,20 @@
      Одна чиста функція: вхід — стан, вихід — усе, що показує
      правий стовпець. Жодного читання DOM. */
   function calc(st) {
-    var c = byId(D.courses, st.course);
+    var c = byId(options(), st.course);
     var mix = {}, k;
     for (k in c.mix) mix[k] = c.mix[k];
 
     /* Два окремі списки: що входить у пакет і що людина додала руками.
-       Поки вони були одним стовпчиком, базова ціна й добір зливалися. */
-    var baseLines = [{ label: 'Пакет ' + c.name + ' · ' + hours(courseHours(c)), value: money(c.price) }];
+       Поки вони були одним стовпчиком, базова ціна й добір зливалися.
+       Без пакета базовий список порожній, і платить людина лише за крок 2. */
+    var baseLines = [];
     var addLines = [];
-    var baseSum = c.price, addSum = 0;
+    var baseSum = 0, addSum = 0;
+    if (!c.custom) {
+      baseLines.push({ label: 'Пакет ' + c.name + ' · ' + hours(courseHours(c)), value: money(c.price) });
+      baseSum = c.price;
+    }
 
     D.extras.forEach(function (x) {
       var h = st.extras[x.id] || 0;
@@ -45,23 +56,29 @@
       addLines.push({ label: x.label + ' · ' + hours(h) + ' × ' + money(x.rate), value: money(sum) });
     });
 
+    /* Документи йдуть у парі з курсом: школа оформлює категорію тому,
+       хто в неї вчиться. Без пакета крок 3 ховається, тож і в розрахунок
+       нічого не потрапляє, навіть якщо прапорець лишився від минулого вибору. */
     var docs = c.docs.slice();
-    D.documents.forEach(function (d) {
-      if (c.docs.indexOf(d.id) >= 0) return;          // вже в курсі
-      if (!st.docs[d.id]) return;
-      docs.push(d.id);
-      addSum += d.price;
-      addLines.push({ label: d.label, value: money(d.price) });
-    });
+    if (!c.custom) {
+      D.documents.forEach(function (d) {
+        if (c.docs.indexOf(d.id) >= 0) return;        // вже в курсі
+        if (!st.docs[d.id]) return;
+        docs.push(d.id);
+        addSum += d.price;
+        addLines.push({ label: d.label, value: money(d.price) });
+      });
 
-    baseLines.push({
-      label: 'Документи ' + c.docs.map(function (id) { return D.docLabels[id] || id; }).join(' та '),
-      value: 'включено', ok: true
-    });
+      baseLines.push({
+        label: 'Документи ' + c.docs.map(function (id) { return D.docLabels[id] || id; }).join(' та '),
+        value: 'включено', ok: true
+      });
+    }
 
     var total = baseSum + addSum;
     return {
-      course: c, mix: mix, docs: docs,
+      course: c, mix: mix, docs: docs, custom: !!c.custom,
+      empty: !!c.custom && total === 0,
       baseLines: baseLines, addLines: addLines,
       baseSum: baseSum, addSum: addSum, total: total,
       compare: compare(c), upsell: upsell(c, total)
@@ -73,6 +90,10 @@
      Години, які вже є в базовому курсі, другий раз не рахуємо —
      інакше економія виходить завищеною. */
   function compare(c) {
+    /* Людина явно відмовилася від пакета — підсовувати їй порівняння
+       пакетів було б торгом замість відповіді. Якщо збірка все-таки
+       переросла повний курс, про це скаже upsell нижче. */
+    if (c.custom) return null;
     if (!D.compare || !D.compare.enabled) return null;
     var target = byId(D.courses, D.compare.target);
     if (!target) return null;
@@ -135,16 +156,22 @@
 
   /* ── Малювання ─────────────────────────────────────────── */
   function renderInputs() {
-    el('#courses').innerHTML = D.courses.map(function (c) {
-      return '<label class="course-opt">' +
-        '<input class="sr" type="radio" name="course" value="' + c.id + '"' +
-        (c.id === state.course ? ' checked' : '') + '>' +
-        '<span class="course-in">' +
-          '<span class="course-ic">' + svg(c.icon, 28) + '</span>' +
+    el('#courses').innerHTML = options().map(function (c) {
+      /* Збірка без пакета не має ні годин, ні власної ціни, тож і картка
+         в неї інша: рядком на всю ширину, щоб її не читали як пʼятий пакет. */
+      var body = c.custom
+        ? '<span class="course-ic">' + svg(c.icon, 26) + '</span>' +
+          '<span class="custom-txt"><b>' + c.name + '</b><em>' + c.note + '</em></span>'
+        : '<span class="course-ic">' + svg(c.icon, 28) + '</span>' +
           '<b>' + c.name + '</b>' +
           (c.legacy && c.legacy !== c.name ? '<s>' + c.legacy + '</s>' : '') +
           '<em>' + hours(courseHours(c)) + '</em>' +
-          '<strong>' + money(c.price) + '</strong>' +
+          '<strong>' + money(c.price) + '</strong>';
+
+      return '<label class="course-opt' + (c.custom ? ' is-custom' : '') + '">' +
+        '<input class="sr" type="radio" name="course" value="' + c.id + '"' +
+        (c.id === state.course ? ' checked' : '') + '>' +
+        '<span class="course-in' + (c.custom ? ' custom' : '') + '">' + body +
           '<span class="course-tick" aria-hidden="true">' + svg('i-check-sm', 16) + '</span>' +
         '</span></label>';
     }).join('');
@@ -180,7 +207,12 @@
   function render() {
     var r = calc(state);
 
-    el('#sum-badge').textContent = r.course.name;
+    var isC = r.custom;
+    el('#sum-badge').textContent = isC ? (r.course.badge || r.course.name) : r.course.name;
+    el('#step-docs').hidden = isC;
+    /* Без пакета ці заняття нічим не «додаткові» — вони і є вся програма */
+    el('#step2-head').textContent = isC ? 'Оберіть заняття' : 'Додайте додаткові заняття';
+    el('#step2-note').textContent = isC ? 'з них складається програма' : 'за потреби';
 
     el('#mix').innerHTML = D.lessonTypes.filter(function (t) { return r.mix[t.id]; }).map(function (t) {
       return '<div class="mix-row"><span>' + svg(t.icon, 22) + t.label + '</span><b>' + hours(r.mix[t.id]) + '</b></div>';
@@ -193,13 +225,36 @@
       }).join('');
     }
     el('#cost-base').innerHTML = rows(r.baseLines, '');
-    el('#cost-add').innerHTML = rows(r.addLines, 'is-add');
+    el('#cost-base-cap').hidden = isC;
+    el('#cost-base').hidden = isC;
+    /* Плюсик перед рядком означає «на додачу до пакета». Без пакета
+       додавати нема до чого, тож і значка немає. */
+    el('#cost-add').innerHTML = rows(r.addLines, isC ? '' : 'is-add');
     el('#cost-add-wrap').hidden = r.addLines.length === 0;
+    var addCap = el('#cost-add-cap');
+    addCap.textContent = isC ? 'Обрані заняття' : 'Додано вручну';
+    addCap.classList.toggle('is-add', !isC);
 
     el('#total').textContent = money(r.total);
     var split = el('#total-split');
-    split.hidden = r.addSum === 0;
-    if (r.addSum) split.textContent = 'пакет ' + money(r.baseSum) + '  +  додано вручну ' + money(r.addSum);
+    if (r.empty) {
+      split.hidden = false;
+      split.textContent = 'Оберіть години в кроці 2 — вартість зʼявиться тут.';
+    } else if (isC) {
+      split.hidden = true;
+    } else {
+      split.hidden = r.addSum === 0;
+      if (r.addSum) split.textContent = 'пакет ' + money(r.baseSum) + '  +  додано вручну ' + money(r.addSum);
+    }
+
+    /* Кнопка «записатися» на порожню програму нікуди не веде */
+    var cta = el('#calc-cta');
+    cta.classList.toggle('is-off', r.empty);
+    cta.setAttribute('aria-disabled', r.empty ? 'true' : 'false');
+    if (r.empty) cta.setAttribute('tabindex', '-1'); else cta.removeAttribute('tabindex');
+    el('#cta-label').textContent = isC
+      ? (r.course.cta || 'Записатися на заняття')
+      : 'Записатися на курс';
 
     var up = el('#upsell');
     up.hidden = !r.upsell;
@@ -277,6 +332,14 @@
     .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then(function (data) {
       D = data;
+      if (D.custom && D.custom.enabled) {
+        CUSTOM = {
+          id: D.custom.id || 'custom', name: D.custom.name,
+          badge: D.custom.badge, note: D.custom.note, cta: D.custom.cta,
+          icon: D.custom.icon || 'i-layers',
+          price: 0, mix: {}, docs: [], custom: true
+        };
+      }
       state.course = (D.compare && D.compare.target) || D.courses[D.courses.length - 1].id;
       renderInputs();
       bind();
