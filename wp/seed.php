@@ -190,6 +190,70 @@ update_option( 'page_on_front', $page_ids['home'] );
 update_option( 'page_for_posts', 0 );
 update_option( 'wp_page_for_privacy_policy', $page_ids['polityka-konfidencijnosti'] );
 
+// ── Тексти сторінки контактів ───────────────────────────────────────
+$kc = $page_ids['kontakty'];
+wp_update_post( [
+	'ID'           => $kc,
+	'post_title'   => 'Контакти FreeRide',
+	'post_excerpt' => 'Звʼяжіться з нами, щоб отримати консультацію, обрати курс або записатися на навчання.',
+] );
+update_field( 'loc_eyebrow', 'Наша локація', $kc );
+update_field( 'loc_title',   'Навчальний майданчик FreeRide', $kc );
+update_field( 'loc_metro',   'Лісова', $kc );
+update_field( 'loc_note',    'точну адресу та схему проїзду надсилаємо після запису', $kc );
+update_field( 'form_title',  'Звʼяжіться з нами', $kc );
+update_field( 'form_button', 'Надіслати запит', $kc );
+update_field( 'form_success','Дякуємо! Передзвонимо найближчим часом.', $kc );
+update_field( 'form_topics', array_map(
+	static fn( $t ) => [ 'topic' => $t ],
+	[ 'Обрати курс', 'Пробний урок', 'Подарунковий сертифікат', 'Підбір мотоцикла', 'Інше питання' ]
+), $kc );
+update_field( 'book_title',  'Найпростіший спосіб — забронювати час онлайн', $kc );
+update_field( 'book_text',   'Оберіть зручну дату, курс і одразу оплатіть заняття в системі Appointer.', $kc );
+update_field( 'book_button', 'Записатися на заняття', $kc );
+update_field( 'book_url',    'https://get.appointer.ua/', $kc );
+update_field( 'benefits', [
+	[ 'icon' => 'i-pin',    'title' => 'Зручна локація', 'text' => 'біля м. Лісова' ],
+	[ 'icon' => 'i-moto',   'title' => 'Парковка',       'text' => 'для авто і мотоциклів' ],
+	[ 'icon' => 'i-helmet', 'title' => 'Сучасна інфраструктура', 'text' => 'та безпечний майданчик' ],
+	[ 'icon' => 'i-shield', 'title' => 'Комфортні умови','text' => 'навчання' ],
+], $kc );
+
+// Графік роботи — в загальні контакти, бо потрібен не лише тут
+update_field( 'hours', 'Щодня, 08:00 – 20:00', 'option' );
+
+// ── Соцмережі ───────────────────────────────────────────────────────
+// Посилання взяті з живого старого сайту, не вигадані.
+update_field( 'socials', [
+	[ 'kind' => 'ig', 'url' => 'https://www.instagram.com/freeridekievua/' ],
+	[ 'kind' => 'fb', 'url' => 'https://www.facebook.com/freeride.kiev.ua/' ],
+	[ 'kind' => 'yt', 'url' => 'https://www.youtube.com/channel/UCT4MeFFmHkUqWR6xDjjfBhg' ],
+], 'option' );
+
+// ── Тексти сторінки галереї ─────────────────────────────────────────
+$gl = $page_ids['galereya'];
+wp_update_post( [
+	'ID'           => $gl,
+	'post_title'   => 'Медіа FreeRide',
+	'post_excerpt' => 'Навчання, події, люди та мотоцикли — життя нашої школи в фото і відео.',
+] );
+update_field( 'eyebrow', 'Фото / Відео / Життя школи', $gl );
+update_field( 'featured', [
+	[ 'kind' => 'video', 'tag' => 'Тренування', 'title' => 'Тренування в місті', 'length' => '4:36' ],
+	[ 'kind' => 'photo', 'tag' => 'Тренування', 'title' => '' ],
+	[ 'kind' => 'photo', 'tag' => 'Спільнота',  'title' => '' ],
+], $gl );
+update_field( 'albums', [
+	[ 'title' => 'Навчання',  'tag' => 'Тренування', 'count' => 320 ],
+	[ 'title' => 'Подорожі',  'tag' => 'Спільнота',  'count' => 148 ],
+	[ 'title' => 'Події',     'tag' => 'Події',      'count' => 97 ],
+	[ 'title' => 'За кадром', 'tag' => 'Спільнота',  'count' => 73 ],
+	[ 'title' => 'Мотоцикли', 'tag' => 'Тренування', 'count' => 102 ],
+], $gl );
+update_field( 'cta_title',  'Більше контенту в наших соцмережах', $gl );
+update_field( 'cta_button', 'Підписатися на FreeRide', $gl );
+update_field( 'cta_url',    'https://www.instagram.com/freeridekievua/', $gl );
+
 // ── Меню ────────────────────────────────────────────────────────────
 foreach ( [ 'primary' => 'Головне меню', 'footer' => 'Підвал' ] as $loc => $name ) {
 	$menu = wp_get_nav_menu_object( $name );

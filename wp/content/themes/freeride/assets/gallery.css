@@ -1,0 +1,138 @@
+/* Сторінка галереї. */
+
+.gl-eyebrow {
+  margin: 0 0 6px; font-size: 12.5px; font-weight: 700;
+  letter-spacing: .22em; text-transform: uppercase; color: var(--ink-2);
+}
+.gl-play { display: inline-flex; align-items: center; gap: 13px; margin-top: 20px; text-decoration: none; color: inherit; font-size: 15.5px; line-height: 1.3; }
+.gl-play-btn {
+  flex: none; width: 52px; height: 52px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--go-grad); border: 1px solid var(--go-edge); color: #111111;
+  box-shadow: var(--go-depth);
+}
+
+/* ── Фільтр ────────────────────────────────────────────────── */
+.gl-pills { display: flex; flex-wrap: wrap; gap: 10px; }
+.gl-pills .pill-btn {
+  display: inline-flex; align-items: center; gap: 9px;
+  border: 1px solid var(--line); border-radius: var(--r-pill);
+  background: var(--ground); color: var(--ink);
+  font: inherit; font-size: 15px; font-weight: 700;
+  padding: 11px 19px; cursor: pointer;
+}
+.gl-pills .pill-btn.is-on {
+  background: var(--go-grad); border-color: var(--go-edge);
+  color: #111111; box-shadow: var(--go-depth);
+}
+
+/* ── Добірка ───────────────────────────────────────────────── */
+.gl-top { display: grid; grid-template-columns: 1.55fr .78fr; gap: 16px; align-items: start; }
+/* Велика картка займає обидва рядки ліворуч, решта — вузькою колонкою */
+.gl-feat { display: grid; grid-template-columns: 1.7fr 1fr; grid-auto-rows: 1fr; gap: 16px; }
+.gl-item {
+  position: relative; display: block; overflow: hidden;
+  border-radius: var(--r-card); background: var(--ground);
+  color: #FFFFFF; text-decoration: none; min-height: 150px;
+}
+.gl-item.is-lead { grid-row: span 2; }
+.gl-item img { display: block; width: 100%; height: 100%; object-fit: cover; }
+/* Доки фото немає — видима заглушка, а не порожня рамка: так одразу
+   зрозуміло, чого саме бракує */
+.gl-ph {
+  display: grid; place-items: center; width: 100%; height: 100%; min-height: 150px;
+  background: repeating-linear-gradient(135deg, #E9E7E0 0 12px, #E3E1D9 12px 24px);
+  color: var(--ink-3); font-size: 13px; text-align: center; padding: 20px;
+}
+/* Підпис читається поверх будь-якого кадру лише з підкладкою */
+.gl-item::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(16,18,20,.34) 0%, rgba(16,18,20,0) 38%, rgba(16,18,20,.62) 100%);
+}
+.gl-kind, .gl-cap, .gl-len, .gl-bigplay { position: absolute; z-index: 1; }
+.gl-kind {
+  top: 12px; left: 12px; display: inline-flex; align-items: center; gap: 7px;
+  background: rgba(16,18,20,.62); backdrop-filter: blur(6px);
+  border-radius: var(--r-pill); padding: 6px 12px; font-size: 13px; font-weight: 700;
+}
+.gl-item.is-lead .gl-kind { background: var(--go-grad); color: #111111; }
+.gl-cap { left: 16px; bottom: 14px; right: 70px; font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 18px; letter-spacing: -0.01em; }
+.gl-len { right: 14px; bottom: 15px; background: rgba(16,18,20,.62); border-radius: 8px; padding: 4px 9px; font-size: 13px; font-weight: 700; }
+.gl-bigplay {
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 70px; height: 70px; border-radius: 50%; display: grid; place-items: center;
+  background: rgba(255,255,255,.92); color: #111111; box-shadow: 0 10px 30px rgba(16,18,20,.3);
+}
+
+/* ── Соцмережі ─────────────────────────────────────────────── */
+.gl-soc { background: var(--ground); border-radius: var(--r-card); padding: 24px; }
+.gl-soc h2 { display: flex; align-items: center; gap: 10px; margin: 0 0 16px; font-size: 25px; line-height: 1.15; }
+.gl-soc a {
+  display: flex; align-items: center; gap: 13px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+  padding: 11px 14px; text-decoration: none; color: inherit;
+}
+.gl-soc a + a { margin-top: 10px; }
+.gl-soc b { flex-grow: 1; font-size: 16px; font-weight: 700; }
+.gl-soc a > svg:last-child { flex: none; color: var(--ink-3); }
+.gl-soc-ic { flex: none; width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; color: #FFFFFF; }
+/* Кольори мереж — їхні власні: так їх упізнають, не читаючи підпис */
+.gl-soc-ig { background: linear-gradient(45deg, #F9CE34 0%, #EE2A7B 50%, #6228D7 100%); }
+.gl-soc-fb { background: #1877F2; }
+.gl-soc-yt { background: #FF0000; }
+.gl-soc-tt { background: #111111; }
+
+/* ── Альбоми ───────────────────────────────────────────────── */
+.gl-albums { display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 16px; }
+.gl-album { display: block; text-decoration: none; color: inherit; }
+.gl-album-img { position: relative; display: block; border-radius: var(--r-card); overflow: hidden; background: var(--ground); }
+.gl-album-img img { display: block; width: 100%; aspect-ratio: 4/3; object-fit: cover; }
+.gl-album-img .gl-kind { top: auto; bottom: 10px; left: 10px; color: #FFFFFF; }
+.gl-album-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 4px 0; }
+.gl-album-foot b { font-size: 16px; font-weight: 700; }
+.gl-album-foot svg { flex: none; color: var(--ink-3); }
+
+/* ── Заклик унизу ──────────────────────────────────────────── */
+.gl-cta { position: relative; border-radius: var(--r-card); overflow: hidden; min-height: 170px; color: #FFFFFF; }
+.gl-cta-media, .gl-cta-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.gl-cta-veil { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(16,18,20,.84) 0%, rgba(16,18,20,.52) 55%, rgba(16,18,20,.74) 100%); }
+.gl-cta-in {
+  position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 20px 28px;
+  padding: 28px 30px;
+}
+.gl-cta-in h2 { display: flex; align-items: center; gap: 11px; margin: 0; font-size: clamp(21px, 2.3vw, 28px); line-height: 1.2; max-width: 16ch; }
+.gl-cta-soc { display: flex; gap: 12px; }
+.gl-cta-soc a {
+  width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center;
+  background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.22); color: #FFFFFF;
+}
+.gl-cta-in .btn { margin-left: auto; }
+
+/* ── Вузькі екрани ─────────────────────────────────────────── */
+@media (max-width: 1080px) {
+  .gl-top { grid-template-columns: 1fr; }
+  .gl-albums { grid-template-columns: repeat(3, minmax(0,1fr)); }
+}
+@media (max-width: 760px) {
+  .gl-feat { grid-template-columns: 1fr; }
+  .gl-item.is-lead { grid-row: auto; }
+  .gl-item { min-height: 210px; }
+  .gl-albums { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .gl-cta-in { padding: 24px 22px; }
+  .gl-cta-in .btn { margin-left: 0; }
+}
+@media (max-width: 430px) {
+  .gl-albums { grid-template-columns: 1fr; }
+  .gl-pills .pill-btn { font-size: 14px; padding: 10px 15px; }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .gl-item, .gl-album-img img, .gl-soc a { transition: transform 200ms cubic-bezier(.2,0,0,1), border-color 170ms ease; }
+  a.gl-item:hover { transform: translateY(-3px); }
+  a.gl-album:hover .gl-album-img img { transform: scale(1.04); }
+  .gl-soc a:hover { border-color: var(--go-edge); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gl-item, .gl-album-img img, .gl-soc a { transition: none; }
+  a.gl-item:hover, a.gl-album:hover .gl-album-img img { transform: none; }
+}

@@ -1,0 +1,130 @@
+/* Сторінка контактів. */
+
+/* ── Швидкі контакти ───────────────────────────────────────── */
+/* Стоять вище за форму навмисно: більшість людей не заповнює поля,
+   якщо поруч є кнопка «подзвонити». Форма — для тих, кому зручніше
+   написати, а не для всіх. */
+.qcon { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 14px; }
+.qcon-card {
+  display: flex; align-items: center; gap: 13px;
+  background: var(--ground); border-radius: var(--r-card);
+  padding: 16px 18px; text-decoration: none; color: inherit;
+  border: 1px solid transparent;
+}
+.qcon-ic {
+  flex: none; width: 42px; height: 42px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--go-grad); border: 1px solid var(--go-edge); color: #111111;
+}
+/* Дві іконки в одному кружку: WhatsApp і Telegram ведуть в одне місце */
+.qcon-ic-2 { width: auto; min-width: 42px; border-radius: var(--r-pill); padding: 0 11px; gap: 7px; display: inline-flex; }
+.qcon-txt { min-width: 0; flex-grow: 1; }
+.qcon-txt s { display: block; text-decoration: none; font-size: 13px; color: var(--ink-2); }
+.qcon-txt b { display: block; font-size: 16.5px; font-weight: 800; letter-spacing: -0.01em; overflow-wrap: anywhere; }
+/* У спрайті шеврон дивиться вниз — тут він потрібен уперед */
+.qcon-go { flex: none; color: var(--ink-3); transform: rotate(-90deg); }
+.qcon-card.is-static { cursor: default; }
+
+/* ── Локація ───────────────────────────────────────────────── */
+.loc { display: grid; grid-template-columns: 1.05fr .95fr 1fr; gap: 16px; align-items: stretch; }
+.loc-map, .loc-photo { position: relative; border-radius: var(--r-card); overflow: hidden; background: var(--ground); }
+.loc-map img, .loc-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.loc-ext {
+  position: absolute; top: 12px; right: 12px; width: 38px; height: 38px;
+  border-radius: 12px; display: grid; place-items: center;
+  background: var(--surface); color: var(--ink); box-shadow: 0 4px 14px rgba(30,31,28,.18);
+}
+.loc-txt { display: flex; flex-direction: column; justify-content: center; padding: 8px 6px; }
+.loc-txt h2 { margin: 6px 0 18px; font-size: clamp(26px, 2.6vw, 34px); line-height: 1.12; }
+.eyebrow {
+  display: flex; align-items: center; gap: 9px; margin: 0;
+  font-size: 12.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2);
+}
+.eyebrow i { width: 16px; height: 3px; border-radius: 2px; background: var(--accent); flex: none; }
+.loc-row { display: flex; gap: 12px; align-items: flex-start; margin: 0 0 13px; }
+.loc-row svg { flex: none; color: var(--accent-mid); margin-top: 1px; }
+.loc-row b { font-size: 16.5px; font-weight: 700; }
+.loc-row s { display: block; text-decoration: none; font-size: 13.5px; color: var(--ink-2); margin-top: 3px; line-height: 1.45; }
+
+/* ── Форма ─────────────────────────────────────────────────── */
+.duo-form { display: grid; grid-template-columns: .9fr 1.1fr; gap: 16px; align-items: start; }
+.fcard { background: var(--ground); border-radius: var(--r-card); padding: 28px; }
+.eyebrow-h { display: flex; align-items: center; gap: 11px; margin: 0 0 20px; font-size: 24px; }
+.slash.sm { transform: scale(.72); transform-origin: left center; }
+
+.fnote { border-radius: 14px; padding: 13px 16px; font-size: 15px; margin: 0 0 16px; }
+.fnote.is-ok  { background: var(--accent-soft); color: var(--accent-ink); font-weight: 700; }
+.fnote.is-err { background: #FBE9E7; color: #8A2E22; font-weight: 700; }
+
+.fform { display: grid; gap: 11px; }
+.fld {
+  position: relative; display: flex; align-items: center; gap: 11px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+  padding: 0 14px; transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+.fld-ic { flex: none; color: var(--ink-3); display: grid; place-items: center; }
+.fld input, .fld select, .fld textarea {
+  flex-grow: 1; min-width: 0; border: 0; background: transparent;
+  font: inherit; font-size: 15.5px; color: var(--ink);
+  padding: 15px 0; outline: none;
+}
+.fld textarea { resize: vertical; min-height: 86px; line-height: 1.5; }
+.fld-area { align-items: flex-start; }
+.fld-area .fld-ic { margin-top: 15px; }
+.fld select { appearance: none; cursor: pointer; padding-right: 22px; }
+.fld-caret { position: absolute; right: 15px; color: var(--ink-3); pointer-events: none; }
+/* Фокус показуємо на всій рамці, а не на самому <input>: інакше обведення
+   ріже по вузькому полю всередині й виглядає як помилка верстки */
+.fld:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.fform-go { width: 100%; justify-content: center; margin-top: 6px; }
+
+/* ── Онлайн-запис ──────────────────────────────────────────── */
+.bookcard {
+  display: grid; grid-template-columns: 1fr .82fr; gap: 10px; align-items: center;
+  background: var(--accent-soft); border-radius: var(--r-card); overflow: hidden;
+}
+.bookcard-txt { padding: 30px 8px 30px 30px; }
+.bookcard-ic { color: var(--accent-ink); }
+.bookcard-txt h2 { margin: 12px 0 10px; font-size: clamp(22px, 2.3vw, 29px); line-height: 1.15; }
+.bookcard-txt p { margin: 0 0 20px; font-size: 15.5px; color: var(--ink-2); line-height: 1.5; }
+.bookcard-img { align-self: end; }
+.bookcard-img img { display: block; width: 100%; height: auto; }
+
+/* ── Смуга переваг ─────────────────────────────────────────── */
+.wins { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px; }
+.wins div { display: flex; gap: 13px; align-items: center; padding: 0 6px; }
+.wins div + div { border-left: 1px solid var(--line); padding-left: 19px; }
+.wins svg { flex: none; color: var(--ink-2); }
+.wins b { display: block; font-size: 15px; font-weight: 700; line-height: 1.3; }
+.wins s { display: block; text-decoration: none; font-weight: 500; color: var(--ink-2); }
+
+/* ── Вузькі екрани ─────────────────────────────────────────── */
+@media (max-width: 1080px) {
+  .qcon { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .loc  { grid-template-columns: 1fr 1fr; }
+  /* Текст локації на всю ширину під картою й фото: у вузькій колонці
+     заголовок «Навчальний майданчик FreeRide» ламається по складах */
+  .loc-txt { grid-column: 1 / -1; order: -1; padding: 0 2px 4px; }
+  .duo-form { grid-template-columns: 1fr; }
+  .wins { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .wins div:nth-child(odd) { border-left: 0; padding-left: 6px; }
+}
+@media (max-width: 760px) {
+  .qcon, .loc { grid-template-columns: 1fr; }
+  .fcard { padding: 22px; }
+  .bookcard { grid-template-columns: 1fr; }
+  .bookcard-txt { padding: 26px 22px 4px; }
+  .wins { grid-template-columns: 1fr; }
+  .wins div { border-left: 0 !important; padding-left: 6px !important; }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .qcon-card { transition: transform 170ms cubic-bezier(.2,0,0,1), border-color 170ms ease; }
+  a.qcon-card:hover { transform: translateY(-3px); border-color: var(--go-edge); }
+  .loc-ext { transition: transform 170ms cubic-bezier(.2,0,0,1); }
+  .loc-ext:hover { transform: scale(1.08); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .qcon-card, .loc-ext { transition: none; }
+  a.qcon-card:hover { transform: none; }
+}
