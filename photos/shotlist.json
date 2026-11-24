@@ -1,0 +1,201 @@
+{
+  "_": "Шотліст фотоконтенту FreeRide. Один запис = один унікальний кадр, який може стояти у кількох слотах. Стиль — у style.md, він додається до кожного промпту як преамбула.",
+  "version": "2026-11-24",
+
+  "preamble": "Photorealistic editorial photograph for a Kyiv motorcycle school. Cinematic late-afternoon golden-hour light, warm backlight, long soft shadows. 35mm lens look, wide aperture, shallow depth of field, fine natural film grain. Muted warm grey-beige palette, desaturated green foliage, late-summer Ukrainian landscape. Exactly one bright accent in frame: the riding gear is matte black with bright grass-green (#69BE28) panels, piping and a green stripe on the helmet; the motorcycles are black and graphite with small green details. Absolutely no readable text, no logos, no brand badges on tanks or fairings, no licence plates, no watermarks, no billboards. No recognisable faces of identifiable people.",
+
+  "negative": "acid yellow, neon cyan, HDR look, oversharpened, plastic skin, fisheye distortion, text, lettering, watermark, logo, licence plate, deformed hands, extra limbs, duplicated wheels",
+
+  "shots": [
+    {
+      "id": "hero-home",
+      "ar": "21:9", "size": "4K",
+      "prompt": "A motorcyclist riding away from the camera on an open country highway at sunset, seen from behind. The rider and bike sit in the RIGHT half of the frame; the left half is empty asphalt and warm hazy sky, deliberately clear so a headline can be laid over it. Slight motion blur on the road surface, sun low and directly ahead.",
+      "slots": ["docs/home.html .hero-media", "WP: головна, hero"]
+    },
+    {
+      "id": "hero-courses",
+      "ar": "21:9", "size": "4K",
+      "prompt": "Close-up of a matte black full-face motorcycle helmet with a green stripe, resting on a motorcycle seat on a training ground. The helmet occupies the RIGHT half of the frame, sharply focused; the left half falls away into a blurred empty tarmac pad and warm evening haze. Visor down, reflecting sky.",
+      "slots": ["docs/courses.html .hero-media", "WP: archive-fr_course hero"]
+    },
+    {
+      "id": "hero-calc",
+      "ar": "21:9", "size": "4K",
+      "prompt": "A black motorcycle standing between orange-and-white training cones on a wide empty asphalt training pad, late afternoon. The bike is in the RIGHT half of the frame, three-quarter view; the left half is bare tarmac with long shadows of the cones, kept visually quiet.",
+      "slots": ["docs/calculator.html .hero-media", "WP: сторінка калькулятора, hero"]
+    },
+    {
+      "id": "hero-kyiv",
+      "ar": "21:9", "size": "4K",
+      "prompt": "A motorcyclist in black riding gear with green accents, seen from behind, standing beside the bike on a high riverbank overlooking Kyiv: the Dnipro river, bridges and the distant city skyline with the tall titanium Motherland monument silhouette on the horizon. The rider is in the RIGHT half of the frame; the left half is open river panorama and warm sky.",
+      "slots": ["docs/about.html .hero-media", "docs/reviews.html .hero-media", "WP: контакти, галерея, відгуки — hero"]
+    },
+    {
+      "id": "hero-serpentine",
+      "ar": "21:9", "size": "4K",
+      "prompt": "A motorcyclist leaning into a bend on a mountain serpentine road, shot from behind and slightly above, evening light raking across the valley. Rider and bike in the RIGHT half; the left half is the descending road and hazy green ridges.",
+      "slots": ["docs/course-advanced.html .chero-media", "WP: сторінка курсу ADVANCED, hero"]
+    },
+    {
+      "id": "hero-certificate",
+      "ar": "21:9", "size": "4K",
+      "prompt": "A motorcyclist standing beside a parked bike on a city overlook at dusk, Kyiv rooftops and the river behind, warm streetlights beginning to glow. Rider in the RIGHT half, seen three-quarters from behind; left half is the soft city panorama.",
+      "slots": ["WP: page-certificate hero"]
+    },
+    {
+      "id": "hero-bikepick",
+      "ar": "21:9", "size": "4K",
+      "prompt": "Close-up of two hands in mechanic gloves inspecting the front fork and brake disc of a used motorcycle, a small wrench resting on the tyre. Hands and bike detail fill the RIGHT half of the frame; the left half is a blurred garage forecourt in warm evening light.",
+      "slots": ["WP: page-bikepick hero", "WP: page-bikepick блок огляду"]
+    },
+    {
+      "id": "hero-team",
+      "ar": "21:9", "size": "4K",
+      "prompt": "Four motorcyclists in matching black riding gear with green accents standing in a loose row beside their bikes on a training ground, all seen from behind or in profile with helmets on, so no faces are visible. The group is in the RIGHT half of the frame; the left half is open tarmac and warm sky.",
+      "slots": ["WP: page-team hero"]
+    },
+    {
+      "id": "hero-generic",
+      "ar": "21:9", "size": "2K",
+      "prompt": "An empty two-lane country road curving through late-summer fields at golden hour, a single black motorcycle parked on the verge in the RIGHT half of the frame. Calm, unpeopled, generous empty sky on the left.",
+      "slots": ["WP: page.php — запасний hero для будь-якої сторінки"]
+    },
+
+    {
+      "id": "stage-pad",
+      "ar": "16:9", "size": "2K",
+      "prompt": "A beginner motorcyclist riding slowly between orange training cones on an asphalt training pad, feet near the pegs, an instructor watching from a few metres away with arms folded. Both wear helmets. Low evening sun throws long cone shadows across the tarmac.",
+      "slots": ["home .lvl-media STARTER", "courses .prog-media 1", "reviews .rev-shot 1", "WP: контакти — фото майданчика", "галерея"]
+    },
+    {
+      "id": "stage-drills",
+      "ar": "16:9", "size": "2K",
+      "prompt": "A motorcyclist deep in a tight slalom turn on a training pad, bike leaned over hard, knee and footpeg close to the ground, cones blurring past. Shot low from the outside of the turn, evening backlight catching the dust.",
+      "slots": ["home .lvl-media CONTROL", "courses .prog-media 2", "course-advanced .why-media 1", "галерея"]
+    },
+    {
+      "id": "stage-city",
+      "ar": "16:9", "size": "2K",
+      "prompt": "A motorcyclist riding in real city traffic on a wide Kyiv avenue, cars on both sides, chestnut trees along the kerb, shot from behind at the rider's shoulder height. Warm late-afternoon light, gentle motion blur on the traffic.",
+      "slots": ["home .lvl-media STREET", "courses .prog-media 3", "course-advanced .why-media 3", "галерея"]
+    },
+    {
+      "id": "stage-road",
+      "ar": "16:9", "size": "2K",
+      "prompt": "A motorcyclist riding confidently on an open highway with wooded hills ahead, shot from behind and slightly to the side, the road sweeping into the distance. Late golden light, long shadow of bike and rider on the asphalt.",
+      "slots": ["home .lvl-media ADVANCED", "courses .prog-media 4", "галерея"]
+    },
+
+    {
+      "id": "extra-scooter",
+      "ar": "16:9", "size": "2K",
+      "prompt": "A rider on a modern black maxi-scooter on a training pad, three-quarter view, cones in the soft background. Helmet on, green accents on the jacket. Clean, bright, evening light.",
+      "slots": ["courses .extra-media 1", "course-advanced .why-media 2"]
+    },
+    {
+      "id": "extra-traffic",
+      "ar": "16:9", "size": "2K",
+      "prompt": "Over-the-shoulder view from behind a motorcyclist waiting at a city intersection, lines of cars ahead, tram rails in the asphalt, traffic light glowing. Shallow focus on the rider's shoulder, traffic softly blurred.",
+      "slots": ["courses .extra-media 2"]
+    },
+    {
+      "id": "detail-licence",
+      "ar": "4:3", "size": "2K",
+      "prompt": "Flat overhead shot of two plain plastic driving-licence cards with blurred unreadable printing, lying on a dark workbench next to motorcycle keys, black gloves and a folded helmet strap. Warm side light, soft shadows. The cards must carry no legible text or recognisable national emblem.",
+      "slots": ["course-advanced .why-media 4 (посвідчення А та А1)"]
+    },
+
+    {
+      "id": "band-serpentine",
+      "ar": "21:9", "size": "4K",
+      "prompt": "A lone motorcyclist seen from behind riding a mountain serpentine straight into a low sun, the road winding down into a hazy valley. The rider sits slightly RIGHT of centre; the LEFT third is dark hillside in shadow, deliberately simple so a white headline can sit over it. Strong warm contre-jour, lens flare restrained.",
+      "slots": ["фінальний банер на courses, course-advanced, calculator, reviews, gallery, team"]
+    },
+    {
+      "id": "band-home",
+      "ar": "21:9", "size": "4K",
+      "prompt": "A motorcyclist in a black jacket with green shoulder panels and the word FREERIDE across the back in clean white sans-serif lettering, seen from directly behind, riding a serpentine road at sunset. Rider RIGHT of centre, dark hillside filling the LEFT third. The only text in the image is FREERIDE on the jacket, spelled exactly.",
+      "slots": ["docs/home.html .final-media"]
+    },
+    {
+      "id": "band-viewpoint",
+      "ar": "21:9", "size": "4K",
+      "prompt": "Three motorcyclists in black-and-green gear sitting on a low wall at a hilltop viewpoint, bikes parked behind them, all seen from behind looking out over a wide valley at sunset. The group sits RIGHT of centre; the LEFT third is dark foreground and sky.",
+      "slots": ["docs/about.html .final-media"]
+    },
+
+    {
+      "id": "about-mission",
+      "ar": "21:9", "size": "4K",
+      "prompt": "A wide empty mountain road curving across forested green ridges, shot from a high vantage point in soft evening light, no people and no vehicles. Calm, panoramic, evenly lit so a dark overlay and text can sit across the whole frame.",
+      "slots": ["docs/about.html .mission-media"]
+    },
+    {
+      "id": "about-motion",
+      "ar": "3:4", "size": "2K",
+      "prompt": "Vertical shot of a black sport-touring motorcycle in motion on a country road, panned so the bike is sharp and the background streaks. Low camera angle, evening light, green accents on the fairing catching the sun.",
+      "slots": ["docs/about.html .duo-photo"]
+    },
+    {
+      "id": "about-fleet",
+      "ar": "16:9", "size": "2K",
+      "prompt": "A row of five identical black training motorcycles with green accents parked at a neat diagonal on a tarmac pad, trees behind, warm evening light raking along the row. Clean, symmetrical, no people.",
+      "slots": ["docs/about.html .duo-wide"]
+    },
+    {
+      "id": "detail-jacket",
+      "ar": "16:9", "size": "2K",
+      "prompt": "Extreme close-up of the shoulder and sleeve of a matte black textile motorcycle jacket with a bright green panel and stitched armour, warm rim light along the seam, background completely out of focus. No text, no badges.",
+      "slots": ["docs/reviews.html .rev-shot 3"]
+    },
+    {
+      "id": "detail-sunset-bike",
+      "ar": "16:9", "size": "2K",
+      "prompt": "A black motorcycle parked side-on in silhouette against a burning orange sunset over open fields, no rider, the sun just behind the engine. Strong graphic shape, minimal detail, warm haze.",
+      "slots": ["docs/reviews.html .rev-shot 2", "галерея"]
+    },
+    {
+      "id": "gallery-briefing",
+      "ar": "16:9", "size": "2K",
+      "prompt": "A small group of riders in black-and-green gear standing in a semicircle around an instructor beside a motorcycle on a training pad, all with helmets on or seen from behind, listening to a briefing. Evening light, cones scattered in the background.",
+      "slots": ["галерея"]
+    },
+    {
+      "id": "gallery-garage",
+      "ar": "16:9", "size": "2K",
+      "prompt": "The inside of a tidy motorcycle workshop at the end of the day: two bikes on stands, tools on a pegboard wall, helmets on a shelf, warm light coming through an open roller door. No people.",
+      "slots": ["галерея"]
+    },
+
+    {
+      "id": "rider-anon-1",
+      "ar": "4:3", "size": "2K",
+      "real": true,
+      "prompt": "A motorcyclist in black-and-green gear standing beside a bike on a training pad, helmet ON with the visor down so no face is visible, arms relaxed, blurred trees behind. Waist-up framing, evening light.",
+      "note": "Тимчасова заміна для картки інструктора. Обличчя навмисно закрите шоломом: вигадувати портрет під справжнім імʼям не можна."
+    },
+    {
+      "id": "rider-anon-2",
+      "ar": "4:3", "size": "2K",
+      "real": true,
+      "prompt": "A motorcyclist in black-and-green gear seen from behind, turning to look over the shoulder with the helmet on and visor down, a bike out of focus beside them. Waist-up framing, warm backlight.",
+      "note": "Тимчасова заміна для картки інструктора."
+    },
+    {
+      "id": "video-still-pad",
+      "ar": "16:9", "size": "2K",
+      "real": true,
+      "prompt": "A candid, slightly imperfect frame as if grabbed from an action-camera video: a helmeted rider on a training pad mid-exercise, cones around, natural light, mild camera shake and slight softness.",
+      "note": "Прев'ю відеовідгуку. Остаточно — справжній кадр з відео учня."
+    }
+  ],
+
+  "real_photos_needed": [
+    { "slot": "docs/about.html .founder-photo", "what": "Костянтин Колот, вертикальний портрет у екіпіруванні, 3:4" },
+    { "slot": "docs/about.html .mate-photo ×4", "what": "Андрій, Олена, Сергій, Дмитро — портрети 4:3 на вулиці" },
+    { "slot": "docs/home.html .quote-ava", "what": "Квадратне фото автора цитати" },
+    { "slot": "docs/reviews.html .vid-shot ×3", "what": "Кадри зі справжніх відеовідгуків" },
+    { "slot": "docs/reviews.html .rev-shot 1", "what": "Фото учня, що залишив відгук (або stage-pad як нейтральна заміна)" }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "_": "Куди який кадр їде у WordPress. thumbnail = головне зображення запису, інше — поле Secure Custom Fields. Шаблони теми вже вміють і те, і те: доки зображення немає, вони показують текстову заглушку.",
+
+  "front_page": {
+    "thumbnail": "hero-home",
+    "final_image": "band-home"
+  },
+
+  "pages": {
+    "pro-nas":    { "thumbnail": "hero-kyiv", "mission_image": "about-mission",
+                    "steps_image": "about-motion", "gear_image": "about-fleet",
+                    "final_image": "band-viewpoint" },
+    "komanda":    { "thumbnail": "hero-team" },
+    "otzyvy":     { "thumbnail": "hero-kyiv" },
+    "kontakty":   { "thumbnail": "hero-kyiv" },
+    "galereya":   { "thumbnail": "hero-kyiv", "cta_image": "band-serpentine" },
+    "kalkulyator":{ "thumbnail": "hero-calc" },
+    "sertifikat": { "thumbnail": "hero-certificate" },
+    "podbor-motoczikla": { "thumbnail": "hero-bikepick", "proof_image": "hero-bikepick" },
+    "polityka-konfidencijnosti": { "thumbnail": "hero-generic" }
+  },
+
+  "courses": {
+    "gorod":       { "thumbnail": "stage-pad" },
+    "intensiv":    { "thumbnail": "stage-drills" },
+    "bazovyj":     { "thumbnail": "stage-city" },
+    "polnyj-kurs": { "thumbnail": "stage-road" }
+  },
+
+  "gallery": ["stage-pad", "stage-drills", "stage-city", "stage-road",
+              "gallery-briefing", "gallery-garage", "about-fleet",
+              "detail-sunset-bike", "detail-jacket", "extra-scooter"],
+
+  "skip": {
+    "founder_photo": "портрет Костянтина Колота — лише справжнє фото",
+    "quote_photo": "аватарка автора цитати — лише справжнє фото",
+    "fr_review thumbnail": "фото учнів і кадри відеовідгуків — лише справжні"
+  }
+}
