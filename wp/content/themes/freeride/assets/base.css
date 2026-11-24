@@ -1,0 +1,385 @@
+/* FreeRide — базовий шар.
+   Палітра Hybrid Premium, затверджена замовником (листопад 2026):
+   сірий ССО #707276 · теплий світлий #F2F1ED · Kawasaki Green #69BE28 */
+
+:root {
+  /* ── Затверджені фірмові кольори ─────────────────────────── */
+  --slate: #707276;           /* основний сірий: великі блоки, графіка */
+  --warm:  #F2F1ED;           /* теплий світлий: основний фон сайту */
+  --accent: #69BE28;          /* Kawasaki Green: CTA, індикатори Rider Card */
+
+  /* ── Похідні, виведені з контрасту ───────────────────────── */
+  /* На Kawasaki Green читається лише темний текст: 7.1:1 проти 2.33:1 у білого */
+  --accent-on: #1E1F1C;
+  /* Сам зелений як текст на світлому дає 2.07:1 — для написів беремо темнішу зелень */
+  --accent-ink: #3D7210;      /* 5.14:1 на теплому фоні */
+  --accent-mid: #4F9419;      /* іконки й графіка на світлому: 3,33:1 */
+
+  /* Обʼємна зелена кнопка. Текст #111 тримає 13:1 угорі градієнта
+     і 4,5:1 біля самого низу, куди він не дістає */
+  --go-grad: linear-gradient(180deg, #A5E96B 0%, #7ACA3C 32%, #63B326 55%, #418D17 100%);
+  --go-grad-hover: linear-gradient(180deg, #B4F27B 0%, #85D544 32%, #69BC28 55%, #3B8614 100%);
+  --go-edge: #509C20;
+  --go-depth: inset 0 1px 0 rgba(255,255,255,.55), 0 8px 20px rgba(65,141,23,.28);
+  --go-depth-hover: inset 0 1px 0 rgba(255,255,255,.65), 0 12px 26px rgba(65,141,23,.38);
+  --go-pressed: inset 0 2px 6px rgba(26,58,7,.45);
+  --accent-soft: #E9F3DD;     /* тло підказок і виділених карток */
+  /* На сірому блоці AA витримує лише чистий білий (4.82:1) — приглушених відтінків там немає */
+  --on-slate: #FFFFFF;
+
+  --ink:   #1E1F1C;           /* 14.65:1 */
+  --ink-2: #4A4C46;           /* 7.6:1  */
+  --ink-3: #666860;           /* 5.0:1  — мінімальний приглушений */
+  --ground: #FFFFFF;
+  --surface: var(--warm);
+  --line: #E2E0D8;
+  --dark: var(--slate);
+
+  --r-card: 22px;
+  --r-pill: 999px;
+  --r-btn: 14px;
+  --wrap: 1240px;
+
+  /* Знак за макетом замовника: FreeRide®, одна риска */
+  --logo-case: none;
+  --logo-tracking: -0.02em;
+}
+
+* { box-sizing: border-box; }
+
+html { overflow-x: clip; }
+
+body {
+  margin: 0; overflow-x: clip; background: var(--surface); color: var(--ink);
+  font-family: 'Manrope', system-ui, sans-serif;
+  font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent-ink); }
+
+h1, h2, h3 {
+  font-family: 'Montserrat', 'Manrope', sans-serif;
+  font-weight: 800; font-style: italic;
+  letter-spacing: -0.02em; line-height: 1.06; margin: 0 0 16px;
+}
+h1 { font-size: clamp(32px, 4.6vw, 54px); }
+h2 { font-size: clamp(24px, 3vw, 34px); }
+h3 { font-size: 20px; }
+
+.wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
+.muted { color: var(--ink-3); }
+.lede { font-size: 19px; line-height: 1.5; color: var(--ink-2); max-width: 34em; }
+
+/* Фірмовий знак: дві риски в лаймовому бренді, одна в зеленому */
+.slash { display: inline-flex; gap: 3px; vertical-align: middle; margin-right: 10px; }
+.slash i { display: block; width: 7px; height: 20px; background: var(--accent); transform: skewX(-18deg); }
+.slash i:nth-child(2) { display: none; }
+.slash i { width: 6px; }
+
+.card { background: var(--ground); border-radius: var(--r-card); padding: 28px; }
+.card-soft { background: var(--accent-soft); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  font-family: inherit; font-weight: 700; font-size: 16px;
+  padding: 15px 26px; border-radius: var(--r-btn); border: 0;
+  text-decoration: none; cursor: pointer;
+  transition: transform 120ms cubic-bezier(.2,0,0,1), filter 160ms ease;
+}
+.btn:active { transform: scale(.975); }
+.btn-go {
+  background: var(--go-grad);
+  color: #111111;
+  border: 1px solid var(--go-edge);
+  box-shadow: var(--go-depth);
+}
+.btn-go:hover { color: #111111; }
+/* Натиснута кнопка втрачає підсвітку згори й отримує тінь усередині:
+   видно, що її продавили, а не просто перефарбували */
+.btn-go:active { box-shadow: var(--go-pressed); }
+.btn-ghost { background: var(--ground); color: var(--ink); border: 1px solid var(--line); }
+.btn-ghost:hover { color: var(--ink); }
+
+a:focus-visible, button:focus-visible { outline: 3px solid var(--accent-ink); outline-offset: 3px; }
+
+.bar {
+  position: sticky; top: 0; z-index: 20;
+  background: rgba(255,255,255,.84);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border-bottom: 1px solid var(--line);
+}
+.bar-in { max-width: var(--wrap); margin: 0 auto; display: flex; flex-wrap: wrap; gap: 18px; align-items: center; padding: 13px 24px; }
+.logo { display: flex; align-items: center; gap: 9px; text-decoration: none; color: var(--ink); }
+.logo b {
+  font-family: 'Montserrat', sans-serif; font-weight: 800; font-style: italic;
+  font-size: 21px; text-transform: var(--logo-case); letter-spacing: var(--logo-tracking);
+}
+.logo s { text-decoration: none; font-size: 9.5px; letter-spacing: .15em; color: var(--ink-3); display: block; text-transform: uppercase; }
+.nav { display: flex; flex-wrap: wrap; gap: 22px; flex-grow: 1; }
+.nav a { text-decoration: none; color: var(--ink); font-weight: 600; font-size: 15px; }
+.nav a:hover { color: var(--accent-ink); }
+
+.grid { display: grid; gap: 18px; }
+.g2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+.g3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+.g4 { grid-template-columns: repeat(4, minmax(0,1fr)); }
+
+.pill {
+  display: inline-block; background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--r-pill); padding: 7px 14px; font-size: 13px; font-weight: 600;
+}
+.pill-go { background: var(--accent); border-color: var(--accent); color: var(--accent-on); }
+
+/* Заглушка фото — поки немає власної зйомки */
+.ph {
+  background: #E4E2DA; border-radius: var(--r-card);
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  color: var(--ink-3); font-size: 13px; padding: 16px;
+}
+
+/* Перемикач бренду — службовий, не частина сайту */
+.brandbar {
+  position: fixed; right: 16px; bottom: 16px; z-index: 50;
+  display: flex; gap: 8px; align-items: center;
+  background: rgba(21,24,26,.92); color: #fff; padding: 10px 12px; border-radius: 14px;
+  font-size: 13px; backdrop-filter: blur(10px);
+}
+.brandbar button {
+  font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer;
+  padding: 7px 12px; border-radius: 9px; border: 1px solid rgba(255,255,255,.26);
+  background: transparent; color: #fff;
+}
+.brandbar button[aria-pressed="true"] { background: var(--accent); color: var(--accent-on); border-color: var(--accent); }
+
+@media (max-width: 980px) { .g4 { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+@media (max-width: 860px) { .g3 { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+@media (max-width: 620px) {
+  .g2, .g3, .g4 { grid-template-columns: minmax(0,1fr); }
+  .wrap { padding: 0 16px; }
+  .nav { order: 3; width: 100%; gap: 16px; }
+  .nav a { padding: 14px 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: none; } .btn:active { transform: none; }
+}
+
+/* ── Великі блоки на основному сірому ──────────────────────── */
+/* Увесь текст тут білий: інші відтінки сірого на цьому фоні не дають 4.5:1 */
+.slab { background: var(--slate); color: var(--on-slate); }
+.slab h1, .slab h2, .slab h3 { color: var(--on-slate); }
+.slab .muted { color: var(--on-slate); opacity: .88; }
+.slab a:not(.btn) { color: var(--on-slate); text-decoration: underline; text-underline-offset: 3px; }
+/* Зелений на сірому — 2.06:1, тому як обведення фокуса він там не працює */
+.slab a:focus-visible, .slab button:focus-visible { outline-color: var(--on-slate); }
+
+/* ── Поява блоків при скролі ───────────────────────────────── */
+/* Ховаємо лише коли JS справді працює: без нього сайт лишається читабельним */
+/* Зсув задається змінними, а не самим transform. Інакше правило
+   `.js [data-rev].in { transform: none }` (специфічність 0,3,0) перебиває
+   ховер-зсуви на кнопках і картках (0,2,0) — і елемент під курсором
+   не рухається. Тепер .in лише обнуляє змінні, а оголошення transform
+   лишається на 0,2,0 і спокійно поступається ховеру. */
+.js [data-rev] {
+  opacity: 0;
+  transform: translate(var(--rev-x, 0px), var(--rev-y, 0px));
+  transition: opacity 620ms cubic-bezier(.2,0,0,1), transform 620ms cubic-bezier(.2,0,0,1);
+  will-change: opacity, transform;
+}
+.js [data-rev="left"]  { --rev-x: -48px; }
+.js [data-rev="right"] { --rev-x: 48px; }
+.js [data-rev="up"]    { --rev-y: 34px; }
+.js [data-rev].in      { opacity: 1; --rev-x: 0px; --rev-y: 0px; }
+
+/* На вузьких екранах бічний виїзд завеликий — замінюємо на підйом */
+@media (max-width: 760px) {
+  .js [data-rev="left"], .js [data-rev="right"] { --rev-x: 0px; --rev-y: 26px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-rev] { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
+
+/* ── Відгук на курсор ──────────────────────────────────────── */
+/* Лише для справжнього вказівника: на тачскріні :hover залипає після
+   тапу — елемент лишається «піднятим», доки не торкнешся іншого */
+@media (hover: hover) and (pointer: fine) {
+
+  .btn {
+    transition: transform 170ms cubic-bezier(.2,0,0,1),
+                box-shadow 170ms cubic-bezier(.2,0,0,1),
+                border-color 170ms ease;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-go:hover {
+    background: var(--go-grad-hover);
+    box-shadow: var(--go-depth-hover);
+  }
+  .btn-ghost:hover { box-shadow: 0 10px 22px rgba(30,31,28,.12); border-color: #CFCDC5; }
+  /* Натискання повертає елемент під палець — інакше кнопка «тікає» */
+  .btn:active { transform: translateY(0) scale(.985); box-shadow: none; }
+  .btn-go:active { box-shadow: var(--go-pressed); }
+
+  a.card {
+    transition: transform 190ms cubic-bezier(.2,0,0,1),
+                box-shadow 190ms cubic-bezier(.2,0,0,1);
+  }
+  a.card:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(30,31,28,.11); }
+  a.card:active { transform: translateY(-1px); }
+
+  .nav a, .lang a {
+    display: inline-block;
+    transition: transform 150ms cubic-bezier(.2,0,0,1), color 150ms ease;
+  }
+  .nav a:hover, .lang a:hover { transform: translateY(-2px); }
+
+  .logo { transition: transform 190ms cubic-bezier(.2,0,0,1); }
+  .logo:hover { transform: translateX(3px); }
+
+  /* З клавіатури сигнал має бути той самий, що й мишею */
+  .btn:focus-visible { transform: translateY(-2px); }
+  a.card:focus-visible { transform: translateY(-3px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn, a.card, .nav a, .lang a, .logo { transition: none; }
+  .btn:hover, a.card:hover, .nav a:hover, .lang a:hover, .logo:hover,
+  .btn:focus-visible, a.card:focus-visible { transform: none; }
+}
+
+/* Атрибут hidden ховає лише через display:none з UA-стилів, тож будь-який
+   клас із власним display його перебиває. Ця страховка потрібна скрізь,
+   де hidden ставиться з JS: фільтр відгуків, плашки калькулятора. */
+[hidden] { display: none !important; }
+
+/* ── Хлібні крихти й шапка внутрішньої сторінки ────────────── */
+.crumbs { font-size: 14px; color: var(--ink-3); margin-bottom: 14px; }
+.crumbs a { color: var(--ink-3); text-decoration: none; }
+.crumbs a:hover { color: var(--accent-ink); }
+.crumbs span { margin: 0 8px; opacity: .6; }
+
+/* Шапка сторінки на фото — та сама механіка, що й хіроу головної
+   (.hero-media + .hero-veil із home.css), тільки нижча і без кнопок. */
+.hero-page { margin-bottom: 34px; }
+.hero-page .hero-in { padding: 26px 24px 44px; min-height: 290px;
+  display: flex; flex-direction: column; justify-content: center; }
+/* підпис-заглушку відсуваємо в правий нижній кут, щоб не лізла в заголовок */
+.hero-page .hero-media { align-items: flex-end; justify-content: flex-end; padding: 14px 20px; }
+.hero-page h1 { font-size: clamp(32px, 4.6vw, 54px); max-width: 14em; }
+.hero-page .lede { margin: 0; }
+/* на вузькому екрані завіса вертикальна (home.css), тож лишаємо знизу
+   смугу фото — інакше підпис-заглушка лягає на текст */
+@media (max-width: 760px) {
+  .hero-page .hero-in { min-height: 0; padding-bottom: 104px; }
+}
+
+/* ── Віджет звʼязку ────────────────────────────────────────── */
+/* Мета — один клік до менеджера з будь-якого місця сторінки.
+   На широкому екрані вертикальна рейка біля правого краю,
+   на вузькому — одна кнопка внизу праворуч, що розкриває список. */
+.callme {
+  position: fixed; z-index: 40; right: 14px; top: 50%; transform: translateY(-50%);
+  display: flex; flex-direction: column-reverse; align-items: flex-end; gap: 10px;
+}
+.callme-list { display: flex; flex-direction: column; gap: 10px; }
+.callme-list a, .callme-toggle {
+  width: 46px; height: 46px; border-radius: 50%; flex: none;
+  display: grid; place-items: center; position: relative;
+  background: var(--ground); color: var(--ink);
+  border: 1px solid var(--line); box-shadow: 0 6px 18px rgba(30,31,28,.15);
+  text-decoration: none; cursor: pointer; padding: 0;
+}
+/* Перша кнопка — телефон — зелена: головна дія рейки */
+.callme-list a:first-child, .callme-toggle {
+  background: var(--go-grad); border-color: var(--go-edge);
+  color: #111111; box-shadow: var(--go-depth);
+}
+.callme-list a span {
+  position: absolute; right: 56px; top: 50%;
+  transform: translateY(-50%) translateX(6px);
+  background: var(--ink); color: #FFFFFF; font-size: 13px; font-weight: 600;
+  padding: 7px 11px; border-radius: 9px; white-space: nowrap;
+  opacity: 0; pointer-events: none;
+  transition: opacity 160ms ease, transform 160ms cubic-bezier(.2,0,0,1);
+}
+.callme-toggle { display: none; }
+
+@media (hover: hover) and (pointer: fine) {
+  .callme-list a {
+    transition: transform 170ms cubic-bezier(.2,0,0,1), box-shadow 170ms ease;
+  }
+  .callme-list a:hover { transform: translateX(-3px); box-shadow: 0 10px 24px rgba(30,31,28,.2); }
+  .callme-list a:hover span { opacity: 1; transform: translateY(-50%) translateX(0); }
+}
+.callme-list a:focus-visible span { opacity: 1; transform: translateY(-50%) translateX(0); }
+
+/* Розгорнута рейка потребує 1380px: вузький .wrap 1240 плюс по 70 з боків.
+   Вужче — згортаємо в кнопку внизу праворуч, інакше лягає на текст */
+@media (max-width: 1379px) {
+  .callme { top: auto; bottom: 16px; right: 16px; transform: none; }
+  .js .callme-toggle { display: grid; }
+  .js .callme-list {
+    opacity: 0; visibility: hidden; transform: translateY(10px);
+    /* visibility їде тією ж тривалістю, що й прозорість: поки список
+       згасає, він лишається видимим, а в кінці зникає з Tab-порядку */
+    transition: opacity 200ms ease, transform 200ms cubic-bezier(.2,0,0,1),
+                visibility 200ms;
+  }
+  .js .callme.open .callme-list {
+    opacity: 1; visibility: visible; transform: none;
+  }
+  .callme.open .callme-toggle i:nth-child(1) { transform: rotate(45deg); }
+  .callme.open .callme-toggle i:nth-child(2) { transform: rotate(-45deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .callme-list a, .callme-list a span, .js .callme-list { transition: none; }
+}
+
+/* ── Підвал сайту ──────────────────────────────────────────── */
+/* Усі написи чисто білі: на сірому #707276 білий дає 4,82:1, і будь-яке
+   приглушення одразу виводить дрібний текст за межу AA. Ієрархію тут
+   тримають розмір і накреслення, а не прозорість. */
+.sfoot-in {
+  display: grid; grid-template-columns: 1.6fr 1fr 1.25fr 1fr;
+  gap: 34px; padding: 48px 24px 34px;
+}
+.sfoot .logo { color: var(--on-slate); }
+.sfoot .logo s { color: var(--on-slate); }
+.sfoot-brand p { font-size: 14.5px; line-height: 1.5; margin: 16px 0 0; max-width: 24em; }
+.sfoot-motto {
+  font-family: 'Montserrat', sans-serif; font-weight: 800; font-style: italic;
+  font-size: 16.5px; letter-spacing: -0.01em;
+}
+.sfoot-col h3 {
+  font-size: 12.5px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase;
+  margin: 0 0 15px;
+}
+.sfoot-col a, .sfoot-col span { display: block; font-size: 15px; line-height: 1.45; margin-bottom: 11px; }
+.sfoot-col a:not(.btn) { text-decoration: none; }
+.sfoot-col a:not(.btn):hover { text-decoration: underline; }
+.sfoot-tel {
+  font-family: 'Montserrat', sans-serif; font-weight: 800; font-style: italic;
+  font-size: 19px !important; letter-spacing: -0.01em;
+}
+.sfoot-soc { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
+.sfoot-soc a {
+  width: 40px; height: 40px; margin: 0; border-radius: 12px;
+  display: grid; place-items: center; text-decoration: none;
+  border: 1px solid rgba(255,255,255,.34);
+}
+.sfoot-soc a:hover { background: var(--on-slate); color: var(--slate); text-decoration: none; }
+.sfoot-bottom {
+  display: flex; flex-wrap: wrap; gap: 8px 22px; align-items: center;
+  padding: 16px 24px 28px; font-size: 13.5px;
+  border-top: 1px solid rgba(255,255,255,.22);
+}
+.sfoot-bottom span:first-child { flex-grow: 1; }
+.sfoot-note { font-style: italic; }
+
+@media (hover: hover) and (pointer: fine) {
+  .sfoot-soc a { transition: transform 170ms cubic-bezier(.2,0,0,1), background 170ms ease, color 170ms ease; }
+  .sfoot-soc a:hover { transform: translateY(-2px); }
+}
+@media (max-width: 980px) { .sfoot-in { grid-template-columns: 1fr 1fr; gap: 30px 24px; } }
+@media (max-width: 560px) { .sfoot-in { grid-template-columns: 1fr; gap: 26px; } }

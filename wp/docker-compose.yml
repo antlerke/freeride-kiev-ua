@@ -1,0 +1,65 @@
+# Локальне середовище розробки сайту FreeRide.
+# Підняти:   cd wp && docker compose up -d && ./init.sh
+# Зупинити:  docker compose down          (дані лишаються)
+# Знести:    docker compose down -v       (разом із базою)
+#
+# У git лежать тільки наші тема й плагін — вони змонтовані з content/.
+# Ядро WordPress і сторонні плагіни живуть у томі й ставляться через init.sh,
+# тож середовище відтворюється з нуля однією командою.
+
+services:
+  db:
+    image: mariadb:11.4
+    environment:
+      MARIADB_DATABASE: freeride
+      MARIADB_USER: freeride
+      MARIADB_PASSWORD: freeride
+      MARIADB_ROOT_PASSWORD: freeride
+    volumes: [db:/var/lib/mysql]
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      retries: 20
+
+  wp:
+    image: wordpress:php8.3-apache
+    depends_on:
+      db: { condition: service_healthy }
+    ports: ["8080:80"]
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: freeride
+      WORDPRESS_DB_USER: freeride
+      WORDPRESS_DB_PASSWORD: freeride
+      WORDPRESS_DEBUG: 1
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_DEBUG_LOG', true);
+        define('WP_DEBUG_DISPLAY', false);
+        define('SCRIPT_DEBUG', true);
+        define('DISALLOW_FILE_EDIT', true);
+    volumes:
+      - wp:/var/www/html
+      - ./content/themes/freeride:/var/www/html/wp-content/themes/freeride
+      - ./content/plugins/freeride-core:/var/www/html/wp-content/plugins/freeride-core
+      - ./content/uploads:/var/www/html/wp-content/uploads
+
+  cli:
+    image: wordpress:cli-php8.3
+    user: "33:33"
+    depends_on: [wp]
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: freeride
+      WORDPRESS_DB_USER: freeride
+      WORDPRESS_DB_PASSWORD: freeride
+      HOME: /tmp
+    volumes:
+      - wp:/var/www/html
+      - ./content/themes/freeride:/var/www/html/wp-content/themes/freeride
+      - ./content/plugins/freeride-core:/var/www/html/wp-content/plugins/freeride-core
+      - ./content/uploads:/var/www/html/wp-content/uploads
+    entrypoint: ["tail", "-f", "/dev/null"]
+
+volumes:
+  wp:
+  db:

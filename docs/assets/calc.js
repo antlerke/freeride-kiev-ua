@@ -328,7 +328,12 @@
     });
   }
 
-  fetch('data/pricing.json', { cache: 'no-cache' })
+  /* На статичних макетах прайс лежить файлом поруч; у WordPress тема
+     підставляє адресу ендпоінта. Схема відповіді однакова, тож код
+     нижче в обох випадках той самий. */
+  var SRC = window.FR_PRICING_URL || 'data/pricing.json';
+
+  fetch(SRC, { cache: 'no-cache' })
     .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then(function (data) {
       D = data;
