@@ -29,6 +29,12 @@ function fr_photo_id( $shot ) {
 	if ( isset( $cache[ $shot ] ) ) {
 		return $cache[ $shot ];
 	}
+	$src = WP_CONTENT_DIR . '/uploads/_in/' . $shot . '.jpg';
+	if ( ! file_exists( $src ) ) {
+		return $cache[ $shot ] = 0;
+	}
+	$hash = md5_file( $src );
+
 	$found = get_posts( [
 		'post_type'   => 'attachment',
 		'post_status' => 'inherit',
@@ -38,12 +44,22 @@ function fr_photo_id( $shot ) {
 		'meta_value'  => $shot,
 	] );
 	if ( $found ) {
-		return $cache[ $shot ] = (int) $found[0];
-	}
-
-	$src = WP_CONTENT_DIR . '/uploads/_in/' . $shot . '.jpg';
-	if ( ! file_exists( $src ) ) {
-		return $cache[ $shot ] = 0;
+		$id  = (int) $found[0];
+		$old = get_post_meta( $id, '_fr_shot_hash', true );
+		if ( $old === $hash ) {
+			return $cache[ $shot ] = $id;
+		}
+		// Кадр перезняли: підміняємо файл на місці, щоб не плодити вкладення
+		// й не відвʼязувати його від сторінок, які на нього посилаються.
+		$path = get_attached_file( $id );
+		if ( $path && copy( $src, $path ) ) {
+			wp_update_attachment_metadata( $id, wp_generate_attachment_metadata( $id, $path ) );
+			update_post_meta( $id, '_fr_shot_hash', $hash );
+			WP_CLI::log( "  оновлено файл $shot (#$id)" );
+			return $cache[ $shot ] = $id;
+		}
+		WP_CLI::warning( "  не вдалося підмінити файл $shot (#$id)" );
+		return $cache[ $shot ] = $id;
 	}
 
 	$up = wp_upload_dir();
@@ -64,6 +80,7 @@ function fr_photo_id( $shot ) {
 	}
 	wp_update_attachment_metadata( $id, wp_generate_attachment_metadata( $id, $dest ) );
 	update_post_meta( $id, '_fr_shot', $shot );
+	update_post_meta( $id, '_fr_shot_hash', $hash );
 	return $cache[ $shot ] = (int) $id;
 }
 
