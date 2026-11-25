@@ -11,13 +11,15 @@ SRC="$ROOT/docs/assets/photos"
 [ -d "$SRC" ] || { echo "Немає $SRC — спершу generate.py, потім apply.py" >&2; exit 1; }
 
 if [ -n "${REMOTE:-}" ]; then
+  # Кадри кладемо поза робочою копією: інакше наступний `git pull`
+  # на сервері падає через «локальні зміни». Скрипт і карту сервер
+  # бере зі свого ж репозиторію, тож їх копіювати не треба.
   echo "→ Копіюю кадри на $REMOTE"
-  ssh "$REMOTE" 'mkdir -p /opt/freeride/photos'
-  scp -q "$SRC"/*.jpg "$HERE/wp-map.json" "$HERE/import.php" "$HERE/import-wp.sh" \
-      "$REMOTE:/opt/freeride/photos/"
+  ssh "$REMOTE" 'mkdir -p /var/tmp/freeride-photos && rm -f /var/tmp/freeride-photos/*.jpg'
+  scp -q "$SRC"/*.jpg "$REMOTE:/var/tmp/freeride-photos/"
   # на сервері стек піднятий прод-оверлеєм: локальний override публікує
   # порт на 0.0.0.0, а Docker пише власні правила в iptables повз фаєрвол
-  ssh "$REMOTE" 'cd /opt/freeride && SRC_OVERRIDE=/opt/freeride/photos \
+  ssh "$REMOTE" 'cd /opt/freeride && SRC_OVERRIDE=/var/tmp/freeride-photos \
     COMPOSE_FILES="-f docker-compose.yml -f docker-compose.prod.yml" \
     bash photos/import-wp.sh'
   exit 0
