@@ -70,11 +70,15 @@ def main():
     shots = {s['id']: s for s in json.loads((HERE / 'shotlist.json').read_text('utf-8'))['shots']}
     cfg = json.loads((HERE / 'mapping.json').read_text('utf-8'))
 
-    needed = sorted({v['id'] for v in cfg['map'].values()})
+    # у макетах стоїть частина кадрів, решта потрібна лише у WordPress —
+    # зменшуємо всі, інакше імпорт у медіатеку не знайде файлів
+    needed = sorted(shots)
+    in_html = {v['id'] for v in cfg['map'].values()}
     have = [i for i in needed if master(i)]
     missing = [i for i in needed if not master(i)]
 
-    print('Кадрів для макетів: %d, згенеровано: %d, бракує: %d' % (len(needed), len(have), len(missing)))
+    print('Кадрів усього: %d, згенеровано: %d, бракує: %d (з них у макетах %d)'
+          % (len(needed), len(have), len(missing), len(in_html)))
     if missing:
         print('  бракує: ' + ', '.join(missing))
         print('  → python3 generate.py --only ' + ','.join(missing))
