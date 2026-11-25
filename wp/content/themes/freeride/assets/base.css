@@ -390,3 +390,21 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--accent-ink); ou
 @media (max-width: 360px) {
   h1, .hero-page h1 { font-size: 28px; hyphens: auto; overflow-wrap: break-word; }
 }
+
+/* Фото в рамках — зображення мають заповнити свій блок */
+/* Доки в цих блоках стояли текстові заглушки, описувати зображення
+   не було потреби. Щойно зʼявилися справжні фото, без цього вони
+   лягають у натуральному розмірі: hero не на всю ширину, а картки
+   рівнів розпирає вбік. */
+.lvl-media, .prog-media, .why-media, .extra-media, .mate-photo,
+.founder-photo, .duo-photo, .duo-wide, .rev-shot, .quote-ava {
+  position: relative; overflow: hidden;
+}
+.hero-media, .final-media, .chero-media, .mission-media, .vid-shot { overflow: hidden; }
+.hero-media img, .final-media img, .chero-media img, .mission-media img,
+.vid-shot img, .lvl-media img, .prog-media img, .why-media img,
+.extra-media img, .mate-photo img, .founder-photo img, .duo-photo img,
+.duo-wide img, .rev-shot img, .quote-ava img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; display: block; border-radius: inherit;
+}
