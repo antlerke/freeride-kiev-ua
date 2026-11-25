@@ -37,7 +37,9 @@ cp -f "$HERE/wp-map.json" "$STAGE/"
 cp -f "$HERE/import.php" "$STAGE/"
 echo "→ $(ls -1 "$STAGE"/*.jpg | wc -l | tr -d ' ') кадрів підготовлено"
 
-$DC ${COMPOSE_FILES:-} run --rm -T cli wp eval-file \
+# саме exec, а не run: у сервісу cli entrypoint "tail -f /dev/null",
+# тож run дописав би аргументи до tail і контейнер просто висів би
+$DC ${COMPOSE_FILES:-} exec -T cli wp --allow-root eval-file \
   /var/www/html/wp-content/uploads/_in/import.php
 
 rm -f "$STAGE"/import.php "$STAGE"/wp-map.json

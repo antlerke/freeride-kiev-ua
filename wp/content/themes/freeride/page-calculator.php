@@ -102,7 +102,7 @@ get_header();
       </div>
 
       <a class="btn btn-go btn-xl calc-cta" id="calc-cta" href="#final">
-        <svg width="21" height="21" viewBox="0 0 28 28"><use href="#i-cal"/></svg>
+        <svg width="21" height="21" viewBox="0 0 24 24"><use href="#i-cal"/></svg>
         <span><b id="cta-label">Записатися на курс</b></span>
         <svg width="20" height="20" viewBox="0 0 20 20"><use href="#i-arrow"/></svg></a>
     </div>
@@ -119,7 +119,7 @@ get_header();
     <div><svg width="28" height="28" viewBox="0 0 28 28"><use href="#i-target"/></svg><b>Прозорий<br>розрахунок</b></div>
     <div><svg width="28" height="28" viewBox="0 0 28 28"><use href="#i-layers"/></svg><b>Реальні пакети<br>та економія</b></div>
     <div><svg width="28" height="28" viewBox="0 0 28 28"><use href="#i-bolt"/></svg><b>Можливість<br>додати практику</b></div>
-    <div><svg width="28" height="28" viewBox="0 0 28 28"><use href="#i-cal"/></svg><b>Оплата<br>частинами</b></div>
+    <div><svg width="28" height="28" viewBox="0 0 24 24"><use href="#i-cal"/></svg><b>Оплата<br>частинами</b></div>
     <div><svg width="28" height="28" viewBox="0 0 28 28"><use href="#i-headset"/></svg><b>Допомога у виборі<br>від інструктора</b></div>
   </div>
 </section>

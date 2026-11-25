@@ -24,7 +24,7 @@ function fr_icon_boxes(): array {
 		'i-arrow' => '0 0 20 20',
 		'i-barshield' => '0 0 585 468',
 		'i-bolt' => '0 0 28 28',
-		'i-cal' => '0 0 28 28',
+		'i-cal' => '0 0 24 24',
 		'i-calc' => '0 0 28 28',
 		'i-cap' => '0 0 28 28',
 		'i-cert' => '0 0 28 28',

@@ -67,8 +67,8 @@
 .mate-photo { aspect-ratio: 4/3; background: #D9D7D0; }
 .mate-body { padding: 16px 18px 18px; display: flex; gap: 12px; align-items: center; }
 .mate-body div { flex-grow: 1; min-width: 0; }
-.mate-body b { display: block; font-size: 18px; font-weight: 800; letter-spacing: -0.01em; }
-.mate-body span { display: block; font-size: 14px; color: var(--ink-2); line-height: 1.35; }
+.mate-body div b { display: block; font-size: 18px; font-weight: 800; letter-spacing: -0.01em; }
+.mate-body div span { display: block; font-size: 14px; color: var(--ink-2); line-height: 1.35; }
 .mate-go {
   flex: none; width: 34px; height: 34px; border-radius: 50%;
   background: var(--go-grad); border: 1px solid var(--go-edge); color: #111111;

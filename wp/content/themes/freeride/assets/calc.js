@@ -21,8 +21,23 @@
   function hours(n) { return n + ' ' + D.unit; }
   function byId(list, id) { for (var i = 0; i < list.length; i++) if (list[i].id === id) return list[i]; return null; }
   function el(sel) { return root.querySelector(sel); }
+  /* Іконки намальовані в різних сітках: та сама картинка в чужому viewBox
+     виходить або крихітною, або зсунутою. Тут лише ті, що не 28. */
+  var BOXES = {
+    'i-check-sm': '0 0 16 16',
+    'i-arrow':    '0 0 20 20',
+    'i-chev':     '0 0 20 20',
+    'i-clock':    '0 0 20 20',
+    'i-ext':      '0 0 20 20',
+    'i-check':    '0 0 22 22',
+    'i-cal':      '0 0 24 24'
+  };
   function svg(icon, size) {
-    return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 28 28" aria-hidden="true"><use href="#' + icon + '"/></svg>';
+    var box = BOXES[icon] || '0 0 28 28';
+    var n = box.split(' ');
+    var h = Math.round(size * (+n[3]) / (+n[2]));
+    return '<svg width="' + size + '" height="' + h + '" viewBox="' + box +
+           '" aria-hidden="true"><use href="#' + icon + '"/></svg>';
   }
   function courseHours(c) {
     var t = 0; for (var k in c.mix) t += c.mix[k]; return t;
