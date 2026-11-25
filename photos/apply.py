@@ -36,8 +36,23 @@ def master(shot_id):
     return None
 
 
+def src_width(path):
+    if not shutil.which('sips'):
+        return 0
+    r = subprocess.run(['sips', '-g', 'pixelWidth', str(path)],
+                       capture_output=True, text=True)
+    for line in r.stdout.splitlines():
+        if 'pixelWidth' in line:
+            return int(line.split(':')[1])
+    return 0
+
+
 def resize(src, dst, width, quality):
     WEB.mkdir(parents=True, exist_ok=True)
+    # збільшувати нема сенсу: різкості це не додасть, тільки вагу
+    w0 = src_width(src)
+    if w0 and w0 < width:
+        width = w0
     if shutil.which('sips'):
         subprocess.run(['sips', '-s', 'format', 'jpeg', '-s', 'formatOptions', str(quality),
                         '--resampleWidth', str(width), str(src), '--out', str(dst)],
